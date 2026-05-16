@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -304,7 +303,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S0: WELCOME -->
-
 <div id="s-welcome" class="screen active">
   <div class="hdr">
     <div class="brand">Constructores de Vida &middot; LIBU LLC</div>
@@ -336,7 +334,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S1: MOMENT -->
-
 <div id="s-moment" class="screen">
   <div class="hdr">
     <div class="brand">Contexto inicial</div>
@@ -369,7 +366,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S2: CALIBRATION -->
-
 <div id="s-cal" class="screen">
   <div class="hdr">
     <div class="brand">Fase 1 de 4</div>
@@ -393,7 +389,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S3: ORDER -->
-
 <div id="s-order" class="screen">
   <div class="hdr">
     <div class="brand">Fase 2 de 4</div>
@@ -435,7 +430,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S4: OVERVIEW -->
-
 <div id="s-overview" class="screen">
   <div class="hdr">
     <div class="brand">Fase 3 de 4</div>
@@ -471,7 +465,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S5: DETAIL -->
-
 <div id="s-detail" class="screen">
   <div class="wrap pb" style="padding-top:1.1rem">
     <button class="back-btn" onclick="go('s-overview');renderOverview()">&#8592; Volver a &Aacute;reas</button>
@@ -488,7 +481,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S6: ACTIVATION -->
-
 <div id="s-activation" class="screen">
   <div class="hdr">
     <div class="brand">Antes del reporte</div>
@@ -523,7 +515,6 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 </div>
 
 <!-- S7: REPORT -->
-
 <div id="s-report" class="screen">
   <div class="hdr">
     <div class="brand">Fase 4 de 4</div>
@@ -853,38 +844,35 @@ function buildReport(){
   if(epRec)html+='<div class="ep-box"><span class="ep-lbl">Episodio recomendado para ti</span><div class="ep-title">'+epRec.ep+' \u2014 '+epRec.title+'</div><div class="ep-text">Este episodio '+epRec.reason+'</div></div>';
   html+='</div>';
   html+='<div class="act-box"><span class="act-lbl">Tu acci\u00f3n de las pr\u00f3ximas 24 horas</span><div class="act-title">'+(fugaArea?fugaArea.full:'Tu \u00e1rea de mayor urgencia')+'</div><div class="act-text">'+action24+'</div><textarea class="act-inp" placeholder="Escribe aqu\u00ed tu compromiso personal..."></textarea></div>';
-
-html+=’<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagn\u00f3stico como PDF</button>’;
-html+=’<div class="cta"><div class="ctat">Tu vida no est\u00e1 perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Est\u00e1 desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede redise\u00f1ar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">\u00bfEst\u00e1s listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@constructoresdevida\',\'_blank\')">📺 Ver Episodio 1 \u2014 Constructores de Vida</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar \u00e1reas</button><button class="ctab" onclick="showResetModal()">Nuevo Esc\u00e1ner</button></div></div>’;
-html+=’<div class="libu-footer"><div class="libu-footer-text">Esc\u00e1ner de Vida PESDAL v5.3c \u00b7 Propiedad intelectual de LIBU LLC \u00b7 Life Is Being Unleashed<br>No defines tu vida por tus resultados actuales, sino por tu capacidad de redise\u00f1ar tu sistema PESDAL.<br>P\u00e1gina 1 de tu Bit\u00e1cora PESDAL \u00b7 Constructores de Vida</div></div>’;
-document.getElementById(‘rpt-content’).innerHTML=html;
+  html+='<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagn\u00f3stico como PDF</button>';
+  html+='<div class="cta"><div class="ctat">Tu vida no est\u00e1 perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Est\u00e1 desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede redise\u00f1ar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">\u00bfEst\u00e1s listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@constructoresdevida\',\'_blank\')">&#128250; Ver Episodio 1 \u2014 Constructores de Vida</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar \u00e1reas</button><button class="ctab" onclick="showResetModal()">Nuevo Esc\u00e1ner</button></div></div>';
+  html+='<div class="libu-footer"><div class="libu-footer-text">Esc\u00e1ner de Vida PESDAL v5.3c \u00b7 Propiedad intelectual de LIBU LLC \u00b7 Life Is Being Unleashed<br>No defines tu vida por tus resultados actuales, sino por tu capacidad de redise\u00f1ar tu sistema PESDAL.<br>P\u00e1gina 1 de tu Bit\u00e1cora PESDAL \u00b7 Constructores de Vida</div></div>';
+  document.getElementById('rpt-content').innerHTML=html;
 }
 
-function showResetModal(){document.getElementById(‘reset-modal’).classList.add(‘show’);}
-function closeModal(){document.getElementById(‘reset-modal’).classList.remove(‘show’);}
+function showResetModal(){document.getElementById('reset-modal').classList.add('show');}
+function closeModal(){document.getElementById('reset-modal').classList.remove('show');}
 function confirmReset(){
-closeModal();momentOfLife=null;calLvl={P:‘B’,E:‘B’,S:‘B’,D:‘B’,A:‘B’,L:‘B’};
-AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
-orderedIds=[];metaAnswer=null;touched={};aiU=5;aiO=5;_shuffledAreas=null;
-buildCal();
-document.querySelectorAll(’.moment-opt’).forEach(function(e){e.classList.remove(‘sel’);});
-var btnMn=document.getElementById(‘btn-mn’);if(btnMn)btnMn.disabled=true;
-var btnStart=document.getElementById(‘btn-start’);if(btnStart)btnStart.disabled=true;
-var aiu=document.getElementById(‘ai-u’);var aio=document.getElementById(‘ai-o’);
-if(aiu){aiu.value=5;aiu.style.background=‘linear-gradient(to right,var(–gold) 44%,var(–dark3) 44%)’;}
-if(aio){aio.value=5;aio.style.background=‘linear-gradient(to right,var(–gold) 44%,var(–dark3) 44%)’;}
-var aivu=document.getElementById(‘aiv-u’);var aivo=document.getElementById(‘aiv-o’);
-if(aivu){aivu.textContent=‘5’;aivu.style.color=‘var(–gold)’;}
-if(aivo){aivo.textContent=‘5’;aivo.style.color=‘var(–gold)’;}
-go(‘s-welcome’);
+  closeModal();momentOfLife=null;calLvl={P:'B',E:'B',S:'B',D:'B',A:'B',L:'B'};
+  AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
+  orderedIds=[];metaAnswer=null;touched={};aiU=5;aiO=5;_shuffledAreas=null;
+  buildCal();
+  document.querySelectorAll('.moment-opt').forEach(function(e){e.classList.remove('sel');});
+  var btnMn=document.getElementById('btn-mn');if(btnMn)btnMn.disabled=true;
+  var btnStart=document.getElementById('btn-start');if(btnStart)btnStart.disabled=true;
+  var aiu=document.getElementById('ai-u');var aio=document.getElementById('ai-o');
+  if(aiu){aiu.value=5;aiu.style.background='linear-gradient(to right,var(--gold) 44%,var(--dark3) 44%)';}
+  if(aio){aio.value=5;aio.style.background='linear-gradient(to right,var(--gold) 44%,var(--dark3) 44%)';}
+  var aivu=document.getElementById('aiv-u');var aivo=document.getElementById('aiv-o');
+  if(aivu){aivu.textContent='5';aivu.style.color='var(--gold)';}
+  if(aivo){aivo.textContent='5';aivo.style.color='var(--gold)';}
+  go('s-welcome');
 }
 
 // INIT
 buildCal();
-var tksU=document.getElementById(‘tks-u’);var tksO=document.getElementById(‘tks-o’);
+var tksU=document.getElementById('tks-u');var tksO=document.getElementById('tks-o');
 if(tksU)tksU.innerHTML=tks();if(tksO)tksO.innerHTML=tks();
 </script>
-
 </body>
 </html>
-
