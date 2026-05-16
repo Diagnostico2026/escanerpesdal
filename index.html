@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Escáner de Vida PESDAL v5.3c — Constructores de Vida</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── VARIABLES ─────────────────────────────────────────── */
+:root{
+  --dark:#080C14;--dark2:#0E1520;--dark3:#141D2E;
+  --gold:#C9A84C;--goldL:#E8C96A;--goldD:rgba(201,168,76,0.12);
+  --text:#EAE6DC;--muted:#7A8499;--border:rgba(201,168,76,0.18);
+  --blue:#3498DB;--green:#27AE60;--orange:#E67E22;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;font-size:16px;}
+@media(min-width:768px){html{font-size:17px;}}
+@media(min-width:1024px){html{font-size:18px;}}
+@media(min-width:1440px){html{font-size:19px;}}
+.screen{display:none;}.screen.active{display:block;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.hdr{text-align:center;padding:2rem 1.5rem .9rem;}
+.hdr::after{content:'';display:block;width:48px;height:1px;background:var(--gold);margin:.9rem auto 0;opacity:.4;}
+.brand{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.45rem;opacity:.8;}
+.main-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1;}
+.main-title span{color:var(--gold);}
+.subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2vw,1.1rem);color:var(--muted);margin-top:.35rem;font-style:italic;}
+.wrap{max-width:720px;margin:0 auto;padding:0 1.2rem 6.5rem;}
+.card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1.4rem;margin-bottom:.9rem;}
+.card-title{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.9rem;}
+.sep{height:1px;background:rgba(201,168,76,.07);margin:.75rem 0;}
+.mt8{margin-top:.8rem;}
+.pb{padding-bottom:5.8rem;}
+.steps{display:flex;justify-content:center;gap:.35rem;flex-wrap:wrap;padding:.6rem 0;}
+.step{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;padding:.28rem .6rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);}
+.step.active{background:var(--goldD);border-color:var(--gold);color:var(--gold);}
+.step.done{border-color:rgba(39,174,96,.3);color:#2ECC71;background:rgba(39,174,96,.06);}
+.w-lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.3rem);font-weight:600;line-height:1.4;margin-bottom:.5rem;}
+.w-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-style:italic;color:var(--text);line-height:1.8;margin-bottom:.55rem;}
+.w-note{font-size:clamp(.85rem,1.8vw,.95rem);color:var(--muted);line-height:1.8;}
+.w-note strong{color:var(--text);}
+.disclaimer{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:4px;padding:.7rem .9rem;font-size:clamp(.75rem,1.6vw,.85rem);color:rgba(168,196,232,.85);line-height:1.6;margin-top:.75rem;}
+.moment-opts{display:flex;flex-direction:column;gap:.42rem;}
+.moment-opt{display:flex;align-items:flex-start;gap:.7rem;background:var(--dark3);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:.78rem .9rem;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.moment-opt:hover{border-color:rgba(201,168,76,.35);}
+.moment-opt.sel{border-color:var(--gold);background:var(--goldD);}
+.moment-icon{font-size:1.15rem;flex-shrink:0;margin-top:.05rem;}
+.moment-text{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.45;}
+.moment-opt.sel .moment-text{color:var(--text);}
+.cal-section{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(201,168,76,.07);}
+.cal-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.cal-section-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:.6rem;}
+.cal-areas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:.8rem;}
+.cal-area-item{background:var(--dark3);border-radius:4px;padding:.7rem .85rem;border:1px solid rgba(255,255,255,.04);}
+.cal-area-icon{font-size:1rem;margin-bottom:.2rem;display:block;}
+.cal-area-name{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:600;display:block;margin-bottom:.18rem;}
+.cal-area-desc{font-size:clamp(.72rem,1.55vw,.8rem);color:var(--muted);line-height:1.5;}
+.cal-item{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(201,168,76,.07);}
+.cal-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.cal-hdr{display:flex;align-items:center;gap:.65rem;margin-bottom:.45rem;}
+.cal-ltr{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);width:1.7rem;flex-shrink:0;line-height:1;}
+.cal-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;}
+.cal-def{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.55rem;}
+.cal-def strong{color:var(--text);}.cal-def em{color:var(--goldL);font-style:italic;}
+.cal-ex{background:rgba(201,168,76,.05);border-left:2px solid var(--gold);padding:.55rem .85rem;font-size:clamp(.8rem,1.7vw,.9rem);color:var(--muted);line-height:1.65;margin-bottom:.65rem;border-radius:0 4px 4px 0;}
+.cal-ex strong{color:var(--text);}
+.cal-q{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--text);font-weight:500;margin-bottom:.45rem;}
+.cal-opts{display:flex;flex-direction:column;gap:.32rem;}
+.cal-opt{display:flex;align-items:flex-start;gap:.58rem;background:var(--dark3);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:.65rem .85rem;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.cal-opt:hover{border-color:rgba(201,168,76,.3);}
+.cal-opt.sel{border-color:var(--gold);background:var(--goldD);}
+.cal-k{font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;color:var(--gold);flex-shrink:0;margin-top:.1rem;width:.85rem;}
+.cal-txt{font-size:clamp(.8rem,1.75vw,.88rem);color:var(--muted);line-height:1.45;}
+.cal-opt.sel .cal-txt{color:var(--text);}
+.adapt{border-radius:4px;padding:.8rem .95rem;margin-top:.6rem;font-size:clamp(.8rem,1.75vw,.88rem);line-height:1.75;display:none;}
+.adapt.show{display:block;}
+.adapt.b{background:rgba(201,168,76,.06);border:1px solid var(--border);color:var(--muted);}
+.adapt.c{background:rgba(74,144,226,.07);border:1px solid rgba(74,144,226,.2);color:#A8C4E8;}
+.order-intro{text-align:center;margin-bottom:1.2rem;}
+.order-cmd{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.2rem);font-style:italic;color:var(--gold);margin-bottom:.5rem;}
+.order-q{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.6vw,1.4rem);font-weight:700;line-height:1.4;margin-bottom:.5rem;}
+.order-q span{color:var(--gold);}
+.order-hint{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);line-height:1.7;font-style:italic;}
+.order-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.72rem;margin-bottom:.9rem;}
+.order-btn{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1rem;cursor:pointer;position:relative;transition:all .2s;-webkit-tap-highlight-color:transparent;text-align:left;}
+.order-btn:hover{border-color:rgba(201,168,76,.4);transform:translateY(-1px);}
+.order-btn.picked{border-color:var(--green);background:rgba(39,174,96,.05);}
+.order-btn.picked::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#27AE60,transparent);border-radius:6px 6px 0 0;}
+.ob-icon{font-size:1.3rem;display:block;margin-bottom:.28rem;}
+.ob-name{font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,2vw,1rem);font-weight:600;line-height:1.2;display:block;}
+.ob-num{position:absolute;top:.55rem;right:.65rem;width:1.55rem;height:1.55rem;border-radius:50%;background:var(--gold);color:var(--dark);font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;}
+.order-btn.picked .ob-num{opacity:1;}
+.order-confirm{background:var(--goldD);border:1px solid var(--border);border-radius:5px;padding:1rem 1.2rem;text-align:center;display:none;margin-bottom:.8rem;}
+.order-confirm.show{display:block;}
+.oc-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.28rem;display:block;}
+.oc-area{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--goldL);}
+.meta-box{background:var(--dark2);border:1px solid var(--border);border-radius:5px;padding:1.1rem 1.2rem;display:none;margin-bottom:.8rem;}
+.meta-box.show{display:block;}
+.meta-q{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-style:italic;color:var(--text);line-height:1.5;margin-bottom:.8rem;text-align:center;}
+.meta-opts{display:flex;gap:.6rem;}
+.meta-opt{flex:1;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:.75rem .6rem;cursor:pointer;text-align:center;font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);transition:all .18s;-webkit-tap-highlight-color:transparent;line-height:1.4;}
+.meta-opt:hover{border-color:rgba(201,168,76,.3);}
+.meta-opt.sel{border-color:var(--gold);background:var(--goldD);color:var(--text);}
+.insight-phrase{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-style:italic;color:var(--goldL);text-align:center;padding:.8rem 1rem;line-height:1.6;display:none;}
+.insight-phrase.show{display:block;}
+.priority-list-compact{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem;}
+.pli{display:flex;align-items:center;gap:.65rem;background:var(--dark3);border-radius:4px;padding:.6rem .85rem;}
+.pli-num{font-family:'DM Mono',monospace;font-size:.7rem;font-weight:700;color:var(--gold);width:1.1rem;flex-shrink:0;}
+.pli-icon{font-size:.95rem;flex-shrink:0;}
+.pli-name{font-size:clamp(.8rem,1.75vw,.9rem);font-weight:500;flex:1;}
+.pli-score{font-family:'DM Mono',monospace;font-size:.68rem;flex-shrink:0;}
+.ovcht{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1.1rem .95rem;position:relative;margin-bottom:.9rem;}
+.chl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.65rem;text-align:center;}
+.br{display:flex;align-items:flex-end;gap:.28rem;height:110px;}
+.bg{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;gap:.2rem;}
+.bw{flex:1;width:100%;display:flex;align-items:flex-end;}
+.b{width:100%;border-radius:2px 2px 0 0;min-height:2px;transition:height .55s cubic-bezier(.34,1.56,.64,1);}
+.bv{font-family:'DM Mono',monospace;font-size:.5rem;text-align:center;}
+.bl{font-size:.45rem;color:var(--muted);text-align:center;line-height:1.2;max-width:32px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.thr{position:absolute;left:.95rem;right:.95rem;}
+.tl{height:1px;border-top:1px dashed rgba(255,255,255,.18);}
+.tlb{position:absolute;right:0;font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.32);transform:translateY(-50%);}
+.vs{text-align:center;padding:.68rem 0;margin-bottom:.35rem;}
+.vt{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-style:italic;color:var(--goldL);}
+.vsb{font-size:clamp(.7rem,1.5vw,.78rem);color:var(--muted);margin-top:.15rem;}
+.pd{display:flex;justify-content:center;gap:.3rem;padding:.5rem 0 0;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--dark3);border:1px solid var(--border);transition:all .18s;}
+.dot.filled{background:var(--gold);border-color:var(--gold);}
+.dot.partial{background:rgba(201,168,76,.3);border-color:rgba(201,168,76,.2);}
+.ag{display:grid;grid-template-columns:repeat(2,1fr);gap:.78rem;}
+.ac{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1rem;cursor:pointer;position:relative;overflow:hidden;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.ac::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .22s;}
+.ac:hover,.ac.done-area{border-color:rgba(201,168,76,.4);}
+.ac:hover::before,.ac.done-area::before{transform:scaleX(1);}
+.ac.done-area::before{background:linear-gradient(90deg,#27AE60,transparent);}
+.ac.next-area{border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.04);}
+.ac.next-area::before{transform:scaleX(1);}
+.ai2{font-size:1.3rem;margin-bottom:.3rem;display:block;}
+.an{font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,2vw,1rem);font-weight:600;line-height:1.2;margin-bottom:.52rem;}
+.abt{height:4px;background:var(--dark3);border-radius:2px;overflow:hidden;margin-bottom:.2rem;}
+.abf{height:100%;border-radius:2px;transition:width .45s ease;}
+.am{display:flex;justify-content:space-between;align-items:center;}
+.asc{font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;}
+.atap{font-size:clamp(.6rem,1.3vw,.68rem);color:var(--gold);opacity:.65;margin-top:.3rem;display:block;}
+.a-ord-badge{position:absolute;top:.5rem;right:.6rem;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--gold);border:1px solid var(--border);padding:.1rem .35rem;border-radius:2px;background:var(--dark3);}
+.partial-banner{background:rgba(201,168,76,.08);border:1px solid var(--border);border-radius:5px;padding:1rem 1.2rem;text-align:center;margin-top:.8rem;}
+.pb-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:.3rem;}
+.pb-text{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);line-height:1.7;margin-bottom:.7rem;}
+.pb-btns{display:flex;gap:.6rem;}
+.pb-btn{flex:1;padding:.65rem .5rem;border-radius:4px;border:1px solid;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .18s;text-align:center;}
+.pb-btn.gold{background:var(--gold);border-color:var(--gold);color:var(--dark);font-weight:600;}
+.pb-btn.outline{background:transparent;border-color:var(--border);color:var(--text);}
+.pb-btn.outline:hover{border-color:var(--gold);color:var(--gold);}
+.back-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;padding:.42rem 0;margin-bottom:.65rem;-webkit-tap-highlight-color:transparent;}
+.di{font-size:1.7rem;display:block;margin-bottom:.3rem;}
+.dn{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,1.7rem);font-weight:700;}
+.dd{font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,1.9vw,1rem);font-style:italic;color:var(--muted);margin-top:.18rem;}
+.area-context{background:var(--goldD);border:1px solid var(--border);border-radius:4px;padding:.7rem .9rem;margin-bottom:.8rem;font-size:clamp(.82rem,1.8vw,.92rem);color:var(--goldL);font-style:italic;font-family:'Cormorant Garamond',serif;line-height:1.5;}
+.cht-hint{font-size:clamp(.75rem,1.6vw,.84rem);color:var(--muted);font-style:italic;margin-bottom:.6rem;line-height:1.5;}
+.pbr{display:flex;align-items:center;gap:.65rem;margin-bottom:.78rem;}
+.pl{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--gold);width:1rem;flex-shrink:0;text-align:center;}
+.pi{flex:1;}
+.pn{font-size:clamp(.7rem,1.5vw,.78rem);font-weight:500;display:block;margin-bottom:.2rem;}
+.pt{height:8px;background:var(--dark3);border-radius:4px;overflow:hidden;position:relative;}
+.pt::after{content:'';position:absolute;left:60%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.12);}
+.pf{height:100%;border-radius:4px;transition:width .42s cubic-bezier(.34,1.56,.64,1);}
+.pnum{font-family:'DM Mono',monospace;font-size:.82rem;font-weight:500;width:1.3rem;text-align:right;flex-shrink:0;}
+.mq-block{margin-bottom:1.1rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(201,168,76,.07);}
+.mq-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.mq-lr{display:flex;align-items:center;gap:.45rem;margin-bottom:.35rem;}
+.mq-l{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);}
+.mq-ln{font-size:clamp(.75rem,1.6vw,.82rem);font-weight:600;color:var(--text);}
+.mq-q{font-size:clamp(.88rem,2vw,1rem);color:var(--text);font-weight:500;line-height:1.55;margin-bottom:.3rem;}
+.mq-q span{color:var(--goldL);font-style:italic;}
+.mq-sim{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);font-style:italic;line-height:1.55;margin-bottom:.52rem;padding-left:.6rem;border-left:2px solid rgba(201,168,76,.28);}
+.mq-guide{font-size:clamp(.78rem,1.7vw,.86rem);color:var(--gold);font-style:italic;margin-bottom:.5rem;padding:.48rem .8rem;background:rgba(201,168,76,.05);border-radius:4px;line-height:1.55;}
+.scale-ref{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.55rem;padding:.65rem .85rem;background:var(--dark3);border-radius:4px;border:1px solid rgba(255,255,255,.04);}
+.srt{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.12rem;}
+.sr{display:flex;align-items:flex-start;gap:.5rem;font-size:clamp(.72rem,1.55vw,.8rem);line-height:1.45;}
+.srb{font-family:'DM Mono',monospace;font-size:.6rem;font-weight:600;padding:.08rem .38rem;border-radius:2px;flex-shrink:0;margin-top:.08rem;}
+.r1{background:rgba(139,0,0,.35);color:#FF4444;}
+.r2{background:rgba(192,57,43,.2);color:#E74C3C;}
+.r3{background:rgba(241,196,15,.14);color:#F1C40F;}
+.r4{background:rgba(39,174,96,.14);color:#2ECC71;}
+.r5{background:rgba(26,188,156,.14);color:#1ABC9C;}
+.srt2{color:var(--muted);}
+.sl-unt{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--orange);letter-spacing:.06em;margin-bottom:.3rem;display:none;}
+.sl-unt.show{display:block;}
+.sl-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem;}
+.sl-val{font-family:'DM Mono',monospace;font-size:1.05rem;font-weight:600;}
+.sl-lbl{font-family:'DM Mono',monospace;font-size:clamp(.58rem,1.3vw,.65rem);color:var(--muted);margin-bottom:.38rem;}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;background:var(--dark3);outline:none;cursor:pointer;margin-bottom:.18rem;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 10px rgba(201,168,76,.4);transition:transform .15s,box-shadow .15s;}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.2);box-shadow:0 0 16px rgba(201,168,76,.6);}
+input[type=range].unt::-webkit-slider-thumb{background:var(--muted);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--gold);border:none;}
+.sl-tks{display:flex;justify-content:space-between;padding:0 .08rem;}
+.sl-tk{font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.2);}
+.diag{border-radius:5px;padding:.95rem 1.05rem;margin-bottom:.85rem;border:1px solid;}
+.diag.critical{background:rgba(139,0,0,.08);border-color:rgba(139,0,0,.35);}
+.diag.warning{background:rgba(230,126,34,.07);border-color:rgba(230,126,34,.26);}
+.diag.good{background:rgba(39,174,96,.07);border-color:rgba(39,174,96,.26);}
+.diag.pattern{background:rgba(52,152,219,.07);border-color:rgba(52,152,219,.26);margin-top:.48rem;}
+.dtag{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;display:block;}
+.dtitle{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin-bottom:.25rem;}
+.dtext{font-size:clamp(.82rem,1.8vw,.92rem);line-height:1.75;color:var(--muted);}
+.wl{margin-top:.6rem;padding:.55rem .85rem;background:rgba(201,168,76,.07);border:1px solid var(--border);border-radius:4px;font-size:clamp(.78rem,1.7vw,.88rem);line-height:1.65;}
+.wl strong{color:var(--gold);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.07em;}
+.stag{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.1rem .42rem;border-radius:2px;}
+.stag.critical{background:rgba(139,0,0,.2);color:#FF4444;border:1px solid rgba(139,0,0,.35);}
+.stag.warning{background:rgba(230,126,34,.17);color:#F39C12;border:1px solid rgba(230,126,34,.28);}
+.stag.good{background:rgba(39,174,96,.17);color:#2ECC71;border:1px solid rgba(39,174,96,.28);}
+.ai-block{margin-bottom:.95rem;}
+.ai-q{font-size:clamp(.88rem,2vw,1rem);color:var(--text);font-weight:500;margin-bottom:.35rem;line-height:1.55;}
+.ai-sub{font-size:clamp(.75rem,1.6vw,.84rem);color:var(--muted);margin-bottom:.58rem;font-style:italic;}
+.ai-val-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem;}
+.ai-val{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:600;}
+.ai-idx{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.22);border-radius:5px;padding:.9rem 1.05rem;margin-bottom:.88rem;}
+.ai-idx-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.28rem;display:block;}
+.ai-idx-score{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;line-height:1;}
+.ai-idx-text{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.7;margin-top:.3rem;}
+.nudge-box{background:rgba(241,196,15,.06);border:1px solid rgba(241,196,15,.22);border-radius:4px;padding:.82rem .98rem;margin-top:.6rem;}
+.nudge-lbl{font-family:'DM Mono',monospace;font-size:.55rem;color:#F1C40F;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.22rem;display:block;}
+.nudge-text{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);line-height:1.7;}
+.rscore{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.2rem);font-weight:700;line-height:1;}
+.rar{display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem;}
+.rai{font-size:1rem;flex-shrink:0;}
+.rain{flex:1;}
+.rann{font-size:clamp(.8rem,1.8vw,.9rem);font-weight:600;margin-bottom:.18rem;}
+.rabt{height:5px;background:var(--dark3);border-radius:3px;overflow:hidden;}
+.rabf{height:100%;border-radius:3px;transition:width .65s ease;}
+.rasco{font-family:'DM Mono',monospace;font-size:.75rem;font-weight:500;flex-shrink:0;width:1.9rem;text-align:right;}
+.prow{display:flex;gap:.65rem;margin-bottom:.65rem;font-size:clamp(.82rem,1.8vw,.92rem);line-height:1.65;}
+.pdot2{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:.45rem;}
+.ebox{background:var(--goldD);border:1px solid var(--border);border-radius:4px;padding:.88rem 1.05rem;margin-top:.5rem;}
+.elbl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem;display:block;}
+.etxt{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2.1vw,1.08rem);font-style:italic;color:var(--text);line-height:1.55;}
+.ep-box{background:rgba(201,168,76,.06);border:1px solid var(--border);border-radius:4px;padding:.88rem 1.05rem;margin-top:.65rem;}
+.ep-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem;display:block;}
+.ep-title{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2.1vw,1.08rem);font-weight:700;margin-bottom:.22rem;}
+.ep-text{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);line-height:1.68;}
+.act-box{background:rgba(39,174,96,.06);border:1px solid rgba(39,174,96,.24);border-radius:5px;padding:1rem 1.08rem;margin-top:.8rem;}
+.act-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:#2ECC71;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;display:block;}
+.act-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin-bottom:.28rem;}
+.act-text{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.7;margin-bottom:.68rem;}
+.act-inp{width:100%;background:var(--dark3);border:1px solid rgba(39,174,96,.28);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:clamp(.84rem,1.85vw,.94rem);padding:.68rem .88rem;resize:none;outline:none;min-height:72px;line-height:1.65;}
+.act-inp::placeholder{color:var(--muted);font-style:italic;}
+.act-inp:focus{border-color:#2ECC71;}
+.btn-save{display:flex;align-items:center;justify-content:center;gap:.5rem;background:transparent;color:var(--gold);border:1px solid var(--gold);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1rem;border-radius:4px;cursor:pointer;width:100%;margin-top:.8rem;transition:all .2s;}
+.btn-save:hover{background:var(--goldD);}
+.cta{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:1.25rem;text-align:center;margin-top:.85rem;}
+.ctat{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2.5vw,1.35rem);font-weight:700;margin-bottom:.32rem;}
+.ctax{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.65rem;}
+.ctaq{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2vw,1.05rem);color:var(--goldL);margin-bottom:.82rem;}
+.ctab{display:inline-block;background:var(--gold);color:var(--dark);font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.5rem;border-radius:3px;border:none;cursor:pointer;font-weight:600;transition:all .18s;margin:.25rem;}
+.ctab:hover{background:var(--goldL);transform:translateY(-1px);}
+.ctab.outline{background:transparent;border:1px solid var(--gold);color:var(--gold);}
+.ctab.outline:hover{background:var(--goldD);}
+.libu-footer{text-align:center;padding:.9rem 0;margin-top:.5rem;border-top:1px solid var(--border);}
+.libu-footer-text{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);letter-spacing:.08em;line-height:1.8;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,20,.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:.68rem 1.2rem;display:flex;gap:.55rem;max-width:720px;margin:0 auto;z-index:100;}
+.bnav button{flex:1;background:var(--dark2);border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:.62rem .35rem;border-radius:4px;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.bnav button:hover{background:var(--goldD);border-color:var(--gold);color:var(--gold);}
+.bnav button.pri{background:var(--gold);border-color:var(--gold);color:var(--dark);font-weight:600;}
+.bnav button.pri:hover{background:var(--goldL);}
+.bnav button:disabled{opacity:.3;cursor:default;pointer-events:none;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:1.5rem;}
+.modal.show{display:flex;}
+.modal-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1.5rem;max-width:380px;width:100%;text-align:center;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem;}
+.modal-text{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.7;margin-bottom:1rem;}
+.modal-btns{display:flex;gap:.6rem;}
+.modal-btn{flex:1;padding:.65rem .5rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .18s;}
+.modal-btn.danger{background:rgba(192,57,43,.15);border-color:rgba(192,57,43,.4);color:#E74C3C;}
+.modal-btn.danger:hover{background:rgba(192,57,43,.25);}
+.modal-btn.cancel{background:var(--dark3);border-color:var(--border);color:var(--text);}
+@keyframes savePulse{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
+.save-confirm{animation:savePulse .3s ease;}
+@media print{
+.bnav,.ctab,.btn-save,.back-btn,.modal{display:none!important;}
+body{background:white!important;color:#1a1a1a!important;font-size:14px!important;}
+.screen{display:block!important;}
+.card{border:1px solid #ddd!important;background:white!important;page-break-inside:avoid;}
+.main-title,.main-title span,.vt,.rscore,.ctat,.ctaq,.etxt,.ep-title,.act-title,.dtitle,.dn{color:#1a1a1a!important;}
+.w-note,.subtitle,.dtext,.ep-text,.act-text,.ctax,.ai-idx-text,.nudge-text,.rann,.vsb,.dd,.cht-hint,.area-context{color:#555!important;}
+.card-title,.brand,.elbl,.ep-lbl,.act-lbl,.ai-idx-lbl,.dtag{color:#8a6a20!important;}
+.libu-footer-text{color:#888!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="modal" id="reset-modal">
+  <div class="modal-card">
+    <div class="modal-title">&#9888; Antes de continuar</div>
+    <div class="modal-text">Si inicias un nuevo esc&aacute;ner perder&aacute;s el diagn&oacute;stico actual. <strong>Guarda tu PDF primero</strong> si quieres conservarlo.</div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-btn danger" onclick="confirmReset()">Empezar desde cero</button>
+    </div>
+  </div>
+</div>
+
+<!-- S0: WELCOME -->
+
+<div id="s-welcome" class="screen active">
+  <div class="hdr">
+    <div class="brand">Constructores de Vida &middot; LIBU LLC</div>
+    <h1 class="main-title">Esc&aacute;ner de Vida <span>PESDAL</span></h1>
+    <p class="subtitle">Tu diagn&oacute;stico de ingenier&iacute;a humana</p>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step active">0&middot;Inicio</div>
+      <div class="step">1&middot;Calibraci&oacute;n</div>
+      <div class="step">2&middot;Prioridades</div>
+      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">4&middot;Reporte</div>
+    </div>
+    <div class="card mt8">
+      <div class="card-title">Antes de comenzar</div>
+      <p class="w-lead" style="color:var(--gold)">No estamos midiendo solamente tu vida.</p>
+      <p class="w-lead">Estamos midiendo el sistema interno que est&aacute; construyendo tu vida.</p>
+      <div class="sep"></div>
+      <p class="w-text">Lo que est&aacute;s a punto de hacer requiere una sola cosa.</p>
+      <p class="w-text" style="color:var(--gold)">Honestidad.</p>
+      <p class="w-text">No con nosotros &mdash; contigo mismo.</p>
+      <div class="sep"></div>
+      <p class="w-note"><strong>Nadie va a ver tus respuestas.</strong> No hay respuestas correctas ni incorrectas. No hay un puntaje que te juzgue.<br><br>Lo que sabes hoy es exactamente suficiente para empezar.</p>
+      <div class="disclaimer">&#9888; Este esc&aacute;ner no reemplaza acompa&ntilde;amiento psicol&oacute;gico, m&eacute;dico, financiero o profesional. Es una herramienta de autoconocimiento y construcci&oacute;n personal.</div>
+    </div>
+  </div>
+  <div class="bnav"><button class="pri" onclick="go('s-moment')">Comenzar &rarr;</button></div>
+</div>
+
+<!-- S1: MOMENT -->
+
+<div id="s-moment" class="screen">
+  <div class="hdr">
+    <div class="brand">Contexto inicial</div>
+    <h1 class="main-title">Tu <span>Momento</span></h1>
+    <p class="subtitle">&iquest;Desde d&oacute;nde est&aacute;s completando este esc&aacute;ner hoy?</p>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step done">0&middot;Inicio</div>
+      <div class="step active">1&middot;Calibraci&oacute;n</div>
+      <div class="step">2&middot;Prioridades</div>
+      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">4&middot;Reporte</div>
+    </div>
+    <div class="card mt8">
+      <div class="card-title">Tu momento de vida</div>
+      <p style="font-size:clamp(.84rem,1.8vw,.95rem);color:var(--muted);line-height:1.75;margin-bottom:.9rem;">El contexto desde el que llegas importa. No cambia el diagn&oacute;stico &mdash; pero s&iacute; c&oacute;mo lo interpretamos.</p>
+      <div class="moment-opts">
+        <div class="moment-opt" onclick="selMoment('crisis',this)"><span class="moment-icon">&#9889;</span><div class="moment-text">Estoy en un momento de <strong style="color:var(--text)">crisis o quiebre</strong> &mdash; algo colaps&oacute; o est&aacute; colapsando</div></div>
+        <div class="moment-opt" onclick="selMoment('stagnant',this)"><span class="moment-icon">&#127787;&#65039;</span><div class="moment-text">Estoy <strong style="color:var(--text)">estancado</strong> &mdash; no hay crisis pero tampoco hay avance real</div></div>
+        <div class="moment-opt" onclick="selMoment('moving',this)"><span class="moment-icon">&#127807;</span><div class="moment-text">Estoy en <strong style="color:var(--text)">proceso de cambio</strong> &mdash; algo ya se est&aacute; moviendo y quiero entenderlo</div></div>
+        <div class="moment-opt" onclick="selMoment('next',this)"><span class="moment-icon">&#128640;</span><div class="moment-text">Estoy <strong style="color:var(--text)">bien y quiero el siguiente nivel</strong> &mdash; busco optimizar y acelerar</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-welcome')">&#8592; Atr&aacute;s</button>
+    <button class="pri" id="btn-mn" disabled onclick="go('s-cal')">Continuar &rarr;</button>
+  </div>
+</div>
+
+<!-- S2: CALIBRATION -->
+
+<div id="s-cal" class="screen">
+  <div class="hdr">
+    <div class="brand">Fase 1 de 4</div>
+    <h1 class="main-title">Calibraci&oacute;n <span>PESDAL</span></h1>
+    <p class="subtitle">&iquest;Qu&eacute; tan bien conoces el sistema que opera en ti?</p>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step done">0&middot;Inicio</div>
+      <div class="step active">1&middot;Calibraci&oacute;n</div>
+      <div class="step">2&middot;Prioridades</div>
+      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">4&middot;Reporte</div>
+    </div>
+    <div class="card mt8" id="cal-wrap"></div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-moment')">&#8592; Atr&aacute;s</button>
+    <button class="pri" onclick="go('s-order');renderOrderBtns()">Continuar &rarr;</button>
+  </div>
+</div>
+
+<!-- S3: ORDER -->
+
+<div id="s-order" class="screen">
+  <div class="hdr">
+    <div class="brand">Fase 2 de 4</div>
+    <h1 class="main-title">Tus <span>Prioridades</span></h1>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step done">0&middot;Inicio</div>
+      <div class="step done">1&middot;Calibraci&oacute;n</div>
+      <div class="step active">2&middot;Prioridades</div>
+      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">4&middot;Reporte</div>
+    </div>
+    <div class="card mt8">
+      <div class="order-intro">
+        <div class="order-cmd">Escucha tu sistema.</div>
+        <div class="order-q">&iquest;Qu&eacute; &aacute;rea necesita atenci&oacute;n ahora mismo<br>y est&aacute; consumiendo m&aacute;s <span>energ&iacute;a</span> de la que te devuelve?</div>
+        <div class="order-hint">Toca las &aacute;reas en el orden que sientas &mdash; desde la que m&aacute;s te drena hasta la que m&aacute;s te sostiene.<br><em>No pienses demasiado. Tu sistema ya sabe la respuesta.</em></div>
+      </div>
+      <div class="order-grid" id="order-grid"></div>
+      <div class="order-confirm" id="order-confirm">
+        <span class="oc-lbl">Prioridad establecida &mdash; iniciando diagn&oacute;stico en</span>
+        <div class="oc-area" id="oc-area-name"></div>
+      </div>
+      <div class="meta-box" id="meta-box">
+        <div class="meta-q">&iquest;Este orden viene de lo que sientes o de lo que crees que deber&iacute;as sentir?</div>
+        <div class="meta-opts">
+          <div class="meta-opt" id="meta-feel" onclick="selMeta('feel')">Lo que siento ahora mismo</div>
+          <div class="meta-opt" id="meta-should" onclick="selMeta('should')">Lo que creo que deber&iacute;a sentir</div>
+        </div>
+      </div>
+      <div class="insight-phrase" id="insight-phrase">Donde tu energ&iacute;a se fuga y la urgencia aparece &mdash; ah&iacute; est&aacute; tu punto de construcci&oacute;n.</div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-cal')">&#8592; Calibraci&oacute;n</button>
+    <button class="pri" id="btn-start" disabled onclick="startDiagnosis()">Iniciar Diagn&oacute;stico &rarr;</button>
+  </div>
+</div>
+
+<!-- S4: OVERVIEW -->
+
+<div id="s-overview" class="screen">
+  <div class="hdr">
+    <div class="brand">Fase 3 de 4</div>
+    <h1 class="main-title">Tus <span>8 &Aacute;reas</span></h1>
+    <p class="subtitle">Escanea en el orden que estableciste</p>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step done">0&middot;Inicio</div>
+      <div class="step done">1&middot;Calibraci&oacute;n</div>
+      <div class="step done">2&middot;Prioridades</div>
+      <div class="step active">3&middot;Diagn&oacute;stico</div>
+      <div class="step">4&middot;Reporte</div>
+    </div>
+    <div class="pd mt8" id="prog-dots"></div>
+    <div id="vida-wrap" class="vs" style="display:none"><div class="vt" id="vida-t"></div><div class="vsb" id="vida-s"></div></div>
+    <div id="ov-chart" style="display:none" class="mt8"></div>
+    <div id="priority-list" class="mt8"></div>
+    <div class="ag mt8" id="areas-grid"></div>
+    <div id="partial-banner" style="display:none" class="partial-banner mt8">
+      <div class="pb-title">Mapa de urgencia parcial &#10003;</div>
+      <div class="pb-text">Escaneaste 5 de tus 8 &aacute;reas. Puedes ver tu reporte ahora o completar las &aacute;reas restantes para un diagn&oacute;stico m&aacute;s preciso.</div>
+      <div class="pb-btns">
+        <button class="pb-btn gold" onclick="go('s-activation')">Ver mi reporte &rarr;</button>
+        <button class="pb-btn outline" onclick="document.getElementById('partial-banner').style.display='none'">Completar &aacute;reas</button>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-order')">&#8592; Prioridades</button>
+    <button class="pri" id="btn-rpt" style="display:none" onclick="go('s-activation')">Ver Reporte &rarr;</button>
+  </div>
+</div>
+
+<!-- S5: DETAIL -->
+
+<div id="s-detail" class="screen">
+  <div class="wrap pb" style="padding-top:1.1rem">
+    <button class="back-btn" onclick="go('s-overview');renderOverview()">&#8592; Volver a &Aacute;reas</button>
+    <div id="d-hdr"></div>
+    <div id="d-context"></div>
+    <div class="card mt8" id="d-chart"></div>
+    <div class="card" id="d-sliders"></div>
+    <div id="d-diag"></div>
+  </div>
+  <div class="bnav">
+    <button id="btn-back-detail" onclick="go('s-overview');renderOverview()">&#8592; Sin guardar</button>
+    <button class="pri" id="btn-save-detail" onclick="trySave()">Guardar &aacute;rea &#10003;</button>
+  </div>
+</div>
+
+<!-- S6: ACTIVATION -->
+
+<div id="s-activation" class="screen">
+  <div class="hdr">
+    <div class="brand">Antes del reporte</div>
+    <h1 class="main-title">&Iacute;ndice de <span>Activaci&oacute;n</span></h1>
+    <p class="subtitle">Dos preguntas &mdash; las m&aacute;s honestas de todas</p>
+  </div>
+  <div class="wrap pb">
+    <div class="card mt8">
+      <div class="card-title">Tu disposici&oacute;n al cambio</div>
+      <p style="font-size:clamp(.84rem,1.8vw,.95rem);color:var(--muted);line-height:1.75;margin-bottom:.95rem;">El diagn&oacute;stico m&aacute;s preciso del mundo no produce transformaci&oacute;n sin dos ingredientes: tu urgencia y tu apertura.</p>
+      <div class="ai-block">
+        <div class="ai-q">&iquest;Qu&eacute; tan urgente es para ti que algo cambie en tu vida en los pr&oacute;ximos 90 d&iacute;as?</div>
+        <div class="ai-sub">1 = No es urgente &middot; 10 = Es absolutamente urgente ahora</div>
+        <div class="ai-val-row"><span style="font-size:clamp(.72rem,1.55vw,.8rem);color:var(--muted)">Tu urgencia:</span><div class="ai-val" id="aiv-u" style="color:var(--gold)">5</div></div>
+        <input type="range" min="1" max="10" value="5" id="ai-u" oninput="updAI('u',this)" style="background:linear-gradient(to right,var(--gold) 44%,var(--dark3) 44%)">
+        <div class="sl-tks" id="tks-u"></div>
+      </div>
+      <div class="sep"></div>
+      <div class="ai-block">
+        <div class="ai-q">&iquest;Qu&eacute; tan dispuesto est&aacute;s a hacer algo diferente a lo que has hecho hasta ahora?</div>
+        <div class="ai-sub">1 = No estoy dispuesto &middot; 10 = Completamente abierto a lo necesario</div>
+        <div class="ai-val-row"><span style="font-size:clamp(.72rem,1.55vw,.8rem);color:var(--muted)">Tu apertura:</span><div class="ai-val" id="aiv-o" style="color:var(--gold)">5</div></div>
+        <input type="range" min="1" max="10" value="5" id="ai-o" oninput="updAI('o',this)" style="background:linear-gradient(to right,var(--gold) 44%,var(--dark3) 44%)">
+        <div class="sl-tks" id="tks-o"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-overview');renderOverview()">&#8592; &Aacute;reas</button>
+    <button class="pri" onclick="buildReport();go('s-report')">Ver Diagn&oacute;stico &rarr;</button>
+  </div>
+</div>
+
+<!-- S7: REPORT -->
+
+<div id="s-report" class="screen">
+  <div class="hdr">
+    <div class="brand">Fase 4 de 4</div>
+    <h1 class="main-title">Tu <span>Diagn&oacute;stico</span></h1>
+    <p class="subtitle">El mapa de tu punto de partida real</p>
+  </div>
+  <div class="wrap pb">
+    <div class="steps">
+      <div class="step done">0&middot;Inicio</div>
+      <div class="step done">1&middot;Calibraci&oacute;n</div>
+      <div class="step done">2&middot;Prioridades</div>
+      <div class="step done">3&middot;Diagn&oacute;stico</div>
+      <div class="step active">4&middot;Reporte</div>
+    </div>
+    <div id="rpt-content" class="mt8"></div>
+  </div>
+  <div class="bnav">
+    <button onclick="go('s-overview');renderOverview()">&#8592; Editar</button>
+    <button class="pri" onclick="showResetModal()">Nuevo Esc&aacute;ner</button>
+  </div>
+</div>
+
+<script>
+var PDEF=[
+  {l:'P',name:'Pensamiento',def:'Un pensamiento no es un hecho \u2014 es una <strong>interpretaci\u00f3n</strong>. La mayor\u00eda lleva d\u00e9cadas creyendo que sus pensamientos son la realidad, cuando son el resultado de creencias heredadas y patrones autom\u00e1ticos. <em>Lo que te dices sobre ti mismo define lo que decides y lo que haces.</em>',ex:'<strong>Ejemplo:</strong> "Soy un fracasado" es un pensamiento. "Fall\u00e9 en este intento" es un hecho. La diferencia no es sem\u00e1ntica \u2014 es la diferencia entre un ciclo que te destruye y uno que te informa.',calQ:'\u00bfQu\u00e9 tan bien identificas tus pensamientos en tiempo real?',opts:[{k:'A',t:'Los identifico claramente \u2014 puedo distinguir entre un pensamiento que me impulsa y uno que me limita mientras ocurre.'},{k:'B',t:'A veces los identifico, pero me cuesta saber si son hechos reales o interpretaciones heredadas.'},{k:'C',t:'Es un concepto nuevo \u2014 nunca hab\u00eda pensado en mis pensamientos como interpretaciones, no como hechos.'}],lb:'Cuando no logramos distinguir entre un hecho y un pensamiento, tomamos decisiones basadas en interpretaciones como si fueran verdades absolutas. Esto explica por qu\u00e9 seguimos en el mismo lugar aunque lo intentemos con todo.',lc:'Un pensamiento limitante es cualquier frase como "No puedo", "No soy capaz", "No me lo merezco". No son verdades \u2014 son programas instalados. Y los programas se pueden cambiar.'},
+  {l:'E',name:'Emoci\u00f3n',def:'La emoci\u00f3n es una <strong>se\u00f1al biol\u00f3gica inmediata</strong> \u2014 no un enemigo que controlar. El miedo avisa de un peligro. La rabia avisa de una injusticia. <em>El problema no es la emoci\u00f3n \u2014 es no saber leerla.</em>',ex:'<strong>Ejemplo:</strong> Sientes ansiedad antes de una decisi\u00f3n importante. Si la escuchas, te informa. Si la ignoras o la amplificas, te controla.',calQ:'\u00bfQu\u00e9 tan bien lees tus emociones en el momento en que aparecen?',opts:[{k:'A',t:'Las identifico claramente \u2014 puedo nombrar lo que siento y entender qu\u00e9 informaci\u00f3n me est\u00e1 dando.'},{k:'B',t:'A veces las identifico, pero me cuesta saber si es una emoci\u00f3n puntual o algo m\u00e1s profundo.'},{k:'C',t:'Es nuevo \u2014 siempre cre\u00ed que las emociones eran lo mismo que los sentimientos y que hab\u00eda que controlarlas.'}],lb:'La emoci\u00f3n es inmediata y puntual \u2014 aparece, te da informaci\u00f3n y pasa. Lo que persiste m\u00e1s all\u00e1 es la historia que construiste alrededor de ella.',lc:'Las emociones b\u00e1sicas son miedo, rabia, tristeza, alegr\u00eda, asco y sorpresa. Ninguna es mala. El problema no es sentirlas \u2014 es no saber qu\u00e9 hacer con la informaci\u00f3n que traen.'},
+  {l:'S',name:'Sentimiento',def:'El sentimiento es la emoci\u00f3n que <strong>se qued\u00f3</strong>. Es el estado emocional que construiste con el tiempo al repetir las mismas emociones una y otra vez. <em>La resignaci\u00f3n no es una emoci\u00f3n \u2014 es un sentimiento construido por a\u00f1os de emociones de impotencia sin procesar.</em>',ex:'<strong>Ejemplo:</strong> Una persona puede sentir miedo (emoci\u00f3n) ante algo espec\u00edfico. Pero si ese miedo se repite durante a\u00f1os sin procesarse, construye un sentimiento sostenido de inseguridad que ya no necesita un detonante.',calQ:'\u00bfCu\u00e1l es el estado emocional sostenido que predomina en tu vida?',opts:[{k:'A',t:'Lo identifico claramente \u2014 puedo describir el estado emocional sostenido que vivo y entender de d\u00f3nde viene.'},{k:'B',t:'Tengo una idea de c\u00f3mo me siento en general, pero no hab\u00eda pensado en ello como un estado construido con el tiempo.'},{k:'C',t:'Es nuevo \u2014 siempre us\u00e9 "emoci\u00f3n" y "sentimiento" como sin\u00f3nimos y no sab\u00eda que eran cosas distintas.'}],lb:'La distinci\u00f3n es clave porque tienen soluciones distintas. Una emoci\u00f3n se procesa en el momento. Un sentimiento requiere reconocer el patr\u00f3n y decidir construir un estado diferente.',lc:'Los sentimientos sostenidos m\u00e1s comunes en personas estancadas son resignaci\u00f3n, inseguridad cr\u00f3nica y miedo generalizado. Ninguno es permanente \u2014 todos se construyeron y todos se pueden reconstruir.'},
+  {l:'D',name:'Decisi\u00f3n',def:'El 95% de las decisiones cotidianas no son decisiones \u2014 son <strong>reacciones autom\u00e1ticas disfrazadas de decisiones</strong>. Una decisi\u00f3n real requiere tres elementos: un pensamiento claro, una lectura correcta de la emoci\u00f3n, y un sentimiento de base que no sea miedo.',ex:'<strong>Ejemplo:</strong> Decides no buscar un nuevo trabajo porque "el mercado est\u00e1 dif\u00edcil". Los tres elementos de PESDAL est\u00e1n activos \u2014 pero ninguno te lleva hacia adelante. Eso no es una decisi\u00f3n \u2014 es una reacci\u00f3n.',calQ:'\u00bfQu\u00e9 tan consciente eres de los fundamentos de tus decisiones?',opts:[{k:'A',t:'Soy bastante consciente \u2014 puedo identificar desde qu\u00e9 pensamiento y estado emocional tomo mis decisiones importantes.'},{k:'B',t:'A veces lo identifico despu\u00e9s de decidir, pero en el momento no siempre s\u00e9 qu\u00e9 me est\u00e1 moviendo.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda analizado mis decisiones desde esta perspectiva.'}],lb:'Antes de una decisi\u00f3n importante h\u00e1ztelas estas tres preguntas: \u00bfQu\u00e9 me estoy diciendo? \u00bfQu\u00e9 estoy sintiendo? \u00bfEse sentimiento es miedo o claridad?',lc:'La mayor\u00eda de las decisiones que no producen cambio real nacen del miedo \u2014 al fracaso, al juicio de otros, a perder lo que se tiene. Reconocer esto es el primer paso para decidir desde un lugar diferente.'},
+  {l:'A',name:'Acci\u00f3n',def:'Una acci\u00f3n desconectada del pensamiento, la emoci\u00f3n, el sentimiento y la decisi\u00f3n que la preceden es <strong>movimiento sin direcci\u00f3n</strong>. Puedes ser muy activo y no avanzar \u2014 porque la acci\u00f3n sin los cinco elementos anteriores alineados reproduce el mismo ciclo que ya tienes.',ex:'<strong>Ejemplo:</strong> Una persona que hace dieta, va al gimnasio y lee libros de productividad pero sigue en el mismo lugar. No le falta acci\u00f3n \u2014 le falta alineaci\u00f3n.',calQ:'\u00bfQu\u00e9 tan alineadas est\u00e1n tus acciones con lo que realmente quieres?',opts:[{k:'A',t:'Hay bastante alineaci\u00f3n \u2014 lo que hago cada d\u00eda responde a mis decisiones conscientes y va en la direcci\u00f3n que quiero.'},{k:'B',t:'Hay algunas acciones alineadas y otras que hago por costumbre o reacci\u00f3n, sin una decisi\u00f3n clara detr\u00e1s.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda pensado en mis acciones como el resultado de un sistema de cinco elementos previos.'}],lb:'Una pregunta pr\u00e1ctica: \u00bfEsta acci\u00f3n la eleg\u00ed conscientemente o simplemente la estoy repitiendo? Si no puedes responder por qu\u00e9 la haces, probablemente es autom\u00e1tica.',lc:'La diferencia entre disciplina y alineaci\u00f3n es fundamental. La disciplina es fuerza de voluntad \u2014 se agota. La alineaci\u00f3n es coherencia. Cuando lo que piensas, sientes, decides y haces apuntan en la misma direcci\u00f3n, la acci\u00f3n no requiere esfuerzo hero\u00edco.'},
+  {l:'L',name:'Logro',def:'El logro no es el destino \u2014 es el <strong>punto de reinicio del ciclo</strong>. Un logro que no retroalimenta el Pensamiento, la Emoci\u00f3n y el Sentimiento no construye nada permanente \u2014 es un evento aislado que el sistema olvida.',ex:'<strong>Ejemplo:</strong> Una persona que logra bajar 10 kilos y en seis meses los recupera. El logro fue real \u2014 pero no reinici\u00f3 el ciclo. No cambi\u00f3 el pensamiento sobre su cuerpo ni construy\u00f3 un nuevo sentimiento sostenido.',calQ:'\u00bfQu\u00e9 haces con tus logros una vez que los alcanzas?',opts:[{k:'A',t:'Los uso conscientemente \u2014 cuando logro algo importante analizo qu\u00e9 funcion\u00f3 y lo integro como parte de qui\u00e9n soy.'},{k:'B',t:'A veces los celebro pero r\u00e1pidamente paso al siguiente objetivo sin reflexionar sobre lo que produjeron en m\u00ed.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda pensado en el logro como un punto de reinicio del ciclo, sino como el final del proceso.'}],lb:'Cuando alcances un logro, antes de pasar al siguiente: \u00bfQu\u00e9 cambi\u00f3 en c\u00f3mo me veo? \u00bfQu\u00e9 emoci\u00f3n domin\u00f3 el proceso? \u00bfQu\u00e9 nuevo ciclo quiero iniciar desde aqu\u00ed?',lc:'El logro sin reflexi\u00f3n es como ganar dinero y no saber en qu\u00e9 lo gastaste. La transformaci\u00f3n real ocurre cuando el logro cambia el pensamiento que lo gener\u00f3.'},
+];
+
+var AREAS=[
+  {id:'quien',icon:'\u{1F31F}',name:'Qui\u00e9n Soy Hoy',full:'Qui\u00e9n Soy Hoy',calDesc:'Tu relaci\u00f3n contigo mismo, tu autoestima, tus creencias sobre lo que mereces y puedes lograr.',ctx:'Vamos a escanear tu sistema en <strong>Qui\u00e9n Soy Hoy</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe un pensamiento que tienes sobre ti mismo que no sabes si es un hecho real o una historia que te contaste. Solo uno.'},
+  {id:'salud',icon:'\u26A1',name:'Salud y Energ\u00eda',full:'Salud y Energ\u00eda',calDesc:'Tu cuerpo, tu vitalidad, tu sue\u00f1o, tu alimentaci\u00f3n y tu capacidad de sostener el ritmo de vida que tienes.',ctx:'Vamos a escanear tu sistema en <strong>Salud y Energ\u00eda</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica el h\u00e1bito que est\u00e1 drenando tu energ\u00eda m\u00e1s que cualquier otro. N\u00f3mbralo con precisi\u00f3n.'},
+  {id:'trabajo',icon:'\u{1F3AF}',name:'Trabajo y Carrera',full:'Trabajo y Carrera',calDesc:'Tu ocupaci\u00f3n, tu talento aplicado, tu satisfacci\u00f3n con lo que haces cada d\u00eda y hacia d\u00f3nde va tu carrera.',ctx:'Vamos a escanear tu sistema en <strong>Trabajo y Carrera</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe en una frase qu\u00e9 cambiar\u00edas de tu trabajo si pudieras hacerlo sin consecuencias.'},
+  {id:'dinero',icon:'\u{1F4B0}',name:'Dinero y Finanzas',full:'Dinero y Finanzas',calDesc:'Lo que ganas, lo que gastas, lo que debes, lo que ahorras y tu relaci\u00f3n real con el dinero.',ctx:'Vamos a escanear tu sistema en <strong>Dinero y Finanzas</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe cu\u00e1nto dinero entra y cu\u00e1nto sale este mes. Solo los n\u00fameros reales.'},
+  {id:'familia',icon:'\u{1F91D}',name:'Familia y Relaciones',full:'Familia y Relaciones',calDesc:'Tu pareja, tus hijos, tus padres, tus amigos y la calidad real de los v\u00ednculos que m\u00e1s importan en tu vida.',ctx:'Vamos a escanear tu sistema en <strong>Familia y Relaciones</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica la conversaci\u00f3n que m\u00e1s tiempo llevas postergando con alguien importante.'},
+  {id:'proposito',icon:'\u2728',name:'Prop\u00f3sito y Sentido',full:'Prop\u00f3sito y Sentido',calDesc:'El porqu\u00e9 profundo de tu vida, lo que te da paz interior y la conexi\u00f3n con algo m\u00e1s grande que tus resultados.',ctx:'Vamos a escanear tu sistema en <strong>Prop\u00f3sito y Sentido</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe en una sola frase para qu\u00e9 crees que est\u00e1s aqu\u00ed.'},
+  {id:'descanso',icon:'\u{1F33F}',name:'Descanso y Disfrute',full:'Descanso y Disfrute',calDesc:'Tu capacidad de parar, disfrutar y recargar sin culpa. Lo que haces solo porque te gusta y te nutre.',ctx:'Vamos a escanear tu sistema en <strong>Descanso y Disfrute</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica la \u00faltima vez que hiciste algo solo por placer.'},
+  {id:'legado',icon:'\u{1F30F}',name:'Legado e Impacto',full:'Legado e Impacto',calDesc:'La huella que dejas en otros y lo que construyes que trasciende tus logros personales.',ctx:'Vamos a escanear tu sistema en <strong>Legado e Impacto</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe qu\u00e9 quieres que digan de ti las personas que m\u00e1s amas cuando ya no est\u00e9s.'},
+];
+
+var MQ={
+  P:{q:function(a){return'\u00bfLos pensamientos que tienes sobre tu <span>'+a+'</span> te impulsan hacia lo que quieres \u2014 o te alejan de ello?';},sim:'Cuando piensas en esta \u00e1rea, \u00bftu mente te abre posibilidades o te cierra caminos?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 pensamientos que paralizan y se creen como verdades absolutas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante dominante \u2014 los pensamientos sobre esta \u00e1rea frenan m\u00e1s de lo que impulsan.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 identificas algunos limitantes pero no siempre puedes cambiarlos.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 tus pensamientos generalmente te impulsan hacia lo que quieres.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 identificas y transformas tus pensamientos en tiempo real.'}]},
+  E:{q:function(a){return'Cuando enfrentas un reto en tu <span>'+a+'</span> \u2014 \u00bftu emoci\u00f3n te informa o te paraliza?';},sim:'\u00bfPuedes sentir miedo, rabia o ansiedad en esta \u00e1rea sin dejar que eso decida por ti?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 las emociones controlan tus decisiones sin que puedas leerlas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 las emociones frecuentemente te paralizan en esta \u00e1rea.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 a veces lees la emoci\u00f3n, a veces te arrastra.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 generalmente puedes leer tus emociones y elegir c\u00f3mo responder.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus emociones son informaci\u00f3n precisa que usas a tu favor.'}]},
+  S:{q:function(a){return'\u00bfEl estado emocional que vives d\u00eda a d\u00eda en tu <span>'+a+'</span> es el que elegiste \u2014 o simplemente el que se instal\u00f3?';},sim:'\u00bfCu\u00e1l es el clima emocional permanente de esta \u00e1rea?',guide:'Piensa en c\u00f3mo te sientes normalmente cuando hablas, piensas o act\u00faas en esta \u00e1rea.',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 el estado sostenido es de resignaci\u00f3n, miedo o vac\u00edo profundo.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 el clima emocional dominante te frena m\u00e1s de lo que te impulsa.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 hay d\u00edas buenos y malos. No hay un estado claro elegido conscientemente.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 el estado sostenido es generalmente de construcci\u00f3n o esperanza.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 el estado emocional es de paz, prop\u00f3sito o entusiasmo sostenido.'}]},
+  D:{q:function(a){return'Las decisiones que tomas en tu <span>'+a+'</span> \u2014 \u00bflas est\u00e1s eligiendo t\u00fa o las est\u00e1 eligiendo el miedo, la costumbre o la urgencia?';},sim:'\u00bfTomas decisiones en esta \u00e1rea desde claridad o desde presi\u00f3n?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 el miedo, la costumbre o la urgencia deciden por ti casi siempre.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 la mayor\u00eda de tus decisiones en esta \u00e1rea son reacciones, no elecciones reales.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 algunas decisiones son conscientes pero muchas siguen siendo autom\u00e1ticas.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 generalmente sabes desde qu\u00e9 pensamiento y estado emocional est\u00e1s decidiendo.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus decisiones son intencionales y puedes distinguirlas de las reacciones.'}]},
+  A:{q:function(a){return'Lo que haces cada d\u00eda en tu <span>'+a+'</span> \u2014 \u00bfes por dise\u00f1o o por inercia?';},sim:'\u00bfTus h\u00e1bitos diarios construyen esta \u00e1rea o solamente la mantienen igual?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 tus acciones son completamente reactivas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 la mayor\u00eda de lo que haces es por inercia o costumbre.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 hay algo de dise\u00f1o y mucho de inercia.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 tus acciones son mayormente intencionales y consistentes.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus acciones son completamente por dise\u00f1o.'}]},
+  L:{q:function(a){return'Cuando logras algo en tu <span>'+a+'</span> \u2014 \u00bfese logro cambia algo en ti o simplemente pasa y se olvida?';},sim:'\u00bfTus logros en esta \u00e1rea se convierten en identidad, aprendizaje y nuevo impulso?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 tus logros no generan ning\u00fan cambio sostenido.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 los logros llegan pero se diluyen.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 algunos logros cambian algo en ti pero no de forma consistente.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 la mayor\u00eda de tus logros retroalimentan el sistema.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 cada logro se convierte en identidad, aprendizaje y combustible.'}]},
+};
+
+var EP_REC={
+  P:{ep:'EP.02',title:'\u00bfQui\u00e9n eres hoy y qui\u00e9n puedes llegar a ser?',reason:'trabaja directamente la conciencia del Pensamiento y la distinci\u00f3n entre hechos e interpretaciones.'},
+  E:{ep:'EP.04',title:'Las mentiras que te cuentas y te crees',reason:'desarrolla la capacidad de leer emociones en tiempo real y entender qu\u00e9 informaci\u00f3n traen.'},
+  S:{ep:'EP.05',title:'Tu historia no te define \u2014 pero s\u00ed te explica',reason:'trabaja el estado emocional sostenido y c\u00f3mo la historia construy\u00f3 el sentimiento que vives hoy.'},
+  D:{ep:'EP.06',title:'Responsable, no culpable',reason:'desarrolla la capacidad de tomar decisiones reales desde claridad en lugar de desde miedo o costumbre.'},
+  A:{ep:'EP.03',title:'Lo que los expertos descubrieron sobre los que s\u00ed cambian',reason:'trabaja la alineaci\u00f3n entre conocimiento y acci\u00f3n.'},
+  L:{ep:'EP.07',title:'Por qu\u00e9 arreglar partecitas no funciona',reason:'desarrolla la capacidad de usar los logros como punto de reinicio del ciclo.'}
+};
+
+// STATE
+var momentOfLife=null,calLvl={P:'B',E:'B',S:'B',D:'B',A:'B',L:'B'};
+var scores={};
+AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
+var orderedIds=[];var metaAnswer=null;var curArea=null;var touched={};var aiU=5,aiO=5;
+var _shuffledAreas=null;
+
+// UTILS
+function col(v){if(v==null)return'rgba(201,168,76,0.3)';if(v<=2)return'#8B0000';if(v<=4)return'#C0392B';if(v<=6)return'#E67E22';if(v<=8)return'#27AE60';return'#1ABC9C';}
+function tagOf(v){if(v==null)return{l:'\u2014',c:'warning'};if(v<4)return{l:'Cr\u00edtico',c:'critical'};if(v<6)return{l:'Atenci\u00f3n',c:'warning'};return{l:'Activo',c:'good'};}
+function scaleLbl(v){if(v<=2)return'\uD83D\uDD34 Bloqueo severo';if(v<=4)return'\uD83D\uDFE0 Patr\u00f3n limitante dominante';if(v<=6)return'\uD83D\uDFE1 Conciencia parcial';if(v<=8)return'\uD83D\uDFE2 Sistema funcional';return'\uD83D\uDD35 Sistema integrado y expansivo';}
+function vidaSt(a){if(a<3)return{t:'Sistema en colapso',s:'Necesitas apoyo, pausa y reconstrucci\u00f3n prioritaria'};if(a<5)return{t:'Vida b\u00e1sica \u2014 pasando raspando',s:'Hay \u00e1reas cr\u00edticas que consumen tu capacidad de logro'};if(a<6)return{t:'Construcci\u00f3n en proceso',s:'Algunas \u00e1reas avanzan mientras otras frenan el sistema'};if(a<7.5)return{t:'Sistema funcionando',s:'El c\u00edrculo PESDAL est\u00e1 girando \u2014 hay espacio para acelerar'};return{t:'Constructor avanzado',s:'El sistema est\u00e1 alineado y generando nuevos ciclos'};}
+function go(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function tks(){return[1,2,3,4,5,6,7,8,9,10].map(function(n){return'<span class="sl-tk">'+n+'</span>';}).join('');}
+
+function selMoment(key,el){
+  momentOfLife=key;
+  document.querySelectorAll('.moment-opt').forEach(function(e){e.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('btn-mn').disabled=false;
+}
+
+function buildCal(){
+  var areaSection='<div class="cal-section"><div class="cal-section-title">Las 8 \u00c1reas de Vida</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">Este esc\u00e1ner analiza 8 dimensiones de tu vida.</p><div class="cal-areas-grid">';
+  AREAS.forEach(function(a){areaSection+='<div class="cal-area-item"><span class="cal-area-icon">'+a.icon+'</span><span class="cal-area-name">'+a.name+'</span><span class="cal-area-desc">'+a.calDesc+'</span></div>';});
+  areaSection+='</div></div>';
+  var pesdalSection='<div class="cal-section"><div class="cal-section-title">El Sistema PESDAL</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">\u00bfQu\u00e9 tan bien conoces cada elemento del sistema que opera en tu vida?</p>';
+  PDEF.forEach(function(p){
+    var sel=calLvl[p.l];
+    pesdalSection+='<div class="cal-item"><div class="cal-hdr"><div class="cal-ltr">'+p.l+'</div><div class="cal-name">'+p.name+'</div></div><div class="cal-def">'+p.def+'</div><div class="cal-ex">'+p.ex+'</div><div class="cal-q">'+p.calQ+'</div><div class="cal-opts">'+p.opts.map(function(o){return'<div class="cal-opt'+(sel===o.k?' sel':'')+'" onclick="selCal(\''+p.l+'\',\''+o.k+'\',this)"><div class="cal-k">'+o.k+'</div><div class="cal-txt">'+o.t+'</div></div>';}).join('')+'</div><div class="adapt b'+(sel==='B'?' show':'')+'" id="ab-'+p.l+'">&#128161; '+p.lb+'</div><div class="adapt c'+(sel==='C'?' show':'')+'" id="ac-'+p.l+'">&#128218; '+p.lc+'</div></div>';
+  });
+  pesdalSection+='</div>';
+  document.getElementById('cal-wrap').innerHTML=areaSection+pesdalSection;
+}
+
+function selCal(l,k,el){
+  calLvl[l]=k;
+  el.closest('.cal-item').querySelectorAll('.cal-opt').forEach(function(o){o.classList.remove('sel');});
+  el.classList.add('sel');
+  ['B','C'].forEach(function(x){var b=document.getElementById('a'+x.toLowerCase()+'-'+l);if(b)b.classList.toggle('show',k===x);});
+}
+
+function renderOrderBtns(){
+  if(!_shuffledAreas)_shuffledAreas=AREAS.slice().sort(function(){return Math.random()-.5;});
+  var el=document.getElementById('order-grid');if(!el)return;
+  el.innerHTML=_shuffledAreas.map(function(a){
+    var orderNum=orderedIds.indexOf(a.id)+1;var isPicked=orderedIds.indexOf(a.id)!==-1;
+    return'<div class="order-btn'+(isPicked?' picked':'')+'" id="obtn-'+a.id+'" onclick="toggleOrder(\''+a.id+'\')"><span class="ob-icon">'+a.icon+'</span><span class="ob-name">'+a.full+'</span><span class="ob-num">'+(isPicked?orderNum:'')+'</span></div>';
+  }).join('');
+}
+
+function toggleOrder(id){
+  var idx=orderedIds.indexOf(id);
+  if(idx!==-1){orderedIds.splice(idx,1);}else{orderedIds.push(id);}
+  AREAS.forEach(function(a){
+    var btn=document.getElementById('obtn-'+a.id);if(!btn)return;
+    var orderNum=orderedIds.indexOf(a.id)+1;var isPicked=orderedIds.indexOf(a.id)!==-1;
+    btn.classList.toggle('picked',isPicked);
+    var numEl=btn.querySelector('.ob-num');if(numEl)numEl.textContent=isPicked?orderNum:'';
+  });
+  updateOrderUI();
+}
+
+function updateOrderUI(){
+  var done=orderedIds.length===AREAS.length;
+  var confirmEl=document.getElementById('order-confirm');var metaEl=document.getElementById('meta-box');
+  var insightEl=document.getElementById('insight-phrase');var areaNameEl=document.getElementById('oc-area-name');
+  var btnStart=document.getElementById('btn-start');
+  if(done){
+    var firstArea=AREAS.filter(function(a){return a.id===orderedIds[0];})[0];
+    if(areaNameEl&&firstArea)areaNameEl.innerHTML=firstArea.full;
+    if(confirmEl)confirmEl.classList.add('show');if(metaEl)metaEl.classList.add('show');if(insightEl)insightEl.classList.add('show');
+  }else{
+    if(confirmEl)confirmEl.classList.remove('show');if(metaEl)metaEl.classList.remove('show');
+    if(insightEl)insightEl.classList.remove('show');if(btnStart)btnStart.disabled=true;
+  }
+}
+
+function selMeta(key){
+  metaAnswer=key;
+  document.getElementById('meta-feel').classList.toggle('sel',key==='feel');
+  document.getElementById('meta-should').classList.toggle('sel',key==='should');
+  var btnStart=document.getElementById('btn-start');if(btnStart)btnStart.disabled=false;
+}
+
+function startDiagnosis(){go('s-overview');renderOverview();if(orderedIds.length>0){openArea(orderedIds[0]);}}
+
+function renderOverview(){
+  renderDots();renderVida();renderOvChart();renderPriorityList();renderCards();
+  var done=AREAS.filter(function(a){return scores[a.id].done;}).length;
+  var btn=document.getElementById('btn-rpt');var banner=document.getElementById('partial-banner');
+  if(done>=8&&btn)btn.style.display='flex';else if(btn)btn.style.display='none';
+  if(done>=5&&done<8&&banner)banner.style.display='block';else if(banner)banner.style.display='none';
+}
+
+function renderDots(){
+  var el=document.getElementById('prog-dots');if(!el)return;
+  el.innerHTML=AREAS.map(function(a){var s=scores[a.id];return'<div class="dot'+(s.done?' filled':s.avg!==null?' partial':'')+'"></div>';}).join('');
+}
+
+function renderVida(){
+  var done=AREAS.filter(function(a){return scores[a.id].done;});var w=document.getElementById('vida-wrap');
+  if(!done.length){w.style.display='none';return;}
+  var avg=done.reduce(function(s,a){return s+scores[a.id].avg;},0)/done.length;var st=vidaSt(avg);
+  document.getElementById('vida-t').innerHTML=st.t;
+  document.getElementById('vida-s').innerHTML='Promedio: '+avg.toFixed(1)+'/10 \u00b7 '+done.length+'/'+AREAS.length+' \u00e1reas';
+  w.style.display='block';
+}
+
+function renderOvChart(){
+  var done=AREAS.filter(function(a){return scores[a.id].done;});var el=document.getElementById('ov-chart');
+  if(!done.length){el.style.display='none';return;}
+  el.style.display='block';
+  var bars='';var orderedAreas=orderedIds.length?orderedIds.map(function(id){return AREAS.filter(function(a){return a.id===id;})[0];}).filter(Boolean):AREAS;
+  orderedAreas.forEach(function(a){
+    var s=scores[a.id];var pct=s.avg!==null?(s.avg/10)*100:0;var c=s.avg!==null?col(s.avg):'rgba(255,255,255,.05)';
+    bars+='<div class="bg"><div class="bw"><div class="b" style="height:'+pct+'%;background:'+c+'"></div></div><div class="bv" style="color:'+(s.avg!==null?c:'var(--muted)')+'">'+( s.avg!==null?s.avg.toFixed(1):'—')+'</div><div class="bl">'+a.name+'</div></div>';
+  });
+  var tTop=110-(6/10)*110;
+  el.innerHTML='<div class="ovcht"><div class="chl">Histograma General</div><div class="br">'+bars+'</div><div class="thr" style="top:'+(tTop+20)+'px"><div class="tl"></div><span class="tlb">6</span></div></div>';
+}
+
+function renderPriorityList(){
+  var el=document.getElementById('priority-list');if(!el||!orderedIds.length)return;
+  var done=AREAS.filter(function(a){return scores[a.id].done;});if(!done.length){el.innerHTML='';return;}
+  var html='<div class="card-title" style="font-family:\'DM Mono\',monospace;font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem;">Tu orden de prioridad</div><div class="priority-list-compact">';
+  orderedIds.forEach(function(id,i){
+    var area=AREAS.filter(function(a){return a.id===id;})[0];if(!area)return;var s=scores[area.id];var scoreHtml='';
+    if(s.done){var c=col(s.avg);scoreHtml='<span class="pli-score" style="color:'+c+'">'+s.avg.toFixed(1)+'</span>';}
+    html+='<div class="pli"><span class="pli-num">'+(i+1)+'</span><span class="pli-icon">'+area.icon+'</span><span class="pli-name">'+area.full+'</span>'+scoreHtml+'</div>';
+  });
+  html+='</div>';el.innerHTML=html;
+}
+
+function renderCards(){
+  var el=document.getElementById('areas-grid');if(!el)return;
+  var orderedAreas=orderedIds.length?orderedIds.map(function(id){return AREAS.filter(function(a){return a.id===id;})[0];}).filter(Boolean):AREAS;
+  var nextId=orderedIds.find(function(id){return!scores[id].done;});
+  el.innerHTML=orderedAreas.map(function(a,i){
+    var s=scores[a.id];var pct=s.avg!==null?(s.avg/10)*100:0;var c=s.avg!==null?col(s.avg):'rgba(201,168,76,0.28)';var t=s.avg!==null?tagOf(s.avg):null;var isNext=a.id===nextId&&!s.done;
+    return'<div class="ac'+(s.done?' done-area':isNext?' next-area':'')+'" onclick="openArea(\''+a.id+'\')"><span class="a-ord-badge">'+(i+1)+'</span><span class="ai2">'+a.icon+'</span><div class="an">'+a.full+'</div><div class="abt"><div class="abf" style="width:'+pct+'%;background:'+c+'"></div></div><div class="am"><span class="asc" style="color:'+c+'">'+(s.avg!==null?s.avg.toFixed(1):'—')+'</span>'+(t?'<span class="stag '+t.c+'">'+t.l+'</span>':'')+'</div><span class="atap">'+(s.done?'✓ Escaneado':isNext?'▶ Siguiente':'Toca para escanear')+'</span></div>';
+  }).join('');
+}
+
+function openArea(id){
+  curArea=id;if(!touched[id])touched[id]={};
+  var area=AREAS.filter(function(a){return a.id===id;})[0];var s=scores[id];
+  PDEF.forEach(function(p){if(s.pesdal[p.l]===null)s.pesdal[p.l]=5;});
+  var priorityNum=orderedIds.indexOf(id)+1;
+  document.getElementById('d-hdr').innerHTML='<span class="di">'+area.icon+'</span><div class="dn">'+area.full+'</div>'+(priorityNum>0?'<div style="font-family:\'DM Mono\',monospace;font-size:.58rem;color:var(--gold);margin-top:.2rem;">Prioridad #'+priorityNum+'</div>':'');
+  document.getElementById('d-context').innerHTML='<div class="area-context mt8">'+area.ctx+'</div>';
+  var ch='<div class="card-title">Histograma PESDAL \u2014 '+area.full+'</div><div class="cht-hint">Estas barras muestran en tiempo real c\u00f3mo est\u00e1 cada elemento del sistema en esta \u00e1rea.</div>';
+  PDEF.forEach(function(p){var v=s.pesdal[p.l];var c=col(v);ch+='<div class="pbr"><div class="pl">'+p.l+'</div><div class="pi"><span class="pn">'+p.name+'</span><div class="pt"><div class="pf" id="pb-'+id+'-'+p.l+'" style="width:'+(v/10)*100+'%;background:'+c+'"></div></div></div><div class="pnum" id="pn-'+id+'-'+p.l+'" style="color:'+c+'">'+v+'</div></div>';});
+  document.getElementById('d-chart').innerHTML=ch;
+  var sl='<div class="card-title">Califica cada elemento del 1 al 10</div>';
+  PDEF.forEach(function(p){
+    var v=s.pesdal[p.l];var c=col(v);var pct=(v-1)/9*100;var mq=MQ[p.l];var isTouched=touched[id][p.l];
+    var scHtml=mq.scales.map(function(sc){return'<div class="sr"><span class="srb '+sc.r+'">'+sc.b+'</span><span class="srt2">'+sc.t+'</span></div>';}).join('');
+    sl+='<div class="mq-block"><div class="mq-lr"><div class="mq-l">'+p.l+'</div><div class="mq-ln">'+p.name+'</div></div><div class="mq-q">'+mq.q(area.full)+'</div><div class="mq-sim">'+mq.sim+'</div>'+(mq.guide?'<div class="mq-guide">'+mq.guide+'</div>':'')+'<div class="scale-ref"><div class="srt">Referencia</div>'+scHtml+'</div><div class="sl-unt'+((!isTouched)?' show':'')+'" id="unt-'+id+'-'+p.l+'">\u26a0 Mueve el control para registrar tu calificaci\u00f3n</div><div class="sl-hdr"><span style="font-size:clamp(.72rem,1.55vw,.8rem);color:var(--muted)">Tu calificaci\u00f3n:</span><div class="sl-val" id="sv-'+id+'-'+p.l+'" style="color:'+c+'">'+v+'</div></div><div class="sl-lbl" id="svl-'+id+'-'+p.l+'" style="color:'+c+'">'+scaleLbl(v)+'</div><input type="range" min="1" max="10" value="'+v+'" id="sl-'+id+'-'+p.l+'" class="'+((!isTouched)?'unt':'')+'" style="background:linear-gradient(to right,'+(isTouched?c:'var(--muted)')+' '+pct+'%,var(--dark3) '+pct+'%)" oninput="updP(\''+id+'\',\''+p.l+'\',this)"><div class="sl-tks">'+tks()+'</div></div>';
+  });
+  document.getElementById('d-sliders').innerHTML=sl;
+  renderDiag(id);
+  var saveBtn=document.getElementById('btn-save-detail');
+  if(saveBtn){saveBtn.innerHTML='Guardar \u00e1rea \u2713';saveBtn.style.background='';saveBtn.style.borderColor='';}
+  go('s-detail');
+}
+
+function updP(id,l,inp){
+  var v=parseInt(inp.value);scores[id].pesdal[l]=v;
+  if(!touched[id])touched[id]={};touched[id][l]=true;
+  inp.classList.remove('unt');
+  var unt=document.getElementById('unt-'+id+'-'+l);if(unt)unt.classList.remove('show');
+  var vals=['P','E','S','D','A','L'].map(function(k){return scores[id].pesdal[k];}).filter(function(x){return x!==null;});
+  scores[id].avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
+  var c=col(v);var pct=(v-1)/9*100;
+  inp.style.background='linear-gradient(to right,'+c+' '+pct+'%,var(--dark3) '+pct+'%)';
+  var bar=document.getElementById('pb-'+id+'-'+l);var num=document.getElementById('pn-'+id+'-'+l);
+  var sv=document.getElementById('sv-'+id+'-'+l);var svl=document.getElementById('svl-'+id+'-'+l);
+  if(bar){bar.style.width=(v/10)*100+'%';bar.style.background=c;}
+  if(num){num.textContent=v;num.style.color=c;}
+  if(sv){sv.textContent=v;sv.style.color=c;}
+  if(svl){svl.innerHTML=scaleLbl(v);svl.style.color=c;}
+  renderDiag(id);
+}
+
+function renderDiag(id){
+  var area=AREAS.filter(function(a){return a.id===id;})[0];var s=scores[id];var avg=s.avg||5;
+  var minV=10,minL='P';
+  PDEF.forEach(function(p){var v=s.pesdal[p.l];if(v!==null&&v<minV){minV=v;minL=p.l;}});
+  var minN=PDEF.filter(function(p){return p.l===minL;})[0].name;var t=tagOf(avg);
+  var titles={critical:'\u00c1rea cr\u00edtica \u2014 el sistema est\u00e1 bloqueado',warning:'\u00c1rea bajo el umbral de seguridad',good:'\u00c1rea funcionando \u2014 con espacio para crecer'};
+  var texts={critical:'Esta \u00e1rea est\u00e1 drenando activamente tu capacidad de logro.',warning:'Esta \u00e1rea est\u00e1 por debajo de la L\u00ednea 6.',good:'El c\u00edrculo PESDAL est\u00e1 girando en esta \u00e1rea.'};
+  var P=s.pesdal['P'],S2=s.pesdal['S'],A2=s.pesdal['A'],L2=s.pesdal['L'];var pat='';
+  if(L2!==null&&S2!==null&&L2>=8&&S2<=4)pat+='<div class="diag pattern"><span class="dtag" style="color:#3498DB">\u26a0 PATR\u00d3N DETECTADO</span><div class="dtitle">\u00c9xito Vac\u00edo</div><div class="dtext">Tienes resultados externos altos pero un estado emocional sostenido bajo.</div></div>';
+  if(P!==null&&A2!==null&&P>=7&&A2<=4)pat+='<div class="diag pattern"><span class="dtag" style="color:#3498DB">\u26a0 PATR\u00d3N DETECTADO</span><div class="dtitle">Par\u00e1lisis por An\u00e1lisis</div><div class="dtext">Sabes ad\u00f3nde quieres ir pero algo frena el movimiento.</div></div>';
+  var wl=minV<7?'<div class="wl"><strong>Elemento m\u00e1s d\u00e9bil: '+minL+' \u2014 '+minN+' ('+minV+'/10)</strong><br>Este es el punto m\u00e1s da\u00f1ado del sistema en esta \u00e1rea.</div>':'';
+  document.getElementById('d-diag').innerHTML='<div class="diag '+t.c+'"><span class="dtag" style="color:'+(t.c==='critical'?'#FF4444':t.c==='warning'?'#F39C12':'#2ECC71')+'">'+t.l+' \u00b7 '+avg.toFixed(1)+'/10</span><div class="dtitle">'+titles[t.c]+'</div><div class="dtext">'+texts[t.c]+'</div>'+wl+'</div>'+pat;
+}
+
+function trySave(){
+  if(!curArea)return;var t=touched[curArea]||{};
+  if(!PDEF.every(function(p){return t[p.l];})){
+    PDEF.forEach(function(p){if(!t[p.l]){var u=document.getElementById('unt-'+curArea+'-'+p.l);if(u)u.classList.add('show');}});
+    var first=PDEF.filter(function(p){return!t[p.l];})[0];
+    if(first){var el=document.getElementById('unt-'+curArea+'-'+first.l);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+    return;
+  }
+  scores[curArea].done=true;
+  var saveBtn=document.getElementById('btn-save-detail');
+  if(saveBtn){saveBtn.innerHTML='\u2713 \u00c1rea guardada';saveBtn.style.background='var(--green)';saveBtn.style.borderColor='var(--green)';saveBtn.classList.add('save-confirm');}
+  setTimeout(function(){var nextId=orderedIds.find(function(id){return!scores[id].done;});if(nextId){openArea(nextId);}else{renderOverview();go('s-overview');}},520);
+}
+
+function updAI(type,inp){
+  var v=parseInt(inp.value);if(type==='u')aiU=v;else aiO=v;
+  var c=v<=4?'#E74C3C':v<=6?'#F39C12':'#2ECC71';var pct=(v-1)/9*100;
+  inp.style.background='linear-gradient(to right,'+c+' '+pct+'%,var(--dark3) '+pct+'%)';
+  var el=document.getElementById('aiv-'+type);if(el){el.textContent=v;el.style.color=c;}
+}
+
+function getActivEl(areaId){
+  var s=scores[areaId];var p=s.pesdal;
+  if(p['P']!==null&&p['P']<=4&&p['A']!==null&&p['A']>=5)return'A';
+  if(p['E']!==null&&p['E']<=4)return'E';if(p['S']!==null&&p['S']<=4)return'S';
+  if(p['D']!==null&&p['D']<=4)return'D';if(p['A']!==null&&p['A']<=4)return'A';
+  if(p['L']!==null&&p['L']<=4)return'L';
+  var minV=10,minL='P';PDEF.forEach(function(pp){var v=s.pesdal[pp.l];if(v!==null&&v<minV){minV=v;minL=pp.l;}});return minL;
+}
+
+function buildReport(){
+  var done=AREAS.filter(function(a){return scores[a.id].done;});if(!done.length)return;
+  var totalAvg=done.reduce(function(s,a){return s+scores[a.id].avg;},0)/done.length;
+  var st=vidaSt(totalAvg);var sorted=done.slice().sort(function(a,b){return scores[a.id].avg-scores[b.id].avg;});
+  var fuga=sorted[0];var fugaArea=fuga?AREAS.filter(function(a){return a.id===fuga.id;})[0]:null;
+  var aiIdx=Math.round(Math.sqrt(aiU*aiO));var aiC=aiIdx<=3?'#E74C3C':aiIdx<=6?'#F39C12':'#2ECC71';
+  var diagLow=totalAvg<6;
+  var aiMsg=diagLow&&aiIdx>=7?'Tienes todo para cambiar y el momento es ahora.':!diagLow&&aiIdx<=3?'Tu sistema funciona pero sin urgencia real el ciclo no se reinicia.':diagLow&&aiIdx<=3?'El sistema est\u00e1 bloqueado y la disposici\u00f3n al cambio es baja.':'Tu \u00edndice de activaci\u00f3n es s\u00f3lido.';
+  var ln={P:'Pensamiento',E:'Emoci\u00f3n',S:'Sentimiento',D:'Decisi\u00f3n',A:'Acci\u00f3n',L:'Logro'};
+  var lc={P:0,E:0,S:0,D:0,A:0,L:0};
+  done.forEach(function(a){['P','E','S','D','A','L'].forEach(function(k){var v=scores[a.id].pesdal[k];if(v!==null&&v<6)lc[k]++;});});
+  var wlKeys=['P','E','S','D','A','L'];wlKeys.sort(function(a,b){return lc[b]-lc[a];});
+  var activEl=fuga?getActivEl(fuga.id):wlKeys[0];var activN=ln[activEl];var epRec=EP_REC[activEl];
+  var action24=fugaArea?fugaArea.action:'Escribe una acci\u00f3n concreta para esta semana.';
+  var patterns=[];
+  if(lc[wlKeys[0]]>=2)patterns.push('La <strong>'+ln[wlKeys[0]]+'</strong> est\u00e1 por debajo del umbral en '+lc[wlKeys[0]]+' \u00e1reas distintas. Es un patr\u00f3n transversal.');
+  var crit=done.filter(function(a){return scores[a.id].avg<4;});
+  if(crit.length)patterns.push(crit.length+' \u00e1rea(s) en estado cr\u00edtico: <strong>'+crit.map(function(a){return a.name;}).join(', ')+'</strong>.');
+  var good=done.filter(function(a){return scores[a.id].avg>=7;});
+  if(good.length)patterns.push(good.length+' \u00e1rea(s) alineadas: <strong>'+good.map(function(a){return a.name;}).join(', ')+'</strong>.');
+  done.forEach(function(a){var s=scores[a.id];if(s.pesdal['L']!==null&&s.pesdal['S']!==null&&s.pesdal['L']>=8&&s.pesdal['S']<=4)patterns.push('<strong>\u00c9xito Vac\u00edo en '+a.name+'</strong>.');if(s.pesdal['P']!==null&&s.pesdal['A']!==null&&s.pesdal['P']>=7&&s.pesdal['A']<=4)patterns.push('<strong>Par\u00e1lisis por An\u00e1lisis en '+a.name+'</strong>.');});
+  if(!patterns.length)patterns.push('Completa m\u00e1s \u00e1reas para ver los patrones transversales.');
+  var mMsg={crisis:'Est\u00e1s en un momento de quiebre. Lo que ves en este diagn\u00f3stico es el mapa de salida.',stagnant:'Est\u00e1s estancado. El diagn\u00f3stico muestra exactamente d\u00f3nde el sistema dej\u00f3 de moverse.',moving:'Algo ya se est\u00e1 moviendo en ti.',next:'Est\u00e1s bien y buscas el siguiente nivel.'};
+  var html='<div class="card" style="text-align:center"><div class="card-title">Tu Diagn\u00f3stico</div>';
+  if(momentOfLife)html+='<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(.88rem,2vw,1rem);color:var(--muted);margin-bottom:.58rem;">'+mMsg[momentOfLife]+'</div>';
+  html+='<div class="rscore" style="color:'+col(totalAvg)+'">'+totalAvg.toFixed(1)+'</div>';
+  html+='<div style="font-size:clamp(.68rem,1.5vw,.76rem);color:var(--muted);margin:.25rem 0">'+done.length+'/'+AREAS.length+' \u00e1reas \u00b7 de 10</div>';
+  html+='<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(.95rem,2.1vw,1.1rem);color:var(--goldL);margin-top:.3rem">'+st.t+'</div></div>';
+  html+='<div class="ai-idx"><span class="ai-idx-lbl">\u00cdndice de Activaci\u00f3n PESDAL</span><div class="ai-idx-score" style="color:'+aiC+'">'+aiIdx+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="ai-idx-text">'+aiMsg+'</div></div>';
+  html+='<div class="card"><div class="card-title">Ranking por Diagn\u00f3stico</div>';
+  sorted.forEach(function(a){var s=scores[a.id];var c=col(s.avg);html+='<div class="rar"><div class="rai">'+a.icon+'</div><div class="rain"><div class="rann">'+a.full+'</div><div class="rabt"><div class="rabf" style="width:'+(s.avg/10)*100+'%;background:'+c+'"></div></div></div><div class="rasco" style="color:'+c+'">'+s.avg.toFixed(1)+'</div></div>';});
+  html+='</div>';
+  if(fugaArea)html+='<div class="card"><div class="card-title">Tu Principal Punto de Fuga</div><div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem"><span style="font-size:1.4rem">'+fugaArea.icon+'</span><div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-weight:700">'+fugaArea.full+'</div><div style="font-size:clamp(.7rem,1.5vw,.78rem);color:var(--muted)">Puntuaci\u00f3n: '+scores[fuga.id].avg.toFixed(1)+'/10</div></div></div><div style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75">Esta \u00e1rea es el principal punto de fuga de energ\u00eda en tu sistema.</div></div>';
+  html+='<div class="card"><div class="card-title">Patrones Transversales del Sistema</div>';
+  patterns.forEach(function(p){html+='<div class="prow"><div class="pdot2"></div><div>'+p+'</div></div>';});html+='</div>';
+  html+='<div class="card"><div class="card-title">Tu Punto de Entrada al C\u00edrculo</div><div class="ebox"><span class="elbl">Tu elemento de activaci\u00f3n</span><div class="etxt">'+activEl+' \u2014 '+activN+': el punto desde donde tu sistema puede empezar a moverse.</div></div>';
+  if(epRec)html+='<div class="ep-box"><span class="ep-lbl">Episodio recomendado para ti</span><div class="ep-title">'+epRec.ep+' \u2014 '+epRec.title+'</div><div class="ep-text">Este episodio '+epRec.reason+'</div></div>';
+  html+='</div>';
+  html+='<div class="act-box"><span class="act-lbl">Tu acci\u00f3n de las pr\u00f3ximas 24 horas</span><div class="act-title">'+(fugaArea?fugaArea.full:'Tu \u00e1rea de mayor urgencia')+'</div><div class="act-text">'+action24+'</div><textarea class="act-inp" placeholder="Escribe aqu\u00ed tu compromiso personal..."></textarea></div>';
+
+html+=’<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagn\u00f3stico como PDF</button>’;
+html+=’<div class="cta"><div class="ctat">Tu vida no est\u00e1 perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Est\u00e1 desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede redise\u00f1ar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">\u00bfEst\u00e1s listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@constructoresdevida\',\'_blank\')">📺 Ver Episodio 1 \u2014 Constructores de Vida</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar \u00e1reas</button><button class="ctab" onclick="showResetModal()">Nuevo Esc\u00e1ner</button></div></div>’;
+html+=’<div class="libu-footer"><div class="libu-footer-text">Esc\u00e1ner de Vida PESDAL v5.3c \u00b7 Propiedad intelectual de LIBU LLC \u00b7 Life Is Being Unleashed<br>No defines tu vida por tus resultados actuales, sino por tu capacidad de redise\u00f1ar tu sistema PESDAL.<br>P\u00e1gina 1 de tu Bit\u00e1cora PESDAL \u00b7 Constructores de Vida</div></div>’;
+document.getElementById(‘rpt-content’).innerHTML=html;
+}
+
+function showResetModal(){document.getElementById(‘reset-modal’).classList.add(‘show’);}
+function closeModal(){document.getElementById(‘reset-modal’).classList.remove(‘show’);}
+function confirmReset(){
+closeModal();momentOfLife=null;calLvl={P:‘B’,E:‘B’,S:‘B’,D:‘B’,A:‘B’,L:‘B’};
+AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
+orderedIds=[];metaAnswer=null;touched={};aiU=5;aiO=5;_shuffledAreas=null;
+buildCal();
+document.querySelectorAll(’.moment-opt’).forEach(function(e){e.classList.remove(‘sel’);});
+var btnMn=document.getElementById(‘btn-mn’);if(btnMn)btnMn.disabled=true;
+var btnStart=document.getElementById(‘btn-start’);if(btnStart)btnStart.disabled=true;
+var aiu=document.getElementById(‘ai-u’);var aio=document.getElementById(‘ai-o’);
+if(aiu){aiu.value=5;aiu.style.background=‘linear-gradient(to right,var(–gold) 44%,var(–dark3) 44%)’;}
+if(aio){aio.value=5;aio.style.background=‘linear-gradient(to right,var(–gold) 44%,var(–dark3) 44%)’;}
+var aivu=document.getElementById(‘aiv-u’);var aivo=document.getElementById(‘aiv-o’);
+if(aivu){aivu.textContent=‘5’;aivu.style.color=‘var(–gold)’;}
+if(aivo){aivo.textContent=‘5’;aivo.style.color=‘var(–gold)’;}
+go(‘s-welcome’);
+}
+
+// INIT
+buildCal();
+var tksU=document.getElementById(‘tks-u’);var tksO=document.getElementById(‘tks-o’);
+if(tksU)tksU.innerHTML=tks();if(tksO)tksO.innerHTML=tks();
+</script>
+
+</body>
+</html>
+
