@@ -280,7 +280,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media print{
 .bnav,.ctab,.btn-save,.back-btn,.modal{display:none!important;}
 body{background:white!important;color:#1a1a1a!important;font-size:14px!important;}
-.screen{display:block!important;}
+.screen.active{display:block!important;}
 .card{border:1px solid #ddd!important;background:white!important;page-break-inside:avoid;}
 .main-title,.main-title span,.vt,.rscore,.ctat,.ctaq,.etxt,.ep-title,.act-title,.dtitle,.dn{color:#1a1a1a!important;}
 .w-note,.subtitle,.dtext,.ep-text,.act-text,.ctax,.ai-idx-text,.nudge-text,.rann,.vsb,.dd,.cht-hint,.area-context{color:#555!important;}
@@ -805,6 +805,108 @@ function getActivEl(areaId){
   var minV=10,minL='P';PDEF.forEach(function(pp){var v=s.pesdal[pp.l];if(v!==null&&v<minV){minV=v;minL=pp.l;}});return minL;
 }
 
+function buildProtocol(activEl, activN, epRec, totalAvg){
+  var pat=totalAvg<4?"varios años":totalAvg<6?"mucho tiempo":"un tiempo considerable";
+  var rep=totalAvg<4?"miles de veces":totalAvg<6?"cientos de veces":"muchas veces";
+  var ep2=epRec?`<div style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(201,168,76,0.6);">&#9201; Próximamente — ${epRec.ep}: ${epRec.title}</div>`:``;
+  return `
+<div style="background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:1.4rem 1.2rem;margin-top:.8rem;">
+
+  <div style="text-align:center;margin-bottom:1rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#C9A84C;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem;">Tu Protocolo PESDAL</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.6vw,1.4rem);font-weight:700;margin-bottom:.3rem;">Acabas de hacer algo que la mayoría nunca hace.</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,2vw,1rem);color:#7A8499;font-style:italic;line-height:1.7;">No viniste a buscar una señal más. Viniste a mirarte. A saber con precisión dónde está roto el sistema. Eso es el primer acto de un Constructor.</div>
+  </div>
+
+  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
+
+  <div style="margin-bottom:.85rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">Antes de decirte qué sigue</div>
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);line-height:1.75;margin-bottom:.4rem;">Tu sistema lleva <strong style="color:#C9A84C">${pat}</strong> operando en este patrón. Ese ciclo se ha ejecutado <strong style="color:#C9A84C">${rep}</strong>. Un surco de años no desaparece en días &mdash; pero sí se puede redirigir. <strong>No es debilidad. Es física.</strong></div>
+  </div>
+
+  <div style="margin-bottom:.85rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">Pronóstico honesto</div>
+    <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:.4rem;">
+      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(139,0,0,.06);border-radius:4px;border-left:2px solid rgba(139,0,0,.3);">&#10060; No vas a despertar transformado mañana</div>
+      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(139,0,0,.06);border-radius:4px;border-left:2px solid rgba(139,0,0,.3);">&#10060; No va a ser lineal &mdash; habrá días que parecerá que retrocedes</div>
+      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En 30 días empezarás a ver el sistema en ti y en otros</div>
+      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En 90 días tomarás al menos una decisión diferente a la de siempre</div>
+      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En un año serás una persona diferente &mdash; porque cambiaste cómo lees lo que te pasa</div>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2vw,1.05rem);color:#E8C96A;text-align:center;">La transformación no es un evento. Es una dirección.</div>
+  </div>
+
+  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
+
+  <div style="margin-bottom:.85rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">El reencuadre central</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2.1vw,1.1rem);font-weight:700;margin-bottom:.28rem;">No fallaste. Operaste sin plano.</div>
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);color:#7A8499;line-height:1.75;margin-bottom:.45rem;">Durante años tomaste decisiones con el sistema que tenías &mdash; no con el que necesitabas. Eso no es culpa. Es punto de partida.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;">
+      <div style="background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);border-radius:4px;padding:.55rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#E74C3C;margin-bottom:.12rem;">CULPA</div>
+        <div style="font-size:clamp(.74rem,1.6vw,.84rem);color:#7A8499;font-style:italic;">"Soy así y no puedo cambiar"</div>
+      </div>
+      <div style="background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:4px;padding:.55rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#2ECC71;margin-bottom:.12rem;">RESPONSABILIDAD</div>
+        <div style="font-size:clamp(.74rem,1.6vw,.84rem);color:#7A8499;font-style:italic;">"A partir de hoy opero diferente"</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:5px;padding:.8rem .95rem;margin-bottom:.85rem;">
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#3498DB;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.22rem;">Modo Aprendiz</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2vw,1.05rem);font-weight:700;margin-bottom:.18rem;">Lo más peligroso ahora es intentar cambiar todo de golpe.</div>
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);color:#7A8499;line-height:1.75;"><strong style="color:#EAE6DC;">Tu único trabajo en los próximos 30 días: entender el sistema.</strong> No cambiarlo. Entenderlo. Cuando lo entiendes &mdash; el cambio ocurre solo.</div>
+  </div>
+
+  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.55rem;text-align:center;">Tu Prescripción</div>
+
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">1</div>
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Universal &middot; Esta semana</div>
+      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Entiende el sistema antes de actuar.</div>
+      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">Sin esta base cualquier acción es movimiento sin dirección.</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:#C9A84C;">&#9658; <a href="https://youtu.be/W4ip8UH0_-I" target="_blank" style="color:#C9A84C;text-decoration:none;font-family:'DM Mono',monospace;font-size:.6rem;">&#9658; Ver EP.01 &mdash; &iquest;Por qué sigues igual? &rarr;</a></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">2</div>
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Personalizado &middot; Este mes</div>
+      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Tu punto de entrada: <strong style="color:#E8C96A">${activEl} &mdash; ${activN}</strong></div>
+      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">Este elemento es donde tu ciclo puede empezar a moverse.</div>
+      ${ep2}
+    </div>
+  </div>
+
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">3</div>
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Permanente &middot; Desde hoy</div>
+      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Este diagnóstico es tu Página 1.</div>
+      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">En 90 días vas a releer esto y no vas a reconocer a la persona que lo escribió.</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:#C9A84C;">&#9658; Guardar PDF &mdash; Bitácora PESDAL</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:.75rem .3rem 0;border-top:1px solid rgba(201,168,76,.12);margin-top:.45rem;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2vw,1.05rem);font-style:italic;color:#E8C96A;line-height:2;">
+      No importa cuántos años lleves en el mismo ciclo.<br>
+      Lo que importa es que hoy iniciaste.<br>
+      Iniciaste con información. Con un diagnóstico. Con un plano.<br>
+      <strong style="color:#C9A84C;font-style:normal;">Bienvenido al proceso. Somos Constructores de Vida.</strong>
+    </div>
+  </div>
+</div>`;
+}
+
+
 function buildReport(){
   var done=AREAS.filter(function(a){return scores[a.id].done;});if(!done.length)return;
   var totalAvg=done.reduce(function(s,a){return s+scores[a.id].avg;},0)/done.length;
@@ -841,8 +943,10 @@ function buildReport(){
   html+='<div class="card"><div class="card-title">Patrones Transversales del Sistema</div>';
   patterns.forEach(function(p){html+='<div class="prow"><div class="pdot2"></div><div>'+p+'</div></div>';});html+='</div>';
   html+='<div class="card"><div class="card-title">Tu Punto de Entrada al C\u00edrculo</div><div class="ebox"><span class="elbl">Tu elemento de activaci\u00f3n</span><div class="etxt">'+activEl+' \u2014 '+activN+': el punto desde donde tu sistema puede empezar a moverse.</div></div>';
-  if(epRec)html+='<div class="ep-box"><span class="ep-lbl">Episodio recomendado para ti</span><div class="ep-title">'+epRec.ep+' \u2014 '+epRec.title+'</div><div class="ep-text">Este episodio '+epRec.reason+'</div></div>';
+  html+='<div class="ep-box"><span class="ep-lbl">Tu episodio personalizado</span>'+(epRec?'<div class="ep-title">'+epRec.ep+' — '+epRec.title+'</div><div class="ep-text" style="color:rgba(201,168,76,0.7);font-style:italic;">⏱ Próximamente — Este episodio '+epRec.reason+'</div>':'')+'</div>';
   html+='</div>';
+
+  html+=buildProtocol(activEl,activN,epRec,totalAvg);
   html+='<div class="act-box"><span class="act-lbl">Tu acci\u00f3n de las pr\u00f3ximas 24 horas</span><div class="act-title">'+(fugaArea?fugaArea.full:'Tu \u00e1rea de mayor urgencia')+'</div><div class="act-text">'+action24+'</div><textarea class="act-inp" placeholder="Escribe aqu\u00ed tu compromiso personal..."></textarea></div>';
   html+='<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagn\u00f3stico como PDF</button>';
   html+='<div class="cta"><div class="ctat">Tu vida no est\u00e1 perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Est\u00e1 desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede redise\u00f1ar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">\u00bfEst\u00e1s listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@constructoresdevida\',\'_blank\')">&#128250; Ver Episodio 1 \u2014 Constructores de Vida</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar \u00e1reas</button><button class="ctab" onclick="showResetModal()">Nuevo Esc\u00e1ner</button></div></div>';
