@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Escáner de Vida PESDAL v5.3c — Constructores de Vida</title>
+<title>Escáner de Vida PESDAL v6.2 · @PESDAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ─── VARIABLES ─────────────────────────────────────────── */
@@ -287,6 +287,75 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 .card-title,.brand,.elbl,.ep-lbl,.act-lbl,.ai-idx-lbl,.dtag{color:#8a6a20!important;}
 .libu-footer-text{color:#888!important;}
 }
+
+/* ─── V1.7 ADDITIONS ────────────────────────────────────────── */
+.central-q{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.2rem;margin-bottom:.9rem;}
+.central-q-lbl{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem;display:block;}
+.central-q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.18rem);font-style:italic;line-height:1.5;margin-bottom:.85rem;}
+.central-opts{display:flex;flex-direction:column;gap:.4rem;}
+.central-opt{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:.7rem .9rem;cursor:pointer;font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.central-opt:hover{border-color:rgba(201,168,76,.3);}
+.central-opt.sel{border-color:var(--gold);background:var(--goldD);color:var(--text);}
+.ancla-q{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.2rem;margin-bottom:.9rem;}
+.ancla-toggle{display:flex;gap:.6rem;margin-top:.7rem;}
+.ancla-btn{flex:1;padding:.75rem .6rem;border-radius:4px;border:1px solid rgba(255,255,255,.08);background:var(--dark3);color:var(--muted);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.ancla-btn.sel{border-color:var(--gold);background:var(--goldD);color:var(--gold);font-weight:600;}
+.instr-box{background:var(--dark3);border:1px solid var(--border);border-radius:5px;padding:1rem 1.1rem;margin-top:.8rem;}
+.instr-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--goldL);margin-bottom:.5rem;}
+.instr-q{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--text);margin-bottom:.3rem;line-height:1.6;}
+.instr-bias{font-size:clamp(.7rem,1.5vw,.78rem);color:var(--muted);font-style:italic;margin-bottom:.55rem;}
+.instr-input{width:100%;background:var(--dark2);border:1px solid rgba(255,255,255,.08);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:clamp(.82rem,1.8vw,.9rem);padding:.6rem .75rem;resize:none;outline:none;min-height:56px;line-height:1.6;margin-bottom:.85rem;}
+.instr-input::placeholder{color:var(--muted);font-style:italic;}
+.instr-input:focus{border-color:var(--gold);}
+.instr-synth{background:var(--goldD);border:1px solid var(--border);border-radius:4px;padding:.75rem .9rem;margin-top:.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2vw,1.02rem);color:var(--goldL);line-height:1.6;}
+.val-q{margin-bottom:.85rem;}
+.val-q-text{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--text);margin-bottom:.4rem;line-height:1.55;}
+.val-opts{display:flex;gap:.45rem;}
+.val-opt{flex:1;padding:.55rem .4rem;border-radius:4px;border:1px solid rgba(255,255,255,.08);background:var(--dark2);color:var(--muted);font-size:clamp(.7rem,1.55vw,.8rem);cursor:pointer;text-align:center;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.val-opt.sel{border-color:var(--gold);background:var(--goldD);color:var(--text);}
+.ancla-result{border-radius:5px;padding:.85rem 1rem;margin-top:.7rem;text-align:center;}
+.ancla-result.valid{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.28);}
+.ancla-result.weak{background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.28);}
+.ancla-result-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.02rem;margin-bottom:.2rem;}
+.ancla-result-text{font-size:clamp(.78rem,1.7vw,.86rem);color:var(--muted);line-height:1.6;}
+.deriva-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:.14rem .5rem;border-radius:2px;}
+.deriva-badge.estable{background:rgba(39,174,96,.17);color:#2ECC71;border:1px solid rgba(39,174,96,.28);}
+.deriva-badge.atencion{background:rgba(230,126,34,.17);color:#F39C12;border:1px solid rgba(230,126,34,.28);}
+.deriva-badge.critica{background:rgba(139,0,0,.2);color:#FF4444;border:1px solid rgba(139,0,0,.35);}
+.deriva-badge.urgencia{background:rgba(74,144,226,.15);color:#A8C4E8;border:1px solid rgba(74,144,226,.3);}
+.n2-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:1rem 1.1rem;margin-bottom:.8rem;}
+.n2-hdr{display:flex;align-items:center;gap:.6rem;margin-bottom:.55rem;}
+.n2-ltr{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--gold);width:1.5rem;flex-shrink:0;line-height:1;}
+.n2-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;}
+.n2-q{font-size:clamp(.82rem,1.8vw,.92rem);color:var(--text);line-height:1.6;margin-bottom:.2rem;}
+.n2-hint{font-size:clamp(.7rem,1.5vw,.78rem);color:var(--muted);font-style:italic;margin-bottom:.65rem;}
+.n2-opts{display:flex;flex-direction:column;gap:.35rem;}
+.n2-opt{display:flex;align-items:flex-start;gap:.55rem;background:var(--dark3);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:.62rem .8rem;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;}
+.n2-opt:hover{border-color:rgba(201,168,76,.3);}
+.n2-opt.sel{border-color:var(--gold);background:var(--goldD);}
+.n2-opt-lbl{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0;margin-top:.12rem;width:4.6rem;}
+.n2-opt-lbl.autom{color:#E67E22;}.n2-opt-lbl.parcial{color:#F1C40F;}.n2-opt-lbl.consc{color:#2ECC71;}
+.n2-opt-txt{font-size:clamp(.78rem,1.7vw,.87rem);color:var(--muted);line-height:1.5;}
+.n2-opt.sel .n2-opt-txt{color:var(--text);}
+.n2-result{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.1rem .4rem;border-radius:2px;margin-left:auto;}
+.n2-result.autom{background:rgba(230,126,34,.17);color:#F39C12;}
+.n2-result.parcial{background:rgba(241,196,15,.15);color:#F1C40F;}
+.n2-result.consc{background:rgba(39,174,96,.17);color:#2ECC71;}
+.n3-box{background:linear-gradient(135deg,rgba(201,168,76,.09),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.28);border-radius:6px;padding:1.1rem 1.15rem;margin-top:.9rem;}
+.n3-lbl{font-family:'DM Mono',monospace;font-size:.56rem;color:var(--gold);letter-spacing:.13em;text-transform:uppercase;margin-bottom:.4rem;display:block;}
+.n3-elem{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;margin-bottom:.5rem;}
+.n3-text{font-size:clamp(.84rem,1.85vw,.94rem);color:var(--text);line-height:1.75;}
+.n3-quote{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--goldL);font-size:clamp(.9rem,2vw,1.02rem);margin-top:.55rem;line-height:1.6;}
+.bidir-card{border-radius:6px;padding:.95rem 1.1rem;margin-bottom:.7rem;border:1px solid;}
+.bidir-card.falla{background:rgba(230,126,34,.06);border-color:rgba(230,126,34,.25);}
+.bidir-card.acierto{background:rgba(39,174,96,.06);border-color:rgba(39,174,96,.25);}
+.bidir-card.sostener{background:rgba(74,144,226,.06);border-color:rgba(74,144,226,.25);}
+.bidir-lbl{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;display:block;}
+.bidir-area{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1rem;margin-bottom:.22rem;}
+.bidir-text{font-size:clamp(.8rem,1.75vw,.9rem);color:var(--muted);line-height:1.65;}
+.no-ancla-flag{background:rgba(74,144,226,.08);border:1px solid rgba(74,144,226,.25);border-radius:4px;padding:.6rem .85rem;margin-top:.55rem;font-size:clamp(.76rem,1.65vw,.85rem);color:#A8C4E8;line-height:1.6;}
+.skip-btn{background:transparent;border:1px dashed rgba(255,255,255,.15);color:var(--muted);font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:.5rem .8rem;border-radius:4px;cursor:pointer;width:100%;margin-top:.3rem;}
+.skip-btn:hover{border-color:rgba(201,168,76,.3);color:var(--gold);}
 </style>
 </head>
 <body>
@@ -305,7 +374,7 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 <!-- S0: WELCOME -->
 <div id="s-welcome" class="screen active">
   <div class="hdr">
-    <div class="brand">Constructores de Vida &middot; LIBU LLC</div>
+    <div class="brand">PESDAL &middot; Constructores de Vida &middot; LIBU LLC</div>
     <h1 class="main-title">Esc&aacute;ner de Vida <span>PESDAL</span></h1>
     <p class="subtitle">Tu diagn&oacute;stico de ingenier&iacute;a humana</p>
   </div>
@@ -313,8 +382,8 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
     <div class="steps">
       <div class="step active">0&middot;Inicio</div>
       <div class="step">1&middot;Calibraci&oacute;n</div>
-      <div class="step">2&middot;Prioridades</div>
-      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">2&middot;Orden</div>
+      <div class="step">3&middot;Nivel 1</div>
       <div class="step">4&middot;Reporte</div>
     </div>
     <div class="card mt8">
@@ -325,6 +394,10 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
       <p class="w-text">Lo que est&aacute;s a punto de hacer requiere una sola cosa.</p>
       <p class="w-text" style="color:var(--gold)">Honestidad.</p>
       <p class="w-text">No con nosotros &mdash; contigo mismo.</p>
+      <div class="sep"></div>
+      <p class="w-text">Entra en modo aprendiz.</p>
+      <p class="w-text" style="color:var(--gold)">No en modo sabio.</p>
+      <p class="w-text">No necesitas ya saber la respuesta &mdash; necesitas ver el sistema con precisi&oacute;n.</p>
       <div class="sep"></div>
       <p class="w-note"><strong>Nadie va a ver tus respuestas.</strong> No hay respuestas correctas ni incorrectas. No hay un puntaje que te juzgue.<br><br>Lo que sabes hoy es exactamente suficiente para empezar.</p>
       <div class="disclaimer">&#9888; Este esc&aacute;ner no reemplaza acompa&ntilde;amiento psicol&oacute;gico, m&eacute;dico, financiero o profesional. Es una herramienta de autoconocimiento y construcci&oacute;n personal.</div>
@@ -344,8 +417,8 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
     <div class="steps">
       <div class="step done">0&middot;Inicio</div>
       <div class="step active">1&middot;Calibraci&oacute;n</div>
-      <div class="step">2&middot;Prioridades</div>
-      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">2&middot;Orden</div>
+      <div class="step">3&middot;Nivel 1</div>
       <div class="step">4&middot;Reporte</div>
     </div>
     <div class="card mt8">
@@ -376,8 +449,8 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
     <div class="steps">
       <div class="step done">0&middot;Inicio</div>
       <div class="step active">1&middot;Calibraci&oacute;n</div>
-      <div class="step">2&middot;Prioridades</div>
-      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step">2&middot;Orden</div>
+      <div class="step">3&middot;Nivel 1</div>
       <div class="step">4&middot;Reporte</div>
     </div>
     <div class="card mt8" id="cal-wrap"></div>
@@ -392,25 +465,25 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 <div id="s-order" class="screen">
   <div class="hdr">
     <div class="brand">Fase 2 de 4</div>
-    <h1 class="main-title">Tus <span>Prioridades</span></h1>
+    <h1 class="main-title">Orden de <span>Escaneo</span></h1>
   </div>
   <div class="wrap pb">
     <div class="steps">
       <div class="step done">0&middot;Inicio</div>
       <div class="step done">1&middot;Calibraci&oacute;n</div>
-      <div class="step active">2&middot;Prioridades</div>
-      <div class="step">3&middot;Diagn&oacute;stico</div>
+      <div class="step active">2&middot;Orden</div>
+      <div class="step">3&middot;Nivel 1</div>
       <div class="step">4&middot;Reporte</div>
     </div>
     <div class="card mt8">
       <div class="order-intro">
-        <div class="order-cmd">Escucha tu sistema.</div>
-        <div class="order-q">&iquest;Qu&eacute; &aacute;rea necesita atenci&oacute;n ahora mismo<br>y est&aacute; consumiendo m&aacute;s <span>energ&iacute;a</span> de la que te devuelve?</div>
-        <div class="order-hint">Toca las &aacute;reas en el orden que sientas &mdash; desde la que m&aacute;s te drena hasta la que m&aacute;s te sostiene.<br><em>No pienses demasiado. Tu sistema ya sabe la respuesta.</em></div>
+        <div class="order-cmd">Esto solo define el orden en que vas a escanear &mdash; no tu prioridad diagn&oacute;stica.</div>
+        <div class="order-q">&iquest;Qu&eacute; &aacute;rea sientes que necesita atenci&oacute;n primero<br>y est&aacute; consumiendo m&aacute;s <span>energ&iacute;a</span> de la que te devuelve?</div>
+        <div class="order-hint">Toca las &aacute;reas en el orden que sientas. Tu prioridad real &mdash; la Deriva o la urgencia &mdash; la vas a calcular el sistema despu&eacute;s, con datos, al terminar el Nivel 1.<br><em>No pienses demasiado. Esto solo decide por d&oacute;nde empiezas.</em></div>
       </div>
       <div class="order-grid" id="order-grid"></div>
       <div class="order-confirm" id="order-confirm">
-        <span class="oc-lbl">Prioridad establecida &mdash; iniciando diagn&oacute;stico en</span>
+        <span class="oc-lbl">Orden de escaneo listo &mdash; empezando Nivel 1 en</span>
         <div class="oc-area" id="oc-area-name"></div>
       </div>
       <div class="meta-box" id="meta-box">
@@ -420,7 +493,7 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
           <div class="meta-opt" id="meta-should" onclick="selMeta('should')">Lo que creo que deber&iacute;a sentir</div>
         </div>
       </div>
-      <div class="insight-phrase" id="insight-phrase">Donde tu energ&iacute;a se fuga y la urgencia aparece &mdash; ah&iacute; est&aacute; tu punto de construcci&oacute;n.</div>
+      <div class="insight-phrase" id="insight-phrase">El Nivel 1 te va a decir, con n&uacute;mero, d&oacute;nde est&aacute; realmente tu punto de construcci&oacute;n.</div>
     </div>
   </div>
   <div class="bnav">
@@ -433,21 +506,22 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
 <div id="s-overview" class="screen">
   <div class="hdr">
     <div class="brand">Fase 3 de 4</div>
-    <h1 class="main-title">Tus <span>8 &Aacute;reas</span></h1>
-    <p class="subtitle">Escanea en el orden que estableciste</p>
+    <h1 class="main-title">Tu Plano <span>General</span></h1>
+    <p class="subtitle">Nivel 1 en las 8 áreas — luego profundiza en la prioritaria</p>
   </div>
   <div class="wrap pb">
     <div class="steps">
       <div class="step done">0&middot;Inicio</div>
       <div class="step done">1&middot;Calibraci&oacute;n</div>
-      <div class="step done">2&middot;Prioridades</div>
-      <div class="step active">3&middot;Diagn&oacute;stico</div>
+      <div class="step done">2&middot;Orden</div>
+      <div class="step active">3&middot;Nivel 1</div>
       <div class="step">4&middot;Reporte</div>
     </div>
     <div class="pd mt8" id="prog-dots"></div>
     <div id="vida-wrap" class="vs" style="display:none"><div class="vt" id="vida-t"></div><div class="vsb" id="vida-s"></div></div>
     <div id="ov-chart" style="display:none" class="mt8"></div>
     <div id="priority-list" class="mt8"></div>
+    <div id="recommended-box" class="mt8" style="display:none"></div>
     <div class="ag mt8" id="areas-grid"></div>
     <div id="partial-banner" style="display:none" class="partial-banner mt8">
       <div class="pb-title">Mapa de urgencia parcial &#10003;</div>
@@ -470,13 +544,11 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
     <button class="back-btn" onclick="go('s-overview');renderOverview()">&#8592; Volver a &Aacute;reas</button>
     <div id="d-hdr"></div>
     <div id="d-context"></div>
-    <div class="card mt8" id="d-chart"></div>
-    <div class="card" id="d-sliders"></div>
-    <div id="d-diag"></div>
+    <div id="d-body" class="mt8"></div>
   </div>
   <div class="bnav">
-    <button id="btn-back-detail" onclick="go('s-overview');renderOverview()">&#8592; Sin guardar</button>
-    <button class="pri" id="btn-save-detail" onclick="trySave()">Guardar &aacute;rea &#10003;</button>
+    <button id="btn-back-detail" onclick="detailBack()">&#8592; Atr&aacute;s</button>
+    <button class="pri" id="btn-save-detail" onclick="detailNext()">Continuar &rarr;</button>
   </div>
 </div>
 
@@ -525,8 +597,8 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
     <div class="steps">
       <div class="step done">0&middot;Inicio</div>
       <div class="step done">1&middot;Calibraci&oacute;n</div>
-      <div class="step done">2&middot;Prioridades</div>
-      <div class="step done">3&middot;Diagn&oacute;stico</div>
+      <div class="step done">2&middot;Orden</div>
+      <div class="step done">3&middot;Nivel 1</div>
       <div class="step active">4&middot;Reporte</div>
     </div>
     <div id="rpt-content" class="mt8"></div>
@@ -537,59 +609,166 @@ body{background:white!important;color:#1a1a1a!important;font-size:14px!important
   </div>
 </div>
 
+
 <script>
-var PDEF=[
-  {l:'P',name:'Pensamiento',def:'Un pensamiento no es un hecho \u2014 es una <strong>interpretaci\u00f3n</strong>. La mayor\u00eda lleva d\u00e9cadas creyendo que sus pensamientos son la realidad, cuando son el resultado de creencias heredadas y patrones autom\u00e1ticos. <em>Lo que te dices sobre ti mismo define lo que decides y lo que haces.</em>',ex:'<strong>Ejemplo:</strong> "Soy un fracasado" es un pensamiento. "Fall\u00e9 en este intento" es un hecho. La diferencia no es sem\u00e1ntica \u2014 es la diferencia entre un ciclo que te destruye y uno que te informa.',calQ:'\u00bfQu\u00e9 tan bien identificas tus pensamientos en tiempo real?',opts:[{k:'A',t:'Los identifico claramente \u2014 puedo distinguir entre un pensamiento que me impulsa y uno que me limita mientras ocurre.'},{k:'B',t:'A veces los identifico, pero me cuesta saber si son hechos reales o interpretaciones heredadas.'},{k:'C',t:'Es un concepto nuevo \u2014 nunca hab\u00eda pensado en mis pensamientos como interpretaciones, no como hechos.'}],lb:'Cuando no logramos distinguir entre un hecho y un pensamiento, tomamos decisiones basadas en interpretaciones como si fueran verdades absolutas. Esto explica por qu\u00e9 seguimos en el mismo lugar aunque lo intentemos con todo.',lc:'Un pensamiento limitante es cualquier frase como "No puedo", "No soy capaz", "No me lo merezco". No son verdades \u2014 son programas instalados. Y los programas se pueden cambiar.'},
-  {l:'E',name:'Emoci\u00f3n',def:'La emoci\u00f3n es una <strong>se\u00f1al biol\u00f3gica inmediata</strong> \u2014 no un enemigo que controlar. El miedo avisa de un peligro. La rabia avisa de una injusticia. <em>El problema no es la emoci\u00f3n \u2014 es no saber leerla.</em>',ex:'<strong>Ejemplo:</strong> Sientes ansiedad antes de una decisi\u00f3n importante. Si la escuchas, te informa. Si la ignoras o la amplificas, te controla.',calQ:'\u00bfQu\u00e9 tan bien lees tus emociones en el momento en que aparecen?',opts:[{k:'A',t:'Las identifico claramente \u2014 puedo nombrar lo que siento y entender qu\u00e9 informaci\u00f3n me est\u00e1 dando.'},{k:'B',t:'A veces las identifico, pero me cuesta saber si es una emoci\u00f3n puntual o algo m\u00e1s profundo.'},{k:'C',t:'Es nuevo \u2014 siempre cre\u00ed que las emociones eran lo mismo que los sentimientos y que hab\u00eda que controlarlas.'}],lb:'La emoci\u00f3n es inmediata y puntual \u2014 aparece, te da informaci\u00f3n y pasa. Lo que persiste m\u00e1s all\u00e1 es la historia que construiste alrededor de ella.',lc:'Las emociones b\u00e1sicas son miedo, rabia, tristeza, alegr\u00eda, asco y sorpresa. Ninguna es mala. El problema no es sentirlas \u2014 es no saber qu\u00e9 hacer con la informaci\u00f3n que traen.'},
-  {l:'S',name:'Sentimiento',def:'El sentimiento es la emoci\u00f3n que <strong>se qued\u00f3</strong>. Es el estado emocional que construiste con el tiempo al repetir las mismas emociones una y otra vez. <em>La resignaci\u00f3n no es una emoci\u00f3n \u2014 es un sentimiento construido por a\u00f1os de emociones de impotencia sin procesar.</em>',ex:'<strong>Ejemplo:</strong> Una persona puede sentir miedo (emoci\u00f3n) ante algo espec\u00edfico. Pero si ese miedo se repite durante a\u00f1os sin procesarse, construye un sentimiento sostenido de inseguridad que ya no necesita un detonante.',calQ:'\u00bfCu\u00e1l es el estado emocional sostenido que predomina en tu vida?',opts:[{k:'A',t:'Lo identifico claramente \u2014 puedo describir el estado emocional sostenido que vivo y entender de d\u00f3nde viene.'},{k:'B',t:'Tengo una idea de c\u00f3mo me siento en general, pero no hab\u00eda pensado en ello como un estado construido con el tiempo.'},{k:'C',t:'Es nuevo \u2014 siempre us\u00e9 "emoci\u00f3n" y "sentimiento" como sin\u00f3nimos y no sab\u00eda que eran cosas distintas.'}],lb:'La distinci\u00f3n es clave porque tienen soluciones distintas. Una emoci\u00f3n se procesa en el momento. Un sentimiento requiere reconocer el patr\u00f3n y decidir construir un estado diferente.',lc:'Los sentimientos sostenidos m\u00e1s comunes en personas estancadas son resignaci\u00f3n, inseguridad cr\u00f3nica y miedo generalizado. Ninguno es permanente \u2014 todos se construyeron y todos se pueden reconstruir.'},
-  {l:'D',name:'Decisi\u00f3n',def:'El 95% de las decisiones cotidianas no son decisiones \u2014 son <strong>reacciones autom\u00e1ticas disfrazadas de decisiones</strong>. Una decisi\u00f3n real requiere tres elementos: un pensamiento claro, una lectura correcta de la emoci\u00f3n, y un sentimiento de base que no sea miedo.',ex:'<strong>Ejemplo:</strong> Decides no buscar un nuevo trabajo porque "el mercado est\u00e1 dif\u00edcil". Los tres elementos de PESDAL est\u00e1n activos \u2014 pero ninguno te lleva hacia adelante. Eso no es una decisi\u00f3n \u2014 es una reacci\u00f3n.',calQ:'\u00bfQu\u00e9 tan consciente eres de los fundamentos de tus decisiones?',opts:[{k:'A',t:'Soy bastante consciente \u2014 puedo identificar desde qu\u00e9 pensamiento y estado emocional tomo mis decisiones importantes.'},{k:'B',t:'A veces lo identifico despu\u00e9s de decidir, pero en el momento no siempre s\u00e9 qu\u00e9 me est\u00e1 moviendo.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda analizado mis decisiones desde esta perspectiva.'}],lb:'Antes de una decisi\u00f3n importante h\u00e1ztelas estas tres preguntas: \u00bfQu\u00e9 me estoy diciendo? \u00bfQu\u00e9 estoy sintiendo? \u00bfEse sentimiento es miedo o claridad?',lc:'La mayor\u00eda de las decisiones que no producen cambio real nacen del miedo \u2014 al fracaso, al juicio de otros, a perder lo que se tiene. Reconocer esto es el primer paso para decidir desde un lugar diferente.'},
-  {l:'A',name:'Acci\u00f3n',def:'Una acci\u00f3n desconectada del pensamiento, la emoci\u00f3n, el sentimiento y la decisi\u00f3n que la preceden es <strong>movimiento sin direcci\u00f3n</strong>. Puedes ser muy activo y no avanzar \u2014 porque la acci\u00f3n sin los cinco elementos anteriores alineados reproduce el mismo ciclo que ya tienes.',ex:'<strong>Ejemplo:</strong> Una persona que hace dieta, va al gimnasio y lee libros de productividad pero sigue en el mismo lugar. No le falta acci\u00f3n \u2014 le falta alineaci\u00f3n.',calQ:'\u00bfQu\u00e9 tan alineadas est\u00e1n tus acciones con lo que realmente quieres?',opts:[{k:'A',t:'Hay bastante alineaci\u00f3n \u2014 lo que hago cada d\u00eda responde a mis decisiones conscientes y va en la direcci\u00f3n que quiero.'},{k:'B',t:'Hay algunas acciones alineadas y otras que hago por costumbre o reacci\u00f3n, sin una decisi\u00f3n clara detr\u00e1s.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda pensado en mis acciones como el resultado de un sistema de cinco elementos previos.'}],lb:'Una pregunta pr\u00e1ctica: \u00bfEsta acci\u00f3n la eleg\u00ed conscientemente o simplemente la estoy repitiendo? Si no puedes responder por qu\u00e9 la haces, probablemente es autom\u00e1tica.',lc:'La diferencia entre disciplina y alineaci\u00f3n es fundamental. La disciplina es fuerza de voluntad \u2014 se agota. La alineaci\u00f3n es coherencia. Cuando lo que piensas, sientes, decides y haces apuntan en la misma direcci\u00f3n, la acci\u00f3n no requiere esfuerzo hero\u00edco.'},
-  {l:'L',name:'Logro',def:'El logro no es el destino \u2014 es el <strong>punto de reinicio del ciclo</strong>. Un logro que no retroalimenta el Pensamiento, la Emoci\u00f3n y el Sentimiento no construye nada permanente \u2014 es un evento aislado que el sistema olvida.',ex:'<strong>Ejemplo:</strong> Una persona que logra bajar 10 kilos y en seis meses los recupera. El logro fue real \u2014 pero no reinici\u00f3 el ciclo. No cambi\u00f3 el pensamiento sobre su cuerpo ni construy\u00f3 un nuevo sentimiento sostenido.',calQ:'\u00bfQu\u00e9 haces con tus logros una vez que los alcanzas?',opts:[{k:'A',t:'Los uso conscientemente \u2014 cuando logro algo importante analizo qu\u00e9 funcion\u00f3 y lo integro como parte de qui\u00e9n soy.'},{k:'B',t:'A veces los celebro pero r\u00e1pidamente paso al siguiente objetivo sin reflexionar sobre lo que produjeron en m\u00ed.'},{k:'C',t:'Es nuevo \u2014 nunca hab\u00eda pensado en el logro como un punto de reinicio del ciclo, sino como el final del proceso.'}],lb:'Cuando alcances un logro, antes de pasar al siguiente: \u00bfQu\u00e9 cambi\u00f3 en c\u00f3mo me veo? \u00bfQu\u00e9 emoci\u00f3n domin\u00f3 el proceso? \u00bfQu\u00e9 nuevo ciclo quiero iniciar desde aqu\u00ed?',lc:'El logro sin reflexi\u00f3n es como ganar dinero y no saber en qu\u00e9 lo gastaste. La transformaci\u00f3n real ocurre cuando el logro cambia el pensamiento que lo gener\u00f3.'},
+var ELEMENTS = [
+  {
+    l:'P', name:'Pensamiento',
+    def:'Un pensamiento no es un hecho — es una <strong>interpretación</strong>. La mayoría lleva décadas creyendo que sus pensamientos son la realidad, cuando son el resultado de creencias heredadas y patrones automáticos. <em>Lo que te dices sobre ti mismo define lo que decides y lo que haces.</em>',
+    ex:'<strong>Ejemplo:</strong> "Soy un fracasado" es un pensamiento. "Fallé en este intento" es un hecho. La diferencia no es semántica — es la diferencia entre un ciclo que opera en automático y uno que te informa.',
+    n2q:'¿Cuándo fue la última vez que cambiaste una creencia sobre esta área porque descubriste que no era tuya?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Recuerdo un ejemplo concreto y propio — sé exactamente qué creencia cambié y por qué.'},
+      {k:'parcial', t:'Tengo una idea vaga, pero no podría dar un ejemplo específico.'},
+      {k:'autom', t:'No recuerdo ningún ejemplo concreto sobre esta área.'}
+    ],
+    accion:'Escribe 3 creencias sobre el área. Por cada una pregúntate: <em>"¿De dónde viene esto — lo decidí yo o lo aprendí?"</em>'
+  },
+  {
+    l:'E', name:'Emoción',
+    def:'La emoción es una <strong>señal biológica inmediata</strong> — no un enemigo que controlar. El miedo avisa de un peligro. La rabia avisa de una injusticia. <em>El problema no es la emoción — es no saber leerla.</em>',
+    ex:'<strong>Ejemplo:</strong> Sientes ansiedad antes de una decisión importante. Si la escuchas, te informa. Si la ignoras o la amplificas, opera en automático y te controla.',
+    n2q:'¿Puedes recordar una vez que notaste una emoción en esta área y pausaste para entender qué te estaba diciendo?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Sí, recuerdo el momento exacto y qué información me dio esa emoción.'},
+      {k:'parcial', t:'Creo que sí, pero no podría describir el momento con precisión.'},
+      {k:'autom', t:'No puedo recordar haber leído una emoción conscientemente en esta área.'}
+    ],
+    accion:'La próxima emoción que aparezca en esta área — para. Nómbrala. Pregúntate: <em>"¿Qué me está diciendo sobre lo que me importa aquí?"</em>'
+  },
+  {
+    l:'S', name:'Sentimiento',
+    def:'El sentimiento es la emoción que <strong>se quedó</strong>. Es el estado emocional que construiste con el tiempo al repetir las mismas emociones una y otra vez. <em>La resignación no es una emoción — es un sentimiento construido por años de emociones sin procesar.</em>',
+    ex:'<strong>Ejemplo:</strong> Una persona puede sentir miedo (emoción) ante algo específico. Pero si ese miedo se repite durante años sin procesarse, construye un sentimiento sostenido de inseguridad que ya no necesita un detonante.',
+    n2q:'¿Puedes describir el estado interior que tienes de base sobre esta área — y recuerdas cuándo era diferente?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Puedo describirlo con precisión y sé cuándo y por qué cambió.'},
+      {k:'parcial', t:'Tengo una idea de cómo me siento en general, pero no sé si lo elegí o simplemente se instaló.'},
+      {k:'autom', t:'No puedo describir cuándo cambió ese estado ni si alguna vez lo elegí.'}
+    ],
+    accion:'Describe en 3 palabras tu estado interior sobre el área. Pregúntate: <em>"¿Este estado me construye o me mantiene en automático?"</em>'
+  },
+  {
+    l:'D', name:'Decisión',
+    def:'El 95% de las decisiones cotidianas no son decisiones — son <strong>reacciones automáticas disfrazadas de decisiones</strong>. Una decisión real requiere tres elementos: un pensamiento claro, una lectura correcta de la emoción, y un sentimiento de base que no sea miedo.',
+    ex:'<strong>Ejemplo:</strong> Decides no buscar un nuevo trabajo porque "el mercado está difícil". Los tres elementos de PESDAL están activos — pero ninguno te lleva hacia adelante. Eso no es una decisión consciente — es el automático operando.',
+    n2q:'¿Puedes nombrar una decisión reciente en esta área que tomaste tú — no las circunstancias?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Sí, puedo nombrarla y sé desde qué pensamiento y estado emocional la tomé.'},
+      {k:'parcial', t:'A veces lo identifico después de decidir, pero no en el momento.'},
+      {k:'autom', t:'No puedo nombrar una decisión en esta área que sienta genuinamente propia.'}
+    ],
+    accion:'Identifica la próxima decisión pendiente en esta área. Pregúntate: <em>"¿Qué elegiría yo si el miedo y las circunstancias no tuvieran voto?"</em>'
+  },
+  {
+    l:'A', name:'Acción',
+    def:'Una acción desconectada del pensamiento, la emoción, el sentimiento y la decisión que la preceden es <strong>movimiento sin dirección</strong>. Puedes ser muy activo y no avanzar — porque la acción sin los elementos anteriores alineados reproduce el mismo ciclo automático.',
+    ex:'<strong>Ejemplo:</strong> Una persona que hace dieta, va al gimnasio y lee libros de productividad pero sigue en el mismo lugar. No le falta acción — le falta dirección.',
+    n2q:'¿Puedes explicar por qué haces lo que haces en esta área — qué estás construyendo con esas acciones?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Sí, puedo conectar mis acciones diarias con la dirección que quiero construir.'},
+      {k:'parcial', t:'Algunas acciones sí, otras las hago por costumbre sin saber bien por qué.'},
+      {k:'autom', t:'No puedo conectar lo que hago en esta área con ninguna dirección clara.'}
+    ],
+    accion:'Lista las 3 acciones más frecuentes en esta área. Por cada una pregúntate: <em>"¿Esta acción me acerca a lo que quiero construir?"</em>'
+  },
+  {
+    l:'L', name:'Logro',
+    def:'El logro no es el destino — es el <strong>punto de reinicio del ciclo</strong>. Un logro que no retroalimenta el Pensamiento, la Emoción y el Sentimiento no construye nada permanente — es un evento aislado que el sistema en automático olvida.',
+    ex:'<strong>Ejemplo:</strong> Una persona que logra bajar 10 kilos y en seis meses los recupera. El logro fue real — pero no reinició el ciclo. No cambió el pensamiento sobre su cuerpo ni construyó un nuevo sentimiento sostenido.',
+    n2q:'¿Puedes describir qué significa para ti lograr algo valioso en esta área — y es tuyo ese criterio?',
+    n2hint:'Responde con un ejemplo concreto. Si no puedes dar un ejemplo específico, esa es la respuesta.',
+    opts:[
+      {k:'consc', t:'Sí, tengo un criterio propio de lo que es valioso aquí, y no depende de lo que otros esperan.'},
+      {k:'parcial', t:'Tengo una idea, pero mezclada con lo que se supone que debería querer.'},
+      {k:'autom', t:'Defino el logro en esta área con criterios externos, o no puedo definirlo.'}
+    ],
+    accion:'Escribe: <em>"En esta área, para mí lograr algo valioso significa…"</em> sin usar criterios de otros. Si esto te cuesta, vuelve primero al Instrumento 1 para construir tu Plano de Referencia.'
+  }
 ];
+
+var ANCLA_I1 = [
+  {q:'¿Qué sería inaceptable en esta área si sigue igual en 5 años?', note:'Esta pregunta rodea el sesgo de aspiración social.'},
+  {q:'¿Hubo un momento donde esto funcionó? ¿Qué era diferente?', note:'Esta pregunta rodea el sesgo de imposibilidad.'},
+  {q:'¿Qué no querrías haber dejado sin construir a los 80 años?', note:'Esta pregunta rodea el sesgo del entorno actual.'}
+];
+
+var ANCLA_I2 = [
+  {k:'origen', q:'¿Lo querías antes de que tu entorno lo esperara?', dim:'Origen'},
+  {k:'compromiso', q:'¿Estás dispuesto a pagar el costo real que implica?', dim:'Compromiso'},
+  {k:'trascendencia', q:'¿En 10 años forma parte de quien quieres haber sido?', dim:'Trascendencia'}
+];
+
+var ANCLA_VAL_OPTS = [
+  {k:2, t:'Sí'},
+  {k:1, t:'Parcial'},
+  {k:0, t:'No'}
+];
+
+var EP_REC = {
+  P:{ep:'EP04', title:'P · Pensamiento · PESDAL', reason:'profundiza en cómo distinguir un hecho de una interpretación.'},
+  E:{ep:'EP05', title:'E · Emoción · PESDAL', reason:'profundiza en cómo leer la señal emocional sin que te controle.'},
+  S:{ep:'EP06', title:'S · Sentimiento · PESDAL', reason:'profundiza en cómo identificar y reconstruir el clima interior sostenido.'},
+  D:{ep:'EP07', title:'D · Decisión · PESDAL', reason:'profundiza en cómo distinguir una decisión real de una reacción.'},
+  A:{ep:'EP08', title:'A · Acción · PESDAL', reason:'profundiza en cómo alinear la acción con el diseño.'},
+  L:{ep:'EP09', title:'L · Logro · PESDAL', reason:'profundiza en cómo convertir el logro en punto de reinicio del ciclo.'}
+};
 
 var AREAS=[
-  {id:'quien',icon:'\u{1F31F}',name:'Qui\u00e9n Soy Hoy',full:'Qui\u00e9n Soy Hoy',calDesc:'Tu relaci\u00f3n contigo mismo, tu autoestima, tus creencias sobre lo que mereces y puedes lograr.',ctx:'Vamos a escanear tu sistema en <strong>Qui\u00e9n Soy Hoy</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe un pensamiento que tienes sobre ti mismo que no sabes si es un hecho real o una historia que te contaste. Solo uno.'},
-  {id:'salud',icon:'\u26A1',name:'Salud y Energ\u00eda',full:'Salud y Energ\u00eda',calDesc:'Tu cuerpo, tu vitalidad, tu sue\u00f1o, tu alimentaci\u00f3n y tu capacidad de sostener el ritmo de vida que tienes.',ctx:'Vamos a escanear tu sistema en <strong>Salud y Energ\u00eda</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica el h\u00e1bito que est\u00e1 drenando tu energ\u00eda m\u00e1s que cualquier otro. N\u00f3mbralo con precisi\u00f3n.'},
-  {id:'trabajo',icon:'\u{1F3AF}',name:'Trabajo y Carrera',full:'Trabajo y Carrera',calDesc:'Tu ocupaci\u00f3n, tu talento aplicado, tu satisfacci\u00f3n con lo que haces cada d\u00eda y hacia d\u00f3nde va tu carrera.',ctx:'Vamos a escanear tu sistema en <strong>Trabajo y Carrera</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe en una frase qu\u00e9 cambiar\u00edas de tu trabajo si pudieras hacerlo sin consecuencias.'},
-  {id:'dinero',icon:'\u{1F4B0}',name:'Dinero y Finanzas',full:'Dinero y Finanzas',calDesc:'Lo que ganas, lo que gastas, lo que debes, lo que ahorras y tu relaci\u00f3n real con el dinero.',ctx:'Vamos a escanear tu sistema en <strong>Dinero y Finanzas</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe cu\u00e1nto dinero entra y cu\u00e1nto sale este mes. Solo los n\u00fameros reales.'},
-  {id:'familia',icon:'\u{1F91D}',name:'Familia y Relaciones',full:'Familia y Relaciones',calDesc:'Tu pareja, tus hijos, tus padres, tus amigos y la calidad real de los v\u00ednculos que m\u00e1s importan en tu vida.',ctx:'Vamos a escanear tu sistema en <strong>Familia y Relaciones</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica la conversaci\u00f3n que m\u00e1s tiempo llevas postergando con alguien importante.'},
-  {id:'proposito',icon:'\u2728',name:'Prop\u00f3sito y Sentido',full:'Prop\u00f3sito y Sentido',calDesc:'El porqu\u00e9 profundo de tu vida, lo que te da paz interior y la conexi\u00f3n con algo m\u00e1s grande que tus resultados.',ctx:'Vamos a escanear tu sistema en <strong>Prop\u00f3sito y Sentido</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe en una sola frase para qu\u00e9 crees que est\u00e1s aqu\u00ed.'},
-  {id:'descanso',icon:'\u{1F33F}',name:'Descanso y Disfrute',full:'Descanso y Disfrute',calDesc:'Tu capacidad de parar, disfrutar y recargar sin culpa. Lo que haces solo porque te gusta y te nutre.',ctx:'Vamos a escanear tu sistema en <strong>Descanso y Disfrute</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Identifica la \u00faltima vez que hiciste algo solo por placer.'},
-  {id:'legado',icon:'\u{1F30F}',name:'Legado e Impacto',full:'Legado e Impacto',calDesc:'La huella que dejas en otros y lo que construyes que trasciende tus logros personales.',ctx:'Vamos a escanear tu sistema en <strong>Legado e Impacto</strong> \u2014 el \u00e1rea que definiste como una de tus prioridades.',action:'Escribe qu\u00e9 quieres que digan de ti las personas que m\u00e1s amas cuando ya no est\u00e9s.'},
+  {id:'quien',icon:'\u{1F31F}',name:'Quién Soy Hoy',full:'Quién Soy Hoy',calDesc:'Tu relación contigo mismo, tu autoestima, tus creencias sobre lo que mereces y puedes lograr.',ctx:'Vamos a escanear tu sistema en <strong>Quién Soy Hoy</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'salud',icon:'\u26A1',name:'Salud y Energía',full:'Salud y Energía',calDesc:'Tu cuerpo, tu vitalidad, tu sueño, tu alimentación y tu capacidad de sostener el ritmo de vida que tienes.',ctx:'Vamos a escanear tu sistema en <strong>Salud y Energía</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'trabajo',icon:'\u{1F3AF}',name:'Trabajo y Carrera',full:'Trabajo y Carrera',calDesc:'Tu ocupación, tu talento aplicado, tu satisfacción con lo que haces cada día y hacia dónde va tu carrera.',ctx:'Vamos a escanear tu sistema en <strong>Trabajo y Carrera</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'dinero',icon:'\u{1F4B0}',name:'Dinero y Finanzas',full:'Dinero y Finanzas',calDesc:'Lo que ganas, lo que gastas, lo que debes, lo que ahorras y tu relación real con el dinero.',ctx:'Vamos a escanear tu sistema en <strong>Dinero y Finanzas</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'familia',icon:'\u{1F91D}',name:'Familia y Relaciones',full:'Familia y Relaciones',calDesc:'Tu pareja, tus hijos, tus padres, tus amigos y la calidad real de los vínculos que más importan en tu vida.',ctx:'Vamos a escanear tu sistema en <strong>Familia y Relaciones</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'proposito',icon:'\u2728',name:'Propósito y Sentido',full:'Propósito y Sentido',calDesc:'El porqué profundo de tu vida, lo que te da paz interior y la conexión con algo más grande que tus resultados.',ctx:'Vamos a escanear tu sistema en <strong>Propósito y Sentido</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'descanso',icon:'\u{1F33F}',name:'Descanso y Disfrute',full:'Descanso y Disfrute',calDesc:'Tu capacidad de parar, disfrutar y recargar sin culpa. Lo que haces solo porque te gusta y te nutre.',ctx:'Vamos a escanear tu sistema en <strong>Descanso y Disfrute</strong> — el área que definiste como una de tus prioridades.'},
+  {id:'legado',icon:'\u{1F30F}',name:'Legado e Impacto',full:'Legado e Impacto',calDesc:'La huella que dejas en otros y lo que construyes que trasciende tus logros personales.',ctx:'Vamos a escanear tu sistema en <strong>Legado e Impacto</strong> — el área que definiste como una de tus prioridades.'}
 ];
 
-var MQ={
-  P:{q:function(a){return'\u00bfLos pensamientos que tienes sobre tu <span>'+a+'</span> te impulsan hacia lo que quieres \u2014 o te alejan de ello?';},sim:'Cuando piensas en esta \u00e1rea, \u00bftu mente te abre posibilidades o te cierra caminos?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 pensamientos que paralizan y se creen como verdades absolutas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante dominante \u2014 los pensamientos sobre esta \u00e1rea frenan m\u00e1s de lo que impulsan.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 identificas algunos limitantes pero no siempre puedes cambiarlos.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 tus pensamientos generalmente te impulsan hacia lo que quieres.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 identificas y transformas tus pensamientos en tiempo real.'}]},
-  E:{q:function(a){return'Cuando enfrentas un reto en tu <span>'+a+'</span> \u2014 \u00bftu emoci\u00f3n te informa o te paraliza?';},sim:'\u00bfPuedes sentir miedo, rabia o ansiedad en esta \u00e1rea sin dejar que eso decida por ti?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 las emociones controlan tus decisiones sin que puedas leerlas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 las emociones frecuentemente te paralizan en esta \u00e1rea.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 a veces lees la emoci\u00f3n, a veces te arrastra.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 generalmente puedes leer tus emociones y elegir c\u00f3mo responder.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus emociones son informaci\u00f3n precisa que usas a tu favor.'}]},
-  S:{q:function(a){return'\u00bfEl estado emocional que vives d\u00eda a d\u00eda en tu <span>'+a+'</span> es el que elegiste \u2014 o simplemente el que se instal\u00f3?';},sim:'\u00bfCu\u00e1l es el clima emocional permanente de esta \u00e1rea?',guide:'Piensa en c\u00f3mo te sientes normalmente cuando hablas, piensas o act\u00faas en esta \u00e1rea.',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 el estado sostenido es de resignaci\u00f3n, miedo o vac\u00edo profundo.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 el clima emocional dominante te frena m\u00e1s de lo que te impulsa.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 hay d\u00edas buenos y malos. No hay un estado claro elegido conscientemente.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 el estado sostenido es generalmente de construcci\u00f3n o esperanza.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 el estado emocional es de paz, prop\u00f3sito o entusiasmo sostenido.'}]},
-  D:{q:function(a){return'Las decisiones que tomas en tu <span>'+a+'</span> \u2014 \u00bflas est\u00e1s eligiendo t\u00fa o las est\u00e1 eligiendo el miedo, la costumbre o la urgencia?';},sim:'\u00bfTomas decisiones en esta \u00e1rea desde claridad o desde presi\u00f3n?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 el miedo, la costumbre o la urgencia deciden por ti casi siempre.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 la mayor\u00eda de tus decisiones en esta \u00e1rea son reacciones, no elecciones reales.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 algunas decisiones son conscientes pero muchas siguen siendo autom\u00e1ticas.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 generalmente sabes desde qu\u00e9 pensamiento y estado emocional est\u00e1s decidiendo.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus decisiones son intencionales y puedes distinguirlas de las reacciones.'}]},
-  A:{q:function(a){return'Lo que haces cada d\u00eda en tu <span>'+a+'</span> \u2014 \u00bfes por dise\u00f1o o por inercia?';},sim:'\u00bfTus h\u00e1bitos diarios construyen esta \u00e1rea o solamente la mantienen igual?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 tus acciones son completamente reactivas.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 la mayor\u00eda de lo que haces es por inercia o costumbre.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 hay algo de dise\u00f1o y mucho de inercia.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 tus acciones son mayormente intencionales y consistentes.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 tus acciones son completamente por dise\u00f1o.'}]},
-  L:{q:function(a){return'Cuando logras algo en tu <span>'+a+'</span> \u2014 \u00bfese logro cambia algo en ti o simplemente pasa y se olvida?';},sim:'\u00bfTus logros en esta \u00e1rea se convierten en identidad, aprendizaje y nuevo impulso?',guide:'',scales:[{r:'r1',b:'1-2',t:'Bloqueo severo \u2014 tus logros no generan ning\u00fan cambio sostenido.'},{r:'r2',b:'3-4',t:'Patr\u00f3n limitante \u2014 los logros llegan pero se diluyen.'},{r:'r3',b:'5-6',t:'Conciencia parcial \u2014 algunos logros cambian algo en ti pero no de forma consistente.'},{r:'r4',b:'7-8',t:'Sistema funcional \u2014 la mayor\u00eda de tus logros retroalimentan el sistema.'},{r:'r5',b:'9-10',t:'Sistema integrado \u2014 cada logro se convierte en identidad, aprendizaje y combustible.'}]},
-};
-
-var EP_REC={
-  P:{ep:'EP.02',title:'\u00bfQui\u00e9n eres hoy y qui\u00e9n puedes llegar a ser?',reason:'trabaja directamente la conciencia del Pensamiento y la distinci\u00f3n entre hechos e interpretaciones.'},
-  E:{ep:'EP.04',title:'Las mentiras que te cuentas y te crees',reason:'desarrolla la capacidad de leer emociones en tiempo real y entender qu\u00e9 informaci\u00f3n traen.'},
-  S:{ep:'EP.05',title:'Tu historia no te define \u2014 pero s\u00ed te explica',reason:'trabaja el estado emocional sostenido y c\u00f3mo la historia construy\u00f3 el sentimiento que vives hoy.'},
-  D:{ep:'EP.06',title:'Responsable, no culpable',reason:'desarrolla la capacidad de tomar decisiones reales desde claridad en lugar de desde miedo o costumbre.'},
-  A:{ep:'EP.03',title:'Lo que los expertos descubrieron sobre los que s\u00ed cambian',reason:'trabaja la alineaci\u00f3n entre conocimiento y acci\u00f3n.'},
-  L:{ep:'EP.07',title:'Por qu\u00e9 arreglar partecitas no funciona',reason:'desarrolla la capacidad de usar los logros como punto de reinicio del ciclo.'}
-};
-
-// STATE
-var momentOfLife=null,calLvl={P:'B',E:'B',S:'B',D:'B',A:'B',L:'B'};
+// ─── STATE ─────────────────────────────────────────────────────
+var momentOfLife=null;
+var calLvl={}; ELEMENTS.forEach(function(e){calLvl[e.l]='B';});
 var scores={};
-AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
-var orderedIds=[];var metaAnswer=null;var curArea=null;var touched={};var aiU=5,aiO=5;
+function blankScore(){return{central:null,hasAncla:null,i1:['','',''],anclaText:'',i2:{origen:null,compromiso:null,trascendencia:null},anclaTotal:null,anclaValid:null,r:5,touched:false,deriva:null,urgencia:null,n1done:false,n2:{P:null,E:null,S:null,D:null,A:null,L:null},elementoPrimario:null,done:false};}
+AREAS.forEach(function(a){scores[a.id]=blankScore();});
+var orderedIds=[];var metaAnswer=null;var curArea=null;var aiU=5,aiO=5;
 var _shuffledAreas=null;
+var detailStep='central'; // NIVEL 1: central -> ancla -> i1 -> i2 -> score  ||  NIVEL 2/3 (modo profundizar): n2 -> n3
+var deepenMode=false;
 
-// UTILS
-function col(v){if(v==null)return'rgba(201,168,76,0.3)';if(v<=2)return'#8B0000';if(v<=4)return'#C0392B';if(v<=6)return'#E67E22';if(v<=8)return'#27AE60';return'#1ABC9C';}
-function tagOf(v){if(v==null)return{l:'\u2014',c:'warning'};if(v<4)return{l:'Cr\u00edtico',c:'critical'};if(v<6)return{l:'Atenci\u00f3n',c:'warning'};return{l:'Activo',c:'good'};}
-function scaleLbl(v){if(v<=2)return'\uD83D\uDD34 Bloqueo severo';if(v<=4)return'\uD83D\uDFE0 Patr\u00f3n limitante dominante';if(v<=6)return'\uD83D\uDFE1 Conciencia parcial';if(v<=8)return'\uD83D\uDFE2 Sistema funcional';return'\uD83D\uDD35 Sistema integrado y expansivo';}
-function vidaSt(a){if(a<3)return{t:'Sistema en colapso',s:'Necesitas apoyo, pausa y reconstrucci\u00f3n prioritaria'};if(a<5)return{t:'Vida b\u00e1sica \u2014 pasando raspando',s:'Hay \u00e1reas cr\u00edticas que consumen tu capacidad de logro'};if(a<6)return{t:'Construcci\u00f3n en proceso',s:'Algunas \u00e1reas avanzan mientras otras frenan el sistema'};if(a<7.5)return{t:'Sistema funcionando',s:'El c\u00edrculo PESDAL est\u00e1 girando \u2014 hay espacio para acelerar'};return{t:'Constructor avanzado',s:'El sistema est\u00e1 alineado y generando nuevos ciclos'};}
+// Área recomendada para Nivel 2 — sin Ancla primero (por urgencia), luego por Deriva más alta
+function getPriorityAreaId(){
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done&&!scores[a.id].done;});
+  var sinAncla=n1.filter(function(a){return!(scores[a.id].hasAncla&&scores[a.id].anclaValid);});
+  var conAncla=n1.filter(function(a){return scores[a.id].hasAncla&&scores[a.id].anclaValid;});
+  sinAncla.sort(function(a,b){return scores[b.id].urgencia-scores[a.id].urgencia;});
+  conAncla.sort(function(a,b){return scores[b.id].deriva-scores[a.id].deriva;});
+  var pick=sinAncla[0]||conAncla[0];
+  return pick?pick.id:null;
+}
+
+// ─── UTILS ─────────────────────────────────────────────────────
 function go(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function tks(){return[1,2,3,4,5,6,7,8,9,10].map(function(n){return'<span class="sl-tk">'+n+'</span>';}).join('');}
+function derivaClass(d){if(d<=2)return'estable';if(d<=5)return'atencion';return'critica';}
+function derivaColor(cls){return cls==='estable'?'#27AE60':cls==='atencion'?'#E67E22':cls==='critica'?'#FF4444':'#A8C4E8';}
+function derivaLabel(cls){return cls==='estable'?'Estable':cls==='atencion'?'Atención':cls==='critica'?'Crítica':'Urgencia';}
+function elName(l){var e=ELEMENTS.filter(function(x){return x.l===l;})[0];return e?e.name:l;}
+
+function areaStatus(id){
+  var s=scores[id];
+  if(!s.n1done)return null;
+  if(s.hasAncla&&s.anclaValid){
+    var cls=derivaClass(s.deriva);
+    return{type:'deriva',value:s.deriva,cls:cls,label:derivaLabel(cls),color:derivaColor(cls)};
+  }
+  return{type:'urgencia',value:s.urgencia,cls:'urgencia',label:'Urgencia',color:derivaColor('urgencia')};
+}
 
 function selMoment(key,el){
   momentOfLife=key;
@@ -598,26 +777,21 @@ function selMoment(key,el){
   document.getElementById('btn-mn').disabled=false;
 }
 
+// ─── CALIBRACIÓN (Fase 1) ───────────────────────────────────────
 function buildCal(){
-  var areaSection='<div class="cal-section"><div class="cal-section-title">Las 8 \u00c1reas de Vida</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">Este esc\u00e1ner analiza 8 dimensiones de tu vida.</p><div class="cal-areas-grid">';
+  var areaSection='<div class="cal-section"><div class="cal-section-title">Las 8 Áreas de Vida</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">Este escáner analiza 8 dimensiones de tu vida.</p><div class="cal-areas-grid">';
   AREAS.forEach(function(a){areaSection+='<div class="cal-area-item"><span class="cal-area-icon">'+a.icon+'</span><span class="cal-area-name">'+a.name+'</span><span class="cal-area-desc">'+a.calDesc+'</span></div>';});
   areaSection+='</div></div>';
-  var pesdalSection='<div class="cal-section"><div class="cal-section-title">El Sistema PESDAL</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">\u00bfQu\u00e9 tan bien conoces cada elemento del sistema que opera en tu vida?</p>';
-  PDEF.forEach(function(p){
+  var pesdalSection='<div class="cal-section"><div class="cal-section-title">El Sistema PESDAL</div><p style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75;margin-bottom:.8rem;">PESDAL nunca se apaga — los 6 elementos siempre operan, en automático o en consciente. ¿Qué tan bien reconoces cada uno en ti hoy?</p>';
+  ELEMENTS.forEach(function(p){
     var sel=calLvl[p.l];
-    pesdalSection+='<div class="cal-item"><div class="cal-hdr"><div class="cal-ltr">'+p.l+'</div><div class="cal-name">'+p.name+'</div></div><div class="cal-def">'+p.def+'</div><div class="cal-ex">'+p.ex+'</div><div class="cal-q">'+p.calQ+'</div><div class="cal-opts">'+p.opts.map(function(o){return'<div class="cal-opt'+(sel===o.k?' sel':'')+'" onclick="selCal(\''+p.l+'\',\''+o.k+'\',this)"><div class="cal-k">'+o.k+'</div><div class="cal-txt">'+o.t+'</div></div>';}).join('')+'</div><div class="adapt b'+(sel==='B'?' show':'')+'" id="ab-'+p.l+'">&#128161; '+p.lb+'</div><div class="adapt c'+(sel==='C'?' show':'')+'" id="ac-'+p.l+'">&#128218; '+p.lc+'</div></div>';
+    pesdalSection+='<div class="cal-item"><div class="cal-hdr"><div class="cal-ltr">'+p.l+'</div><div class="cal-name">'+p.name+'</div></div><div class="cal-def">'+p.def+'</div><div class="cal-ex">'+p.ex+'</div></div>';
   });
   pesdalSection+='</div>';
   document.getElementById('cal-wrap').innerHTML=areaSection+pesdalSection;
 }
 
-function selCal(l,k,el){
-  calLvl[l]=k;
-  el.closest('.cal-item').querySelectorAll('.cal-opt').forEach(function(o){o.classList.remove('sel');});
-  el.classList.add('sel');
-  ['B','C'].forEach(function(x){var b=document.getElementById('a'+x.toLowerCase()+'-'+l);if(b)b.classList.toggle('show',k===x);});
-}
-
+// ─── PRIORIDADES (Fase 2) ───────────────────────────────────────
 function renderOrderBtns(){
   if(!_shuffledAreas)_shuffledAreas=AREAS.slice().sort(function(){return Math.random()-.5;});
   var el=document.getElementById('order-grid');if(!el)return;
@@ -626,7 +800,6 @@ function renderOrderBtns(){
     return'<div class="order-btn'+(isPicked?' picked':'')+'" id="obtn-'+a.id+'" onclick="toggleOrder(\''+a.id+'\')"><span class="ob-icon">'+a.icon+'</span><span class="ob-name">'+a.full+'</span><span class="ob-num">'+(isPicked?orderNum:'')+'</span></div>';
   }).join('');
 }
-
 function toggleOrder(id){
   var idx=orderedIds.indexOf(id);
   if(idx!==-1){orderedIds.splice(idx,1);}else{orderedIds.push(id);}
@@ -638,7 +811,6 @@ function toggleOrder(id){
   });
   updateOrderUI();
 }
-
 function updateOrderUI(){
   var done=orderedIds.length===AREAS.length;
   var confirmEl=document.getElementById('order-confirm');var metaEl=document.getElementById('meta-box');
@@ -653,142 +825,298 @@ function updateOrderUI(){
     if(insightEl)insightEl.classList.remove('show');if(btnStart)btnStart.disabled=true;
   }
 }
-
 function selMeta(key){
   metaAnswer=key;
   document.getElementById('meta-feel').classList.toggle('sel',key==='feel');
   document.getElementById('meta-should').classList.toggle('sel',key==='should');
   var btnStart=document.getElementById('btn-start');if(btnStart)btnStart.disabled=false;
 }
-
 function startDiagnosis(){go('s-overview');renderOverview();if(orderedIds.length>0){openArea(orderedIds[0]);}}
 
+// ─── OVERVIEW (Fase 3 — lista de áreas) ─────────────────────────
 function renderOverview(){
-  renderDots();renderVida();renderOvChart();renderPriorityList();renderCards();
+  renderDots();renderVida();renderOvChart();renderPriorityList();renderRecommended();renderCards();
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done;}).length;
   var done=AREAS.filter(function(a){return scores[a.id].done;}).length;
   var btn=document.getElementById('btn-rpt');var banner=document.getElementById('partial-banner');
-  if(done>=8&&btn)btn.style.display='flex';else if(btn)btn.style.display='none';
-  if(done>=5&&done<8&&banner)banner.style.display='block';else if(banner)banner.style.display='none';
+  if(n1>=8&&btn)btn.style.display='flex';else if(btn)btn.style.display='none';
+  if(n1>=5&&n1<8&&banner)banner.style.display='block';else if(banner)banner.style.display='none';
 }
-
 function renderDots(){
   var el=document.getElementById('prog-dots');if(!el)return;
-  el.innerHTML=AREAS.map(function(a){var s=scores[a.id];return'<div class="dot'+(s.done?' filled':s.avg!==null?' partial':'')+'"></div>';}).join('');
+  el.innerHTML=AREAS.map(function(a){var s=scores[a.id];return'<div class="dot'+(s.done?' filled':(s.n1done?' partial':''))+'"></div>';}).join('');
 }
-
 function renderVida(){
-  var done=AREAS.filter(function(a){return scores[a.id].done;});var w=document.getElementById('vida-wrap');
-  if(!done.length){w.style.display='none';return;}
-  var avg=done.reduce(function(s,a){return s+scores[a.id].avg;},0)/done.length;var st=vidaSt(avg);
-  document.getElementById('vida-t').innerHTML=st.t;
-  document.getElementById('vida-s').innerHTML='Promedio: '+avg.toFixed(1)+'/10 \u00b7 '+done.length+'/'+AREAS.length+' \u00e1reas';
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done;});var w=document.getElementById('vida-wrap');
+  if(!n1.length){w.style.display='none';return;}
+  var conAncla=n1.filter(function(a){return scores[a.id].hasAncla&&scores[a.id].anclaValid;});
+  var sinAncla=n1.length-conAncla.length;
+  var done=AREAS.filter(function(a){return scores[a.id].done;}).length;
+  var txt;
+  if(conAncla.length){
+    var avgD=conAncla.reduce(function(s,a){return s+scores[a.id].deriva;},0)/conAncla.length;
+    txt='Deriva promedio: '+avgD.toFixed(1);
+    document.getElementById('vida-t').innerHTML=derivaLabel(derivaClass(avgD))+' en promedio';
+  }else{
+    document.getElementById('vida-t').innerHTML='Aún sin Planos de Referencia validados';
+    txt='El escáner está señalando urgencia, no Deriva todavía';
+  }
+  if(sinAncla)txt+=' · '+sinAncla+' sin Plano de Referencia';
+  txt+=' · '+done+' con diagnóstico Nivel 2 completo';
+  document.getElementById('vida-s').innerHTML=txt+' · '+n1.length+'/'+AREAS.length+' en Nivel 1';
   w.style.display='block';
 }
-
+function renderRecommended(){
+  var el=document.getElementById('recommended-box');if(!el)return;
+  var pid=getPriorityAreaId();
+  if(!pid){el.style.display='none';el.innerHTML='';return;}
+  var area=AREAS.filter(function(a){return a.id===pid;})[0];var st=areaStatus(pid);
+  el.style.display='block';
+  el.innerHTML='<div class="card" style="border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.05);"><div class="card-title">Área recomendada para Nivel 2</div><div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem;"><span style="font-size:1.5rem;">'+area.icon+'</span><div><div style="font-family:\'Cormorant Garamond\',serif;font-weight:700;font-size:1.05rem;">'+area.full+'</div><div style="font-size:.74rem;color:var(--muted);">'+(st.type==='urgencia'?'Sin Plano de Referencia aún — urgencia '+st.value.toFixed(1):'Desviación '+st.value.toFixed(1)+' · '+st.label)+'</div></div></div><p style="font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:.7rem;">El sistema identificó esta área como prioritaria: '+(st.type==='urgencia'?'aquí necesitas construir tu Plano de Referencia primero.':'mayor Desviación entre las áreas con Plano de Referencia validado.')+'</p><button class="btn-save" style="margin-top:0;" onclick="openArea(\''+pid+'\',\'n2\')">Profundizar — Nivel 2 \u2192</button></div>';
+}
 function renderOvChart(){
-  var done=AREAS.filter(function(a){return scores[a.id].done;});var el=document.getElementById('ov-chart');
-  if(!done.length){el.style.display='none';return;}
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done;});var el=document.getElementById('ov-chart');
+  if(!n1.length){el.style.display='none';return;}
   el.style.display='block';
   var bars='';var orderedAreas=orderedIds.length?orderedIds.map(function(id){return AREAS.filter(function(a){return a.id===id;})[0];}).filter(Boolean):AREAS;
   orderedAreas.forEach(function(a){
-    var s=scores[a.id];var pct=s.avg!==null?(s.avg/10)*100:0;var c=s.avg!==null?col(s.avg):'rgba(255,255,255,.05)';
-    bars+='<div class="bg"><div class="bw"><div class="b" style="height:'+pct+'%;background:'+c+'"></div></div><div class="bv" style="color:'+(s.avg!==null?c:'var(--muted)')+'">'+( s.avg!==null?s.avg.toFixed(1):'—')+'</div><div class="bl">'+a.name+'</div></div>';
+    var st=areaStatus(a.id);var pct=st?(st.value/10)*100:0;var c=st?st.color:'rgba(255,255,255,.05)';
+    var val=st?st.value.toFixed(1):'—';
+    bars+='<div class="bg"><div class="bw"><div class="b" style="height:'+pct+'%;background:'+c+'"></div></div><div class="bv" style="color:'+(st?c:'var(--muted)')+'">'+val+'</div><div class="bl">'+a.name+'</div></div>';
   });
-  var tTop=110-(6/10)*110;
-  el.innerHTML='<div class="ovcht"><div class="chl">Histograma General</div><div class="br">'+bars+'</div><div class="thr" style="top:'+(tTop+20)+'px"><div class="tl"></div><span class="tlb">6</span></div></div>';
+  el.innerHTML='<div class="ovcht"><div class="chl">Deriva / Urgencia por área — Nivel 1</div><div class="br">'+bars+'</div></div>';
 }
-
 function renderPriorityList(){
   var el=document.getElementById('priority-list');if(!el||!orderedIds.length)return;
-  var done=AREAS.filter(function(a){return scores[a.id].done;});if(!done.length){el.innerHTML='';return;}
-  var html='<div class="card-title" style="font-family:\'DM Mono\',monospace;font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem;">Tu orden de prioridad</div><div class="priority-list-compact">';
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done;});if(!n1.length){el.innerHTML='';return;}
+  var html='<div class="card-title" style="font-family:\'DM Mono\',monospace;font-size:.6rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem;">Tu orden de escaneo</div><div class="priority-list-compact">';
   orderedIds.forEach(function(id,i){
-    var area=AREAS.filter(function(a){return a.id===id;})[0];if(!area)return;var s=scores[area.id];var scoreHtml='';
-    if(s.done){var c=col(s.avg);scoreHtml='<span class="pli-score" style="color:'+c+'">'+s.avg.toFixed(1)+'</span>';}
+    var area=AREAS.filter(function(a){return a.id===id;})[0];if(!area)return;var st=areaStatus(area.id);var scoreHtml='';
+    if(st)scoreHtml='<span class="pli-score" style="color:'+st.color+'">'+st.value.toFixed(1)+'</span>';
     html+='<div class="pli"><span class="pli-num">'+(i+1)+'</span><span class="pli-icon">'+area.icon+'</span><span class="pli-name">'+area.full+'</span>'+scoreHtml+'</div>';
   });
   html+='</div>';el.innerHTML=html;
 }
-
 function renderCards(){
   var el=document.getElementById('areas-grid');if(!el)return;
   var orderedAreas=orderedIds.length?orderedIds.map(function(id){return AREAS.filter(function(a){return a.id===id;})[0];}).filter(Boolean):AREAS;
-  var nextId=orderedIds.find(function(id){return!scores[id].done;});
+  var nextId=orderedIds.find(function(id){return!scores[id].n1done;});
   el.innerHTML=orderedAreas.map(function(a,i){
-    var s=scores[a.id];var pct=s.avg!==null?(s.avg/10)*100:0;var c=s.avg!==null?col(s.avg):'rgba(201,168,76,0.28)';var t=s.avg!==null?tagOf(s.avg):null;var isNext=a.id===nextId&&!s.done;
-    return'<div class="ac'+(s.done?' done-area':isNext?' next-area':'')+'" onclick="openArea(\''+a.id+'\')"><span class="a-ord-badge">'+(i+1)+'</span><span class="ai2">'+a.icon+'</span><div class="an">'+a.full+'</div><div class="abt"><div class="abf" style="width:'+pct+'%;background:'+c+'"></div></div><div class="am"><span class="asc" style="color:'+c+'">'+(s.avg!==null?s.avg.toFixed(1):'—')+'</span>'+(t?'<span class="stag '+t.c+'">'+t.l+'</span>':'')+'</div><span class="atap">'+(s.done?'✓ Escaneado':isNext?'▶ Siguiente':'Toca para escanear')+'</span></div>';
+    var s=scores[a.id];var st=areaStatus(a.id);var pct=st?(st.value/10)*100:0;var c=st?st.color:'rgba(201,168,76,0.28)';var isNext=a.id===nextId&&!s.n1done;
+    var tap=s.done?'✓ Nivel 2 completo':s.n1done?'▶ Toca para Nivel 2':isNext?'▶ Siguiente — Nivel 1':'Toca para Nivel 1';
+    var mode=s.n1done&&!s.done?"'n2'":"'central'";
+    return'<div class="ac'+(s.done?' done-area':isNext?' next-area':'')+'" onclick="openArea(\''+a.id+'\','+mode+')"><span class="a-ord-badge">'+(i+1)+'</span><span class="ai2">'+a.icon+'</span><div class="an">'+a.full+'</div><div class="abt"><div class="abf" style="width:'+pct+'%;background:'+c+'"></div></div><div class="am"><span class="asc" style="color:'+c+'">'+(st?st.value.toFixed(1):'—')+'</span>'+(st?'<span class="deriva-badge '+st.cls+'">'+st.label+'</span>':'')+'</div><span class="atap">'+tap+'</span></div>';
   }).join('');
 }
 
-function openArea(id){
-  curArea=id;if(!touched[id])touched[id]={};
-  var area=AREAS.filter(function(a){return a.id===id;})[0];var s=scores[id];
-  PDEF.forEach(function(p){if(s.pesdal[p.l]===null)s.pesdal[p.l]=5;});
+// ─── DETALLE DE ÁREA: NIVEL 1 → NIVEL 2 → NIVEL 3 ───────────────
+function openArea(id,mode){
+  curArea=id;deepenMode=(mode==='n2');detailStep=deepenMode?'n2':'central';
+  var area=AREAS.filter(function(a){return a.id===id;})[0];
   var priorityNum=orderedIds.indexOf(id)+1;
   document.getElementById('d-hdr').innerHTML='<span class="di">'+area.icon+'</span><div class="dn">'+area.full+'</div>'+(priorityNum>0?'<div style="font-family:\'DM Mono\',monospace;font-size:.58rem;color:var(--gold);margin-top:.2rem;">Prioridad #'+priorityNum+'</div>':'');
-  document.getElementById('d-context').innerHTML='<div class="area-context mt8">'+area.ctx+'</div>';
-  var ch='<div class="card-title">Histograma PESDAL \u2014 '+area.full+'</div><div class="cht-hint">Estas barras muestran en tiempo real c\u00f3mo est\u00e1 cada elemento del sistema en esta \u00e1rea.</div>';
-  PDEF.forEach(function(p){var v=s.pesdal[p.l];var c=col(v);ch+='<div class="pbr"><div class="pl">'+p.l+'</div><div class="pi"><span class="pn">'+p.name+'</span><div class="pt"><div class="pf" id="pb-'+id+'-'+p.l+'" style="width:'+(v/10)*100+'%;background:'+c+'"></div></div></div><div class="pnum" id="pn-'+id+'-'+p.l+'" style="color:'+c+'">'+v+'</div></div>';});
-  document.getElementById('d-chart').innerHTML=ch;
-  var sl='<div class="card-title">Califica cada elemento del 1 al 10</div>';
-  PDEF.forEach(function(p){
-    var v=s.pesdal[p.l];var c=col(v);var pct=(v-1)/9*100;var mq=MQ[p.l];var isTouched=touched[id][p.l];
-    var scHtml=mq.scales.map(function(sc){return'<div class="sr"><span class="srb '+sc.r+'">'+sc.b+'</span><span class="srt2">'+sc.t+'</span></div>';}).join('');
-    sl+='<div class="mq-block"><div class="mq-lr"><div class="mq-l">'+p.l+'</div><div class="mq-ln">'+p.name+'</div></div><div class="mq-q">'+mq.q(area.full)+'</div><div class="mq-sim">'+mq.sim+'</div>'+(mq.guide?'<div class="mq-guide">'+mq.guide+'</div>':'')+'<div class="scale-ref"><div class="srt">Referencia</div>'+scHtml+'</div><div class="sl-unt'+((!isTouched)?' show':'')+'" id="unt-'+id+'-'+p.l+'">\u26a0 Mueve el control para registrar tu calificaci\u00f3n</div><div class="sl-hdr"><span style="font-size:clamp(.72rem,1.55vw,.8rem);color:var(--muted)">Tu calificaci\u00f3n:</span><div class="sl-val" id="sv-'+id+'-'+p.l+'" style="color:'+c+'">'+v+'</div></div><div class="sl-lbl" id="svl-'+id+'-'+p.l+'" style="color:'+c+'">'+scaleLbl(v)+'</div><input type="range" min="1" max="10" value="'+v+'" id="sl-'+id+'-'+p.l+'" class="'+((!isTouched)?'unt':'')+'" style="background:linear-gradient(to right,'+(isTouched?c:'var(--muted)')+' '+pct+'%,var(--dark3) '+pct+'%)" oninput="updP(\''+id+'\',\''+p.l+'\',this)"><div class="sl-tks">'+tks()+'</div></div>';
-  });
-  document.getElementById('d-sliders').innerHTML=sl;
-  renderDiag(id);
-  var saveBtn=document.getElementById('btn-save-detail');
-  if(saveBtn){saveBtn.innerHTML='Guardar \u00e1rea \u2713';saveBtn.style.background='';saveBtn.style.borderColor='';}
+  document.getElementById('d-context').innerHTML='<div class="area-context mt8">'+area.ctx+(deepenMode?'<div style="margin-top:.4rem;font-size:.76rem;color:var(--gold);">Nivel 2 — diagnóstico profundo de esta área</div>':'')+'</div>';
+  renderDetailStep();
   go('s-detail');
 }
 
-function updP(id,l,inp){
-  var v=parseInt(inp.value);scores[id].pesdal[l]=v;
-  if(!touched[id])touched[id]={};touched[id][l]=true;
-  inp.classList.remove('unt');
-  var unt=document.getElementById('unt-'+id+'-'+l);if(unt)unt.classList.remove('show');
-  var vals=['P','E','S','D','A','L'].map(function(k){return scores[id].pesdal[k];}).filter(function(x){return x!==null;});
-  scores[id].avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
-  var c=col(v);var pct=(v-1)/9*100;
-  inp.style.background='linear-gradient(to right,'+c+' '+pct+'%,var(--dark3) '+pct+'%)';
-  var bar=document.getElementById('pb-'+id+'-'+l);var num=document.getElementById('pn-'+id+'-'+l);
-  var sv=document.getElementById('sv-'+id+'-'+l);var svl=document.getElementById('svl-'+id+'-'+l);
-  if(bar){bar.style.width=(v/10)*100+'%';bar.style.background=c;}
-  if(num){num.textContent=v;num.style.color=c;}
-  if(sv){sv.textContent=v;sv.style.color=c;}
-  if(svl){svl.innerHTML=scaleLbl(v);svl.style.color=c;}
-  renderDiag(id);
+function stepIndex(){return['central','ancla','i1','i2','score','n2','n3'].indexOf(detailStep);}
+
+function renderDetailProgress(){
+  if(deepenMode){
+    var html='<div class="steps mt8"><div class="step '+(detailStep==='n2'?'active':'done')+'">Nivel 2 · Elementos</div><div class="step '+(detailStep==='n3'?'active':'')+'">Nivel 3 · Protocolo</div></div>';
+    return html;
+  }
+  var labels=[['central','¿Tú o te lo construyeron?'],['ancla','Plano de Referencia'],['score','Escáner']];
+  var activeGroup=detailStep==='i1'||detailStep==='i2'?'ancla':detailStep;
+  var html='<div class="steps mt8"><div class="step" style="border-color:var(--gold);color:var(--gold);">Nivel 1 — Escáner General</div></div><div class="steps">';
+  labels.forEach(function(l){
+    var cls=l[0]===activeGroup?'active':'';
+    html+='<div class="step '+cls+'">'+l[1]+'</div>';
+  });
+  html+='</div>';
+  return html;
 }
 
-function renderDiag(id){
-  var area=AREAS.filter(function(a){return a.id===id;})[0];var s=scores[id];var avg=s.avg||5;
-  var minV=10,minL='P';
-  PDEF.forEach(function(p){var v=s.pesdal[p.l];if(v!==null&&v<minV){minV=v;minL=p.l;}});
-  var minN=PDEF.filter(function(p){return p.l===minL;})[0].name;var t=tagOf(avg);
-  var titles={critical:'\u00c1rea cr\u00edtica \u2014 el sistema est\u00e1 bloqueado',warning:'\u00c1rea bajo el umbral de seguridad',good:'\u00c1rea funcionando \u2014 con espacio para crecer'};
-  var texts={critical:'Esta \u00e1rea est\u00e1 drenando activamente tu capacidad de logro.',warning:'Esta \u00e1rea est\u00e1 por debajo de la L\u00ednea 6.',good:'El c\u00edrculo PESDAL est\u00e1 girando en esta \u00e1rea.'};
-  var P=s.pesdal['P'],S2=s.pesdal['S'],A2=s.pesdal['A'],L2=s.pesdal['L'];var pat='';
-  if(L2!==null&&S2!==null&&L2>=8&&S2<=4)pat+='<div class="diag pattern"><span class="dtag" style="color:#3498DB">\u26a0 PATR\u00d3N DETECTADO</span><div class="dtitle">\u00c9xito Vac\u00edo</div><div class="dtext">Tienes resultados externos altos pero un estado emocional sostenido bajo.</div></div>';
-  if(P!==null&&A2!==null&&P>=7&&A2<=4)pat+='<div class="diag pattern"><span class="dtag" style="color:#3498DB">\u26a0 PATR\u00d3N DETECTADO</span><div class="dtitle">Par\u00e1lisis por An\u00e1lisis</div><div class="dtext">Sabes ad\u00f3nde quieres ir pero algo frena el movimiento.</div></div>';
-  var wl=minV<7?'<div class="wl"><strong>Elemento m\u00e1s d\u00e9bil: '+minL+' \u2014 '+minN+' ('+minV+'/10)</strong><br>Este es el punto m\u00e1s da\u00f1ado del sistema en esta \u00e1rea.</div>':'';
-  document.getElementById('d-diag').innerHTML='<div class="diag '+t.c+'"><span class="dtag" style="color:'+(t.c==='critical'?'#FF4444':t.c==='warning'?'#F39C12':'#2ECC71')+'">'+t.l+' \u00b7 '+avg.toFixed(1)+'/10</span><div class="dtitle">'+titles[t.c]+'</div><div class="dtext">'+texts[t.c]+'</div>'+wl+'</div>'+pat;
+function renderDetailStep(){
+  var area=AREAS.filter(function(a){return a.id===curArea;})[0];var s=scores[curArea];
+  var html=renderDetailProgress();
+
+  if(detailStep==='central'){
+    html+='<div class="central-q"><span class="central-q-lbl">La pregunta que transforma el escáner</span><div class="central-q-text">¿Este diseño en '+area.full+' lo construiste tú — o te lo construyeron?</div><div class="central-opts">'
+      +['yo::Lo construí yo — es genuinamente mío.','mixto::Es una mezcla — parte mía, parte heredada.','otros::Me lo construyeron — familia, entorno o expectativas ajenas.'].map(function(opt){
+        var parts=opt.split('::');var k=parts[0],t=parts[1];
+        return'<div class="central-opt'+(s.central===k?' sel':'')+'" onclick="setCentral(\''+k+'\')">'+t+'</div>';
+      }).join('')+'</div></div>';
+  }
+
+  else if(detailStep==='ancla'){
+    html+='<div class="ancla-q"><span class="central-q-lbl">Tu Plano de Referencia</span><div class="central-q-text">¿Tienes tu Plano de Referencia para esta área — tu 10: quién quieres Ser, qué quieres Hacer y qué quieres Tener aquí?</div>'
+      +'<div class="ancla-toggle"><div class="ancla-btn'+(s.hasAncla===true?' sel':'')+'" onclick="setHasAncla(true)">Sí, la tengo clara</div><div class="ancla-btn'+(s.hasAncla===false?' sel':'')+'" onclick="setHasAncla(false)">No, no la tengo</div></div>';
+    if(s.hasAncla===false)html+='<div class="no-ancla-flag">Sin Plano de Referencia, tu puntaje no mide Desviación — mide <strong>urgencia</strong>. Puedes construirlo ahora con los dos instrumentos, o saltarlo y volver después.</div>';
+    html+='</div>';
+  }
+
+  else if(detailStep==='i1'){
+    html+='<div class="instr-box"><div class="instr-title">Instrumento 1 — Descubrimiento del Plano de Referencia</div>';
+    ANCLA_I1.forEach(function(q,i){
+      html+='<div class="instr-q">'+(i+1)+'. '+q.q+'</div><div class="instr-bias">'+q.note+'</div><textarea class="instr-input" placeholder="Tu respuesta..." data-i1="'+i+'" oninput="updI1(this)">'+(s.i1[i]||'')+'</textarea>';
+    });
+    html+='<div class="instr-q">Síntesis</div><div class="instr-bias">"En esta área, lo que genuinamente quiero construir es ___."</div><textarea class="instr-input" placeholder="Tu síntesis..." oninput="updAnclaText(this)">'+(s.anclaText||'')+'</textarea>';
+    html+='<button class="skip-btn" onclick="skipAncla()">Aún no lo tengo claro — saltar y volver después</button>';
+    html+='</div>';
+  }
+
+  else if(detailStep==='i2'){
+    html+='<div class="instr-box"><div class="instr-title">Instrumento 2 — Validación del Plano de Referencia</div>';
+    ANCLA_I2.forEach(function(q){
+      html+='<div class="val-q"><div class="val-q-text">'+q.q+'</div><div class="val-opts">'+ANCLA_VAL_OPTS.map(function(o){
+        return'<div class="val-opt'+(s.i2[q.k]===o.k?' sel':'')+'" onclick="setI2(\''+q.k+'\','+o.k+')">'+o.t+'</div>';
+      }).join('')+'</div></div>';
+    });
+    if(s.anclaTotal!==null){
+      var valid=s.anclaValid;
+      html+='<div class="ancla-result '+(valid?'valid':'weak')+'"><div class="ancla-result-title">'+(valid?'Plano de Referencia válido':'Plano de Referencia débil')+' — '+s.anclaTotal+'/6</div><div class="ancla-result-text">'+(valid?'Tu Plano de Referencia pasó el umbral (4 o más). A partir de ahora tu puntaje en esta área mide Desviación.':anclaFailText(s))+'</div></div>';
+    }
+    html+='</div>';
+  }
+
+  else if(detailStep==='score'){
+    var label=(s.hasAncla&&s.anclaValid)?'¿Qué tan cerca estás hoy de tu Plano de Referencia en esta área?':'¿Cómo está esta área hoy, del 1 al 10?';
+    var sub=(s.hasAncla&&s.anclaValid)?'1 = muy lejos de tu Plano de Referencia · 10 = exactamente en él':'1 = muy mal · 10 = muy bien — esto marca tu urgencia, no tu Desviación';
+    var pct=(s.r-1)/9*100;
+    html+='<div class="card"><div class="card-title">Nivel 1 — Escáner General</div><div class="ai-q">'+label+'</div><div class="ai-sub">'+sub+'</div><div class="ai-val-row"><span style="font-size:.78rem;color:var(--muted)">Tu puntaje:</span><div class="ai-val" id="score-val" style="color:var(--gold)">'+s.r+'</div></div><input type="range" min="1" max="10" value="'+s.r+'" id="score-slider" oninput="updScore(this)" style="background:linear-gradient(to right,var(--gold) '+pct+'%,var(--dark3) '+pct+'%)"><div class="sl-tks">'+tks()+'</div></div>';
+  }
+
+  else if(detailStep==='n2'){
+    html+='<div class="card-title mt8">Nivel 2 — Diagnóstico de Elementos</div><p style="font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:.8rem;">Para cada elemento, responde con un ejemplo concreto en <strong>'+area.full+'</strong>. Si no puedes dar un ejemplo específico — esa es la respuesta.</p>';
+    ELEMENTS.forEach(function(e){
+      var sel=s.n2[e.l];
+      html+='<div class="n2-card"><div class="n2-hdr"><div class="n2-ltr">'+e.l+'</div><div class="n2-name">'+e.name+'</div>'+(sel?'<span class="n2-result '+sel+'">'+(sel==='consc'?'Consciente':sel==='parcial'?'Parcial':'Automático')+'</span>':'')+'</div><div class="n2-q">'+e.n2q+'</div><div class="n2-hint">'+e.n2hint+'</div><div class="n2-opts">'
+        +e.opts.map(function(o){
+          var lbl=o.k==='consc'?'Consciente':o.k==='parcial'?'Parcial':'Automático';
+          return'<div class="n2-opt'+(sel===o.k?' sel':'')+'" onclick="setN2(\''+e.l+'\',\''+o.k+'\')"><span class="n2-opt-lbl '+o.k+'">'+lbl+'</span><span class="n2-opt-txt">'+o.t+'</span></div>';
+        }).join('')+'</div></div>';
+    });
+  }
+
+  else if(detailStep==='n3'){
+    var prim=s.elementoPrimario;
+    if(!prim){
+      html+='<div class="n3-box"><span class="n3-lbl">Nivel 3 — Resultado</span><div class="n3-text">Todos los elementos operan en consciente en esta área. No hay un elemento primario que active — este es un área donde el automático está alineado. <strong>Déjalo operar.</strong></div></div>';
+    }else{
+      var e=ELEMENTS.filter(function(x){return x.l===prim;})[0];
+      html+='<div class="n3-box"><span class="n3-lbl">Nivel 3 — Tu elemento de activación</span><div class="n3-elem">'+e.l+' — '+e.name+'</div><div class="n3-text">Este es el elemento que más directamente está causando la Desviación en '+area.full+'. Tu primera acción consciente:</div><div class="n3-quote">'+e.accion+'</div></div>';
+    }
+  }
+
+  document.getElementById('d-body').innerHTML=html;
+  updateDetailNav();
 }
 
-function trySave(){
-  if(!curArea)return;var t=touched[curArea]||{};
-  if(!PDEF.every(function(p){return t[p.l];})){
-    PDEF.forEach(function(p){if(!t[p.l]){var u=document.getElementById('unt-'+curArea+'-'+p.l);if(u)u.classList.add('show');}});
-    var first=PDEF.filter(function(p){return!t[p.l];})[0];
-    if(first){var el=document.getElementById('unt-'+curArea+'-'+first.l);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+function anclaFailText(s){
+  if(s.i2.origen===0)return'Falló Origen — este "quiero" parece venir de tu entorno, no de ti. Vuelve a la Pregunta 1 del Instrumento 1.';
+  if(s.i2.compromiso===0)return'Falló Compromiso — no parece valer el costo real que implica. Vuelve a la Pregunta 3 del Instrumento 1.';
+  if(s.i2.trascendencia===0)return'Falló Trascendencia — le falta profundidad. Vuelve a la Pregunta 3 del Instrumento 1.';
+  return'Está cerca del umbral. Revisa tus respuestas del Instrumento 1 y profundiza donde sientas menos claridad.';
+}
+
+function setCentral(k){scores[curArea].central=k;scores[curArea].touched=true;renderDetailStep();}
+function setHasAncla(v){scores[curArea].hasAncla=v;scores[curArea].touched=true;renderDetailStep();}
+function updI1(el){var i=parseInt(el.getAttribute('data-i1'));scores[curArea].i1[i]=el.value;}
+function updAnclaText(el){scores[curArea].anclaText=el.value;}
+function setI2(k,v){
+  var s=scores[curArea];s.i2[k]=v;
+  var vals=[s.i2.origen,s.i2.compromiso,s.i2.trascendencia];
+  if(vals.every(function(x){return x!==null;})){
+    s.anclaTotal=vals.reduce(function(a,b){return a+b;},0);
+    s.anclaValid=s.anclaTotal>=4;
+  }
+  renderDetailStep();
+}
+function updScore(inp){
+  var v=parseInt(inp.value);scores[curArea].r=v;
+  document.getElementById('score-val').textContent=v;
+  var pct=(v-1)/9*100;inp.style.background='linear-gradient(to right,var(--gold) '+pct+'%,var(--dark3) '+pct+'%)';
+}
+function setN2(l,k){scores[curArea].n2[l]=k;renderDetailStep();}
+
+function computeElementoPrimario(s){
+  var order=['P','E','S','D','A','L'];
+  for(var i=0;i<order.length;i++){if(s.n2[order[i]]==='autom')return order[i];}
+  for(var i=0;i<order.length;i++){if(s.n2[order[i]]==='parcial')return order[i];}
+  return null;
+}
+
+function updateDetailNav(){
+  var backBtn=document.getElementById('btn-back-detail');var nextBtn=document.getElementById('btn-save-detail');
+  if(!backBtn||!nextBtn)return;
+  var s=scores[curArea];
+  var canAdvance=true;
+  if(deepenMode){
+    backBtn.textContent='\u2190 Volver al Plano';
+    if(detailStep==='n2')nextBtn.textContent='Ver Protocolo \u2192';
+    if(detailStep==='n3')nextBtn.textContent='Guardar diagnóstico \u2713';
     return;
   }
-  scores[curArea].done=true;
-  var saveBtn=document.getElementById('btn-save-detail');
-  if(saveBtn){saveBtn.innerHTML='\u2713 \u00c1rea guardada';saveBtn.style.background='var(--green)';saveBtn.style.borderColor='var(--green)';saveBtn.classList.add('save-confirm');}
-  setTimeout(function(){var nextId=orderedIds.find(function(id){return!scores[id].done;});if(nextId){openArea(nextId);}else{renderOverview();go('s-overview');}},520);
+  backBtn.textContent=detailStep==='central'?'\u2190 Sin guardar':'\u2190 Atrás';
+  if(detailStep==='central')canAdvance=!!s.central;
+  if(detailStep==='ancla')canAdvance=s.hasAncla!==null;
+  if(detailStep==='score')nextBtn.textContent='Guardar Nivel 1 \u2713';
+  else nextBtn.textContent='Continuar \u2192';
+  nextBtn.disabled=!canAdvance;
 }
 
+function detailBack(){
+  if(deepenMode){
+    if(detailStep==='n3'){detailStep='n2';renderDetailStep();return;}
+    go('s-overview');renderOverview();return;
+  }
+  if(detailStep==='central'){go('s-overview');renderOverview();return;}
+  if(detailStep==='ancla'){detailStep='central';}
+  else if(detailStep==='i1'){detailStep='ancla';}
+  else if(detailStep==='i2'){detailStep='i1';}
+  else if(detailStep==='score'){detailStep=scores[curArea].hasAncla?'i2':'ancla';}
+  renderDetailStep();
+}
+
+function detailNext(){
+  var s=scores[curArea];
+
+  if(deepenMode){
+    if(detailStep==='n2'){
+      var allAnswered=ELEMENTS.every(function(e){return s.n2[e.l];});
+      if(!allAnswered)return;
+      s.elementoPrimario=computeElementoPrimario(s);
+      detailStep='n3';renderDetailStep();return;
+    }
+    if(detailStep==='n3'){
+      s.done=true;
+      go('s-overview');renderOverview();return;
+    }
+    return;
+  }
+
+  // NIVEL 1
+  if(detailStep==='central'){if(!s.central)return;detailStep='ancla';renderDetailStep();return;}
+  if(detailStep==='ancla'){
+    if(s.hasAncla===null)return;
+    detailStep=s.hasAncla?'i1':'score';
+    renderDetailStep();return;
+  }
+  if(detailStep==='i1'){detailStep='i2';renderDetailStep();return;}
+  if(detailStep==='i2'){detailStep='score';renderDetailStep();return;}
+  if(detailStep==='score'){
+    if(s.hasAncla&&s.anclaValid){s.deriva=10-s.r;s.urgencia=null;}
+    else{s.urgencia=10-s.r;s.deriva=null;}
+    s.n1done=true;
+    go('s-overview');renderOverview();return;
+  }
+}
+
+function skipAncla(){scores[curArea].hasAncla=false;detailStep='score';renderDetailStep();}
+
+// ─── ÍNDICE DE ACTIVACIÓN (Fase 4 previa) ───────────────────────
 function updAI(type,inp){
   var v=parseInt(inp.value);if(type==='u')aiU=v;else aiO=v;
   var c=v<=4?'#E74C3C':v<=6?'#F39C12':'#2ECC71';var pct=(v-1)/9*100;
@@ -796,171 +1124,149 @@ function updAI(type,inp){
   var el=document.getElementById('aiv-'+type);if(el){el.textContent=v;el.style.color=c;}
 }
 
-function getActivEl(areaId){
-  var s=scores[areaId];var p=s.pesdal;
-  if(p['P']!==null&&p['P']<=4&&p['A']!==null&&p['A']>=5)return'A';
-  if(p['E']!==null&&p['E']<=4)return'E';if(p['S']!==null&&p['S']<=4)return'S';
-  if(p['D']!==null&&p['D']<=4)return'D';if(p['A']!==null&&p['A']<=4)return'A';
-  if(p['L']!==null&&p['L']<=4)return'L';
-  var minV=10,minL='P';PDEF.forEach(function(pp){var v=s.pesdal[pp.l];if(v!==null&&v<minV){minV=v;minL=pp.l;}});return minL;
-}
-
-function buildProtocol(activEl, activN, epRec, totalAvg){
-  var pat=totalAvg<4?"varios años":totalAvg<6?"mucho tiempo":"un tiempo considerable";
-  var rep=totalAvg<4?"miles de veces":totalAvg<6?"cientos de veces":"muchas veces";
-  var ep2=epRec?`<div style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(201,168,76,0.6);">&#9201; Próximamente — ${epRec.ep}: ${epRec.title}</div>`:``;
-  return `
-<div style="background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:1.4rem 1.2rem;margin-top:.8rem;">
-
-  <div style="text-align:center;margin-bottom:1rem;">
-    <div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#C9A84C;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem;">Tu Protocolo PESDAL</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.6vw,1.4rem);font-weight:700;margin-bottom:.3rem;">Acabas de hacer algo que la mayoría nunca hace.</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,2vw,1rem);color:#7A8499;font-style:italic;line-height:1.7;">No viniste a buscar una señal más. Viniste a mirarte. A saber con precisión dónde está roto el sistema. Eso es el primer acto de un Constructor.</div>
-  </div>
-
-  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
-
-  <div style="margin-bottom:.85rem;">
-    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">Antes de decirte qué sigue</div>
-    <div style="font-size:clamp(.82rem,1.8vw,.92rem);line-height:1.75;margin-bottom:.4rem;">Tu sistema lleva <strong style="color:#C9A84C">${pat}</strong> operando en este patrón. Ese ciclo se ha ejecutado <strong style="color:#C9A84C">${rep}</strong>. Un surco de años no desaparece en días &mdash; pero sí se puede redirigir. <strong>No es debilidad. Es física.</strong></div>
-  </div>
-
-  <div style="margin-bottom:.85rem;">
-    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">Pronóstico honesto</div>
-    <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:.4rem;">
-      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(139,0,0,.06);border-radius:4px;border-left:2px solid rgba(139,0,0,.3);">&#10060; No vas a despertar transformado mañana</div>
-      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(139,0,0,.06);border-radius:4px;border-left:2px solid rgba(139,0,0,.3);">&#10060; No va a ser lineal &mdash; habrá días que parecerá que retrocedes</div>
-      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En 30 días empezarás a ver el sistema en ti y en otros</div>
-      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En 90 días tomarás al menos una decisión diferente a la de siempre</div>
-      <div style="font-size:clamp(.78rem,1.7vw,.88rem);color:#7A8499;padding:.3rem .6rem;background:rgba(39,174,96,.06);border-radius:4px;border-left:2px solid rgba(39,174,96,.3);">&#10004; En un año serás una persona diferente &mdash; porque cambiaste cómo lees lo que te pasa</div>
-    </div>
-    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2vw,1.05rem);color:#E8C96A;text-align:center;">La transformación no es un evento. Es una dirección.</div>
-  </div>
-
-  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
-
-  <div style="margin-bottom:.85rem;">
-    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">El reencuadre central</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2.1vw,1.1rem);font-weight:700;margin-bottom:.28rem;">No fallaste. Operaste sin plano.</div>
-    <div style="font-size:clamp(.82rem,1.8vw,.92rem);color:#7A8499;line-height:1.75;margin-bottom:.45rem;">Durante años tomaste decisiones con el sistema que tenías &mdash; no con el que necesitabas. Eso no es culpa. Es punto de partida.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;">
-      <div style="background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);border-radius:4px;padding:.55rem;text-align:center;">
-        <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#E74C3C;margin-bottom:.12rem;">CULPA</div>
-        <div style="font-size:clamp(.74rem,1.6vw,.84rem);color:#7A8499;font-style:italic;">"Soy así y no puedo cambiar"</div>
-      </div>
-      <div style="background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:4px;padding:.55rem;text-align:center;">
-        <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#2ECC71;margin-bottom:.12rem;">RESPONSABILIDAD</div>
-        <div style="font-size:clamp(.74rem,1.6vw,.84rem);color:#7A8499;font-style:italic;">"A partir de hoy opero diferente"</div>
-      </div>
-    </div>
-  </div>
-
-  <div style="background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:5px;padding:.8rem .95rem;margin-bottom:.85rem;">
-    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#3498DB;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.22rem;">Modo Aprendiz</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2vw,1.05rem);font-weight:700;margin-bottom:.18rem;">Lo más peligroso ahora es intentar cambiar todo de golpe.</div>
-    <div style="font-size:clamp(.82rem,1.8vw,.92rem);color:#7A8499;line-height:1.75;"><strong style="color:#EAE6DC;">Tu único trabajo en los próximos 30 días: entender el sistema.</strong> No cambiarlo. Entenderlo. Cuando lo entiendes &mdash; el cambio ocurre solo.</div>
-  </div>
-
-  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>
-
-  <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.55rem;text-align:center;">Tu Prescripción</div>
-
-  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">1</div>
-    <div>
-      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Universal &middot; Esta semana</div>
-      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Entiende el sistema antes de actuar.</div>
-      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">Sin esta base cualquier acción es movimiento sin dirección.</div>
-      <div style="font-size:clamp(.74rem,1.6vw,.84rem);color:#7A8499;line-height:1.75;margin-bottom:.2rem;">▶ <strong style="color:#EAE6DC;">¿Aún no lo has visto?</strong>&nbsp;&nbsp;<a href="https://youtu.be/W4ip8UH0_-I" target="_blank" style="color:#C9A84C;text-decoration:none;">Ver EP.01 ahora &rarr;</a><br>✓ <strong style="color:#EAE6DC;">¿Ya lo viste?</strong>&nbsp;&nbsp;<span style="color:#7A8499;">Estás en el camino correcto. Tu episodio específico está en producción.</span></div>
-      <div style="display:none"><a href="https://youtu.be/W4ip8UH0_-I">x</a></div>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">2</div>
-    <div>
-      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Personalizado &middot; Este mes</div>
-      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Tu punto de entrada: <strong style="color:#E8C96A">${activEl} &mdash; ${activN}</strong></div>
-      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">Este elemento es donde tu ciclo puede empezar a moverse.</div>
-      ${ep2}
-    </div>
-  </div>
-
-  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">3</div>
-    <div>
-      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Permanente &middot; Desde hoy</div>
-      <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Este diagnóstico es tu Página 1.</div>
-      <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">En 90 días vas a releer esto y no vas a reconocer a la persona que lo escribió.</div>
-      <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:#C9A84C;">&#9658; Guardar PDF &mdash; Bitácora PESDAL</div>
-    </div>
-  </div>
-
-  <div style="text-align:center;padding:.75rem .3rem 0;border-top:1px solid rgba(201,168,76,.12);margin-top:.45rem;">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2vw,1.05rem);font-style:italic;color:#E8C96A;line-height:2;">
-      No importa cuántos años lleves en el mismo ciclo.<br>
-      Lo que importa es que hoy iniciaste.<br>
-      Iniciaste con información. Con un diagnóstico. Con un plano.<br>
-      <strong style="color:#C9A84C;font-style:normal;">Bienvenido al proceso. Somos Constructores de Vida.</strong>
-    </div>
-  </div>
-</div>`;
-}
-
-
 function buildReport(){
-  var done=AREAS.filter(function(a){return scores[a.id].done;});if(!done.length)return;
-  var totalAvg=done.reduce(function(s,a){return s+scores[a.id].avg;},0)/done.length;
-  var st=vidaSt(totalAvg);var sorted=done.slice().sort(function(a,b){return scores[a.id].avg-scores[b.id].avg;});
-  var fuga=sorted[0];var fugaArea=fuga?AREAS.filter(function(a){return a.id===fuga.id;})[0]:null;
+  var n1=AREAS.filter(function(a){return scores[a.id].n1done;});if(!n1.length)return;
+  var done=AREAS.filter(function(a){return scores[a.id].done;});
+  var conAncla=n1.filter(function(a){return scores[a.id].hasAncla&&scores[a.id].anclaValid;});
+  var sinAncla=n1.filter(function(a){return!(scores[a.id].hasAncla&&scores[a.id].anclaValid);});
+  var sorted=conAncla.slice().sort(function(a,b){return scores[b.id].deriva-scores[a.id].deriva;});
+  var sortedUrg=sinAncla.slice().sort(function(a,b){return scores[b.id].urgencia-scores[a.id].urgencia;});
+
   var aiIdx=Math.round(Math.sqrt(aiU*aiO));var aiC=aiIdx<=3?'#E74C3C':aiIdx<=6?'#F39C12':'#2ECC71';
-  var diagLow=totalAvg<6;
-  var aiMsg=diagLow&&aiIdx>=7?'Tienes todo para cambiar y el momento es ahora.':!diagLow&&aiIdx<=3?'Tu sistema funciona pero sin urgencia real el ciclo no se reinicia.':diagLow&&aiIdx<=3?'El sistema est\u00e1 bloqueado y la disposici\u00f3n al cambio es baja.':'Tu \u00edndice de activaci\u00f3n es s\u00f3lido.';
-  var ln={P:'Pensamiento',E:'Emoci\u00f3n',S:'Sentimiento',D:'Decisi\u00f3n',A:'Acci\u00f3n',L:'Logro'};
-  var lc={P:0,E:0,S:0,D:0,A:0,L:0};
-  done.forEach(function(a){['P','E','S','D','A','L'].forEach(function(k){var v=scores[a.id].pesdal[k];if(v!==null&&v<6)lc[k]++;});});
-  var wlKeys=['P','E','S','D','A','L'];wlKeys.sort(function(a,b){return lc[b]-lc[a];});
-  var activEl=fuga?getActivEl(fuga.id):wlKeys[0];var activN=ln[activEl];var epRec=EP_REC[activEl];
-  var action24=fugaArea?fugaArea.action:'Escribe una acci\u00f3n concreta para esta semana.';
-  var patterns=[];
-  if(lc[wlKeys[0]]>=2)patterns.push('La <strong>'+ln[wlKeys[0]]+'</strong> est\u00e1 por debajo del umbral en '+lc[wlKeys[0]]+' \u00e1reas distintas. Es un patr\u00f3n transversal.');
-  var crit=done.filter(function(a){return scores[a.id].avg<4;});
-  if(crit.length)patterns.push(crit.length+' \u00e1rea(s) en estado cr\u00edtico: <strong>'+crit.map(function(a){return a.name;}).join(', ')+'</strong>.');
-  var good=done.filter(function(a){return scores[a.id].avg>=7;});
-  if(good.length)patterns.push(good.length+' \u00e1rea(s) alineadas: <strong>'+good.map(function(a){return a.name;}).join(', ')+'</strong>.');
-  done.forEach(function(a){var s=scores[a.id];if(s.pesdal['L']!==null&&s.pesdal['S']!==null&&s.pesdal['L']>=8&&s.pesdal['S']<=4)patterns.push('<strong>\u00c9xito Vac\u00edo en '+a.name+'</strong>.');if(s.pesdal['P']!==null&&s.pesdal['A']!==null&&s.pesdal['P']>=7&&s.pesdal['A']<=4)patterns.push('<strong>Par\u00e1lisis por An\u00e1lisis en '+a.name+'</strong>.');});
-  if(!patterns.length)patterns.push('Completa m\u00e1s \u00e1reas para ver los patrones transversales.');
-  var mMsg={crisis:'Est\u00e1s en un momento de quiebre. Lo que ves en este diagn\u00f3stico es el mapa de salida.',stagnant:'Est\u00e1s estancado. El diagn\u00f3stico muestra exactamente d\u00f3nde el sistema dej\u00f3 de moverse.',moving:'Algo ya se est\u00e1 moviendo en ti.',next:'Est\u00e1s bien y buscas el siguiente nivel.'};
-  var html='<div class="card" style="text-align:center"><div class="card-title">Tu Diagn\u00f3stico</div>';
+  var aiMsg=aiIdx>=7?'Tienes urgencia y apertura altas — el momento de activar es ahora.':aiIdx<=3?'Tu urgencia o tu apertura son bajas — la activación va a costar más esfuerzo del esperado.':'Tu índice de activación es moderado — hay espacio real para moverte si lo decides.';
+
+  var mMsg={crisis:'Estás en un momento de quiebre. Lo que ves en este diagnóstico es el mapa de salida.',stagnant:'Estás estancado. El diagnóstico muestra exactamente dónde el automático dejó de moverte.',moving:'Algo ya se está moviendo en ti.',next:'Estás bien y buscas el siguiente nivel.'};
+
+  var html='<div class="card" style="text-align:center"><div class="card-title">Tu Diagnóstico</div>';
   if(momentOfLife)html+='<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(.88rem,2vw,1rem);color:var(--muted);margin-bottom:.58rem;">'+mMsg[momentOfLife]+'</div>';
-  html+='<div class="rscore" style="color:'+col(totalAvg)+'">'+totalAvg.toFixed(1)+'</div>';
-  html+='<div style="font-size:clamp(.68rem,1.5vw,.76rem);color:var(--muted);margin:.25rem 0">'+done.length+'/'+AREAS.length+' \u00e1reas \u00b7 de 10</div>';
-  html+='<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(.95rem,2.1vw,1.1rem);color:var(--goldL);margin-top:.3rem">'+st.t+'</div></div>';
-  html+='<div class="ai-idx"><span class="ai-idx-lbl">\u00cdndice de Activaci\u00f3n PESDAL</span><div class="ai-idx-score" style="color:'+aiC+'">'+aiIdx+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="ai-idx-text">'+aiMsg+'</div></div>';
-  html+='<div class="card"><div class="card-title">Ranking por Diagn\u00f3stico</div>';
-  sorted.forEach(function(a){var s=scores[a.id];var c=col(s.avg);html+='<div class="rar"><div class="rai">'+a.icon+'</div><div class="rain"><div class="rann">'+a.full+'</div><div class="rabt"><div class="rabf" style="width:'+(s.avg/10)*100+'%;background:'+c+'"></div></div></div><div class="rasco" style="color:'+c+'">'+s.avg.toFixed(1)+'</div></div>';});
-  html+='</div>';
-  if(fugaArea)html+='<div class="card"><div class="card-title">Tu Principal Punto de Fuga</div><div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem"><span style="font-size:1.4rem">'+fugaArea.icon+'</span><div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);font-weight:700">'+fugaArea.full+'</div><div style="font-size:clamp(.7rem,1.5vw,.78rem);color:var(--muted)">Puntuaci\u00f3n: '+scores[fuga.id].avg.toFixed(1)+'/10</div></div></div><div style="font-size:clamp(.82rem,1.8vw,.92rem);color:var(--muted);line-height:1.75">Esta \u00e1rea es el principal punto de fuga de energ\u00eda en tu sistema.</div></div>';
-  html+='<div class="card"><div class="card-title">Patrones Transversales del Sistema</div>';
-  patterns.forEach(function(p){html+='<div class="prow"><div class="pdot2"></div><div>'+p+'</div></div>';});html+='</div>';
-  html+='<div class="card"><div class="card-title">Tu Punto de Entrada al C\u00edrculo</div><div class="ebox"><span class="elbl">Tu elemento de activaci\u00f3n</span><div class="etxt">'+activEl+' \u2014 '+activN+': el punto desde donde tu sistema puede empezar a moverse.</div></div>';
-  html+='<div class="ep-box"><span class="ep-lbl">Tu episodio personalizado</span>'+(epRec?'<div class="ep-title">'+epRec.ep+' — '+epRec.title+'</div><div class="ep-text" style="color:rgba(201,168,76,0.7);font-style:italic;">⏱ Próximamente — Este episodio '+epRec.reason+'</div>':'')+'</div>';
+  if(conAncla.length){
+    var avgD=conAncla.reduce(function(s,a){return s+scores[a.id].deriva;},0)/conAncla.length;
+    html+='<div class="rscore" style="color:'+derivaColor(derivaClass(avgD))+'">'+avgD.toFixed(1)+'</div><div style="font-size:.7rem;color:var(--muted);margin:.25rem 0">Desviación promedio · '+conAncla.length+' área(s) con Plano de Referencia de '+AREAS.length+'</div>';
+  }else{
+    html+='<div class="rscore" style="color:#A8C4E8">—</div><div style="font-size:.7rem;color:var(--muted);margin:.25rem 0">Aún no tienes Planos de Referencia validados — el escáner está midiendo urgencia</div>';
+  }
   html+='</div>';
 
-  html+=buildProtocol(activEl,activN,epRec,totalAvg);
-  html+='<div class="act-box"><span class="act-lbl">Tu acci\u00f3n de las pr\u00f3ximas 24 horas</span><div class="act-title">'+(fugaArea?fugaArea.full:'Tu \u00e1rea de mayor urgencia')+'</div><div class="act-text">'+action24+'</div><textarea class="act-inp" placeholder="Escribe aqu\u00ed tu compromiso personal..."></textarea></div>';
-  html+='<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagn\u00f3stico como PDF</button>';
-  html+='<div class="cta"><div class="ctat">Tu vida no est\u00e1 perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Est\u00e1 desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede redise\u00f1ar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">\u00bfEst\u00e1s listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@constructoresdevida\',\'_blank\')">&#128250; Ver Episodio 1 \u2014 Constructores de Vida</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar \u00e1reas</button><button class="ctab" onclick="showResetModal()">Nuevo Esc\u00e1ner</button></div></div>';
-  html+='<div class="libu-footer"><div class="libu-footer-text">Esc\u00e1ner de Vida PESDAL v5.3c \u00b7 Propiedad intelectual de LIBU LLC \u00b7 Life Is Being Unleashed<br>No defines tu vida por tus resultados actuales, sino por tu capacidad de redise\u00f1ar tu sistema PESDAL.<br>P\u00e1gina 1 de tu Bit\u00e1cora PESDAL \u00b7 Constructores de Vida</div></div>';
+  html+='<div class="ai-idx"><span class="ai-idx-lbl">Índice de Activación</span><div class="ai-idx-score" style="color:'+aiC+'">'+aiIdx+'<span style="font-size:1rem;color:var(--muted)">/10</span></div><div class="ai-idx-text">'+aiMsg+'</div></div>';
+
+  // RANKING
+  html+='<div class="card"><div class="card-title">Ranking — Desviación / Urgencia</div>';
+  sorted.forEach(function(a){var s=scores[a.id];var cls=derivaClass(s.deriva);var c=derivaColor(cls);html+='<div class="rar"><div class="rai">'+a.icon+'</div><div class="rain"><div class="rann">'+a.full+' <span class="deriva-badge '+cls+'">'+derivaLabel(cls)+'</span></div><div class="rabt"><div class="rabf" style="width:'+(s.deriva/10)*100+'%;background:'+c+'"></div></div></div><div class="rasco" style="color:'+c+'">'+s.deriva.toFixed(1)+'</div></div>';});
+  sortedUrg.forEach(function(a){var s=scores[a.id];var c=derivaColor('urgencia');html+='<div class="rar"><div class="rai">'+a.icon+'</div><div class="rain"><div class="rann">'+a.full+' <span class="deriva-badge urgencia">Sin Plano de Referencia</span></div><div class="rabt"><div class="rabf" style="width:'+(s.urgencia/10)*100+'%;background:'+c+'"></div></div></div><div class="rasco" style="color:'+c+'">'+s.urgencia.toFixed(1)+'</div></div>';});
+  html+='</div>';
+
+  // DIAGNÓSTICO BIDIRECCIONAL
+  html+='<div class="card"><div class="card-title">Diagnóstico Bidireccional</div><p style="font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:.7rem;">Para cada Logro resultado: si no fue el esperado, ¿en qué elemento falló el ciclo? Si fue el esperado, ¿en qué elemento operó conscientemente?</p>';
+  n1.forEach(function(a){
+    var s=scores[a.id];
+    if(s.hasAncla&&s.anclaValid){
+      var cls=derivaClass(s.deriva);
+      if(cls==='estable'){
+        html+='<div class="bidir-card sostener"><span class="bidir-lbl" style="color:#A8C4E8">Sostener</span><div class="bidir-area">'+a.full+'</div><div class="bidir-text">Desviación baja ('+s.deriva.toFixed(1)+'). ¿Qué mantuvo el sistema en este estado? Identifica qué acertó y repítelo.</div></div>';
+      }else if(s.done){
+        var prim=s.elementoPrimario;
+        var primTxt=prim?elName(prim)+' ('+prim+')':'ningún elemento en automático identificado';
+        html+='<div class="bidir-card falla"><span class="bidir-lbl" style="color:#F39C12">Corregir</span><div class="bidir-area">'+a.full+' — Desviación '+s.deriva.toFixed(1)+'</div><div class="bidir-text">El elemento que más opera en automático aquí es <strong>'+primTxt+'</strong>. Esa es tu primera acción consciente en esta área.</div></div>';
+      }else{
+        html+='<div class="bidir-card falla"><span class="bidir-lbl" style="color:#F39C12">Pendiente Nivel 2</span><div class="bidir-area">'+a.full+' — Desviación '+s.deriva.toFixed(1)+'</div><div class="bidir-text">Tienes Nivel 1 completo pero falta el Nivel 2 para identificar qué elemento está causando esta Desviación.</div></div>';
+      }
+    }else{
+      html+='<div class="bidir-card falla"><span class="bidir-lbl" style="color:#A8C4E8">Construir Plano de Referencia</span><div class="bidir-area">'+a.full+'</div><div class="bidir-text">Sin Plano de Referencia todavía. La señal de urgencia es '+s.urgencia.toFixed(1)+'/10. El paso aquí no es corregir Desviación — es construir tu 10 con el Instrumento 1 y 2.</div></div>';
+    }
+  });
+  html+='</div>';
+
+  // ELEMENTO TRANSVERSAL
+  var lc={};ELEMENTS.forEach(function(e){lc[e.l]=0;});
+  done.forEach(function(a){var s=scores[a.id];ELEMENTS.forEach(function(e){if(s.n2[e.l]==='autom')lc[e.l]++;});});
+  var wlKeys=ELEMENTS.map(function(e){return e.l;});wlKeys.sort(function(a,b){return lc[b]-lc[a];});
+  var topEl=wlKeys[0];var topCount=lc[topEl];
+  html+='<div class="card"><div class="card-title">Patrón Transversal del Sistema</div>';
+  if(topCount>=2){
+    html+='<div class="prow"><div class="pdot2"></div><div><strong>'+elName(topEl)+' ('+topEl+')</strong> opera en automático en '+topCount+' área(s) distintas. Es tu patrón transversal — el punto donde más se repite el automático desalineado en tu vida.</div></div>';
+  }else{
+    html+='<div class="prow"><div class="pdot2"></div><div>No hay un elemento dominante repetido todavía. Completa más áreas para ver el patrón transversal con claridad.</div></div>';
+  }
+  var critAreas=conAncla.filter(function(a){return derivaClass(scores[a.id].deriva)==='critica';});
+  if(critAreas.length)html+='<div class="prow"><div class="pdot2"></div><div>'+critAreas.length+' área(s) en Desviación crítica: <strong>'+critAreas.map(function(a){return a.full;}).join(', ')+'</strong>.</div></div>';
+  var estableAreas=conAncla.filter(function(a){return derivaClass(scores[a.id].deriva)==='estable';});
+  if(estableAreas.length)html+='<div class="prow"><div class="pdot2"></div><div>'+estableAreas.length+' área(s) estables: <strong>'+estableAreas.map(function(a){return a.full;}).join(', ')+'</strong>. Ahí el automático ya está alineado — déjalo operar.</div></div>';
+  html+='</div>';
+
+  // ELEMENTO DE ACTIVACIÓN GLOBAL
+  var fuga=sorted[0]||sortedUrg[0];var fugaArea=fuga?AREAS.filter(function(a){return a.id===fuga.id;})[0]:null;
+  var activEl=topCount>=1?topEl:(fuga?scores[fuga.id].elementoPrimario:null);
+  var epRec=activEl?EP_REC[activEl]:null;
+  html+='<div class="card"><div class="card-title">Tu Punto de Entrada al Ciclo</div>';
+  if(fugaArea)html+='<div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.65rem"><span style="font-size:1.4rem">'+fugaArea.icon+'</span><div><div style="font-family:\'Cormorant Garamond\',serif;font-size:1.05rem;font-weight:700">'+fugaArea.full+'</div><div style="font-size:.74rem;color:var(--muted)">Tu principal punto de Desviación o urgencia</div></div></div>';
+  if(activEl)html+='<div class="ebox"><span class="elbl">Tu elemento de activación</span><div class="etxt">'+activEl+' — '+elName(activEl)+': el punto desde donde tu sistema puede empezar a moverse.</div></div>';
+  if(epRec)html+='<div class="ep-box"><span class="ep-lbl">Tu episodio recomendado</span><div class="ep-title">'+epRec.ep+' — '+epRec.title+'</div><div class="ep-text" style="color:rgba(201,168,76,0.7);font-style:italic;">⏱ Próximamente — Este episodio '+epRec.reason+'</div></div>';
+  html+='</div>';
+
+  html+=buildProtocolBox(activEl,fugaArea,conAncla.length,sinAncla.length);
+  html+='<div class="act-box"><span class="act-lbl">Tu acción de las próximas 24 horas</span><div class="act-title">'+(fugaArea?fugaArea.full:'Tu área de mayor urgencia')+'</div><div class="act-text">'+(activEl?ELEMENTS.filter(function(e){return e.l===activEl;})[0].accion.replace(/<\/?em>/g,''):'Construye tu Plano de Referencia en tu área de mayor urgencia.')+'</div><textarea class="act-inp" placeholder="Escribe aquí tu compromiso personal..."></textarea></div>';
+  html+='<button class="btn-save" onclick="window.print()">\u2193 Guardar Diagnóstico como PDF</button>';
+  html+='<div class="cta"><div class="ctat">Tu vida no está perdida.</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1rem,2.2vw,1.15rem);color:var(--goldL);margin-bottom:.45rem;font-style:italic;">Está desorganizada.</div><div class="ctax">Y lo que se puede diagnosticar, se puede rediseñar. Somos Constructores de Vida. Y esto apenas comienza.</div><div class="ctaq">¿Estás listo para construir con plano?</div><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;"><button class="ctab outline" onclick="window.open(\'https://youtube.com/@PESDAL\',\'_blank\')">&#128250; Ver canal @PESDAL</button><button class="ctab outline" onclick="go(\'s-overview\');renderOverview()">Completar áreas</button><button class="ctab" onclick="showResetModal()">Nuevo Escáner</button></div></div>';
+  html+='<div class="libu-footer"><div class="libu-footer-text">Escáner de Vida PESDAL v6.2 · @PESDAL · Propiedad intelectual de LIBU LLC<br>No defines tu vida por tus resultados actuales, sino por tu capacidad de rediseñar lo que opera en automático.<br>Página 1 de tu Bitácora PESDAL · Constructores de Vida</div></div>';
   document.getElementById('rpt-content').innerHTML=html;
+}
+
+function buildProtocolBox(activEl,fugaArea,nAncla,nSinAncla){
+  var elTxt=activEl?ELEMENTS.filter(function(e){return e.l===activEl;})[0]:null;
+  var step2=elTxt
+    ?'<div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Tu punto de entrada: <strong style="color:#E8C96A">'+activEl+' — '+elTxt.name+'</strong></div><div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-bottom:.25rem;">'+elTxt.accion.replace(/<\/?em>/g,'')+'</div>'
+    :'<div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;">Completa más áreas para identificar tu punto de entrada.</div>';
+  var anclaNote=nSinAncla>0
+    ?'<div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;margin-top:.3rem;">Tienes '+nSinAncla+' área(s) sin Plano de Referencia validado — ahí el trabajo es construir tu 10 antes de medir Desviación.</div>'
+    :'';
+  return '\
+<div style="background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:1.4rem 1.2rem;margin-top:.8rem;">\
+  <div style="text-align:center;margin-bottom:1rem;">\
+    <div style="font-family:\'DM Mono\',monospace;font-size:.56rem;color:#C9A84C;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem;">Tu Protocolo PESDAL</div>\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(1.1rem,2.6vw,1.4rem);font-weight:700;margin-bottom:.3rem;">Acabas de hacer algo que la mayoría nunca hace.</div>\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(.88rem,2vw,1rem);color:#7A8499;font-style:italic;line-height:1.7;">No viniste a buscar una señal más. Viniste a mirar con precisión qué opera en automático en tu sistema. Eso es el primer acto de un Constructor.</div>\
+  </div>\
+  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>\
+  <div style="margin-bottom:.85rem;">\
+    <div style="font-family:\'DM Mono\',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">El reencuadre central</div>\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(.95rem,2.1vw,1.1rem);font-weight:700;margin-bottom:.28rem;">El automático nunca se apaga. La pregunta es si está alineado.</div>\
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);color:#7A8499;line-height:1.75;margin-bottom:.45rem;">No necesitas vivir todo conscientemente — es imposible. Necesitas los automáticos correctos alineados, y consciencia donde el diseño lo requiere. Una vez corriges un automático desalineado, se convierte en un nuevo automático alineado — y liberas consciencia para lo siguiente.</div>'+anclaNote+'\
+  </div>\
+  <div style="height:1px;background:rgba(201,168,76,.12);margin:.7rem 0;"></div>\
+  <div style="font-family:\'DM Mono\',monospace;font-size:.54rem;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.55rem;text-align:center;">Tu Prescripción</div>\
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">1</div>\
+    <div><div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Esta semana</div>\
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Revisa tu Ranking — Desviación / Urgencia y elige un área.</div>\
+    <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;">Empieza por la que cumple al menos dos: mayor Desviación, mayor efecto corredor en áreas adyacentes, mayor conexión con tu Logro de largo plazo.</div></div>\
+  </div>\
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.45rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">2</div>\
+    <div><div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Personalizado</div>\
+    '+step2+'</div>\
+  </div>\
+  <div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;background:#141D2E;border-radius:5px;padding:.7rem .8rem;">\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:#C9A84C;flex-shrink:0;line-height:1;width:1.2rem;">3</div>\
+    <div><div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:#C9A84C;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.12rem;">Permanente</div>\
+    <div style="font-size:clamp(.82rem,1.8vw,.92rem);font-weight:500;margin-bottom:.1rem;">Este diagnóstico es tu Página 1.</div>\
+    <div style="font-size:clamp(.76rem,1.65vw,.86rem);color:#7A8499;">Revísalo mensual (¿las Desviaciones se mueven?), trimestral (¿el diseño sigue vigente?) y anual (¿el Plano completo te representa?).</div></div>\
+  </div>\
+  <div style="text-align:center;padding:.75rem .3rem 0;border-top:1px solid rgba(201,168,76,.12);margin-top:.45rem;">\
+    <div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(.9rem,2vw,1.05rem);font-style:italic;color:#E8C96A;line-height:2;">\
+      No importa cuánto tiempo lleve operando este automático.<br>\
+      Lo que importa es que hoy lo viste con precisión.<br>\
+      <strong style="color:#C9A84C;font-style:normal;">Bienvenido al proceso. Somos Constructores de Vida.</strong>\
+    </div>\
+  </div>\
+</div>';
 }
 
 function showResetModal(){document.getElementById('reset-modal').classList.add('show');}
 function closeModal(){document.getElementById('reset-modal').classList.remove('show');}
 function confirmReset(){
-  closeModal();momentOfLife=null;calLvl={P:'B',E:'B',S:'B',D:'B',A:'B',L:'B'};
-  AREAS.forEach(function(a){scores[a.id]={pesdal:{P:null,E:null,S:null,D:null,A:null,L:null},avg:null,done:false};});
-  orderedIds=[];metaAnswer=null;touched={};aiU=5;aiO=5;_shuffledAreas=null;
+  closeModal();momentOfLife=null;calLvl={};ELEMENTS.forEach(function(e){calLvl[e.l]='B';});
+  AREAS.forEach(function(a){scores[a.id]=blankScore();});
+  orderedIds=[];metaAnswer=null;aiU=5;aiO=5;_shuffledAreas=null;curArea=null;detailStep='central';
   buildCal();
   document.querySelectorAll('.moment-opt').forEach(function(e){e.classList.remove('sel');});
   var btnMn=document.getElementById('btn-mn');if(btnMn)btnMn.disabled=true;
@@ -978,6 +1284,7 @@ function confirmReset(){
 buildCal();
 var tksU=document.getElementById('tks-u');var tksO=document.getElementById('tks-o');
 if(tksU)tksU.innerHTML=tks();if(tksO)tksO.innerHTML=tks();
+
 </script>
 </body>
 </html>
