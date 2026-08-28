@@ -1,0 +1,188 @@
+<!doctype html><html lang="es" style="background:#111318"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111318"><title>PESDAL v7 Prototype v0.4</title>
+<style>
+:root{--bg:#111318;--card:#1a1e25;--text:#f2efe8;--muted:#aaa9a5;--accent:#d5b25f;--line:#303641;--soft:#222731;color-scheme:dark}*{box-sizing:border-box}html,body{background:#111318}html{min-height:100%}textarea,input{color-scheme:dark}body{margin:0;min-height:100dvh;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:720px;margin:auto;padding:24px 18px 64px}.brand{letter-spacing:.18em;color:var(--accent);font-size:12px;font-weight:800}h1{font-size:32px;line-height:1.08;margin:12px 0}h2{font-size:24px}p{line-height:1.5;color:#ddd}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0}button{width:100%;border:0;border-radius:13px;padding:15px 16px;font-size:16px;font-weight:750;cursor:pointer;background:var(--accent);color:#151515;margin-top:10px}button.secondary,.choice{background:var(--soft);color:var(--text);border:1px solid var(--line)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{min-height:58px}.choice.sel{outline:2px solid var(--accent)}.screen{display:none}.screen.active{display:block}.progress{height:6px;background:#262b33;border-radius:9px;overflow:hidden;margin:14px 0 28px}.progress span{display:block;height:100%;background:var(--accent)}.rangeRow{display:grid;grid-template-columns:1fr 60px;gap:12px;align-items:center}.val{font-size:28px;font-weight:800;text-align:center;color:var(--accent)}input[type=range]{width:100%;accent-color:var(--accent)}.muted{color:var(--muted);font-size:14px}.areaTitle{font-size:22px;font-weight:800}.maprow{display:grid;grid-template-columns:1.4fr 2fr 34px;gap:10px;align-items:center;margin:10px 0}.bar{height:10px;background:#2b3039;border-radius:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}.scale10{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:14px 0}
+.numChoice{margin:0;background:var(--soft);color:var(--text);border:1px solid var(--line);padding:14px 4px;border-radius:12px;font-size:17px}
+.numChoice.sel{outline:2px solid var(--accent);background:#2b3039}
+.numChoice:focus-visible{outline:3px solid var(--accent)}
+.notice{border-left:3px solid var(--accent);padding:10px 14px;background:#191d23;border-radius:8px}.small{font-size:12px;color:var(--muted)}@media(max-width:520px){.scale10{grid-template-columns:repeat(5,1fr)}.grid{grid-template-columns:1fr}.wrap{padding:18px 14px 48px}h1{font-size:29px}}
+</style></head><body style="background:#111318;min-height:100dvh"><main class="wrap"><div class="brand">PESDAL · PROTOTIPO v7 · v0.4</div><div class="progress"><span id="prog" style="width:8%"></span></div>
+<section id="s0" class="screen active"><h1>Escanea las 8 áreas de tu vida en unos minutos.</h1><p>Responde una pregunta rápida por cada área. Al final verás tu mapa y dónde puede valer la pena mirar primero.</p><div class="card"><b>Este prototipo no diagnostica causas.</b><p class="muted">Trabaja con tus propias respuestas. La profundidad PESDAL viene después.</p></div><button onclick="go('s1',15)">Empezar mi Escáner</button></section>
+<section id="s1" class="screen"><h2>Tu momento</h2><p>¿Cuál describe mejor el momento que estás viviendo?</p><div class="grid" id="momentChoices"></div><button id="mnext" disabled onclick="go('s2',22)">Continuar</button></section>
+<section id="s2" class="screen"><h2>Tu intuición</h2><p>Antes de responder las escalas, ¿qué área sientes intuitivamente que necesita más atención hoy?</p><div class="grid" id="intuitionChoices"></div><button id="inext" disabled onclick="startToday()">Ver las 8 áreas</button></section>
+<section id="s3" class="screen"><div class="muted" id="areaCount"></div><div class="areaTitle" id="areaName"></div><p class="muted" id="areaDesc"></p><p>Pensando en las últimas semanas, ¿cómo está esta área de tu vida hoy?</p><div class="card"><div id="todayScale" class="scale10" aria-label="Escala Hoy del 1 al 10"></div><div class="small">1 = está funcionando muy mal para mí · 10 = está funcionando muy bien para mí</div></div><button id="todayNext" disabled onclick="saveToday()">Guardar y seguir</button></section>
+
+<section id="sTie" class="screen">
+<h2>Hay un empate en tu mapa</h2>
+<p>Varias áreas tienen exactamente el mismo valor. El sistema no va a inventar un desempate.</p>
+<div class="card">
+<p id="tieInstruction"></p>
+<div class="grid" id="tieChoices"></div>
+</div>
+<button id="tieNext" disabled onclick="finishTie()">Continuar</button>
+</section>
+
+<section id="s4" class="screen"><h2>Una referencia, solo donde aporta información</h2><p>Ahora compararemos solo algunas áreas con el nivel que hoy considerarías suficiente. No busques un 10 perfecto.</p><div class="card"><div class="areaTitle" id="refArea"></div><p>¿En qué nivel dirías: <b>“esto está suficientemente bien por ahora”</b>?</p><div id="refScale" class="scale10" aria-label="Escala de referencia del 1 al 10"></div><div class="small">Ningún valor está preseleccionado.</div></div><button id="refNext" disabled onclick="saveRef()">Guardar y seguir</button></section>
+<section id="s5" class="screen"><h2>Tu disposición para actuar</h2><p>Esto no cambia qué área aparece primero. Solo ayuda a orientar el siguiente paso.</p><div class="card"><label>¿Cuánta energía tienes hoy para hacer un ajuste?</label><div id="energyScale" class="scale10" aria-label="Energía del 1 al 10"></div></div><div class="card"><label>¿Qué tan dispuesto estás a mirar algo que quizá no habías considerado?</label><div id="openScale" class="scale10" aria-label="Apertura del 1 al 10"></div></div><button id="resultsNext" disabled onclick="results()">Ver mi mapa</button></section>
+<section id="s6" class="screen"><h1>Tu primer mapa</h1><div id="headline" class="notice"></div><div class="card" id="map"></div><div class="card"><h3>Áreas comparadas con tu referencia</h3><div id="refSummary"></div></div><div class="card"><h3>Tu intuición inicial</h3><p id="intuitionText"></p></div><div class="card"><h3>Siguiente paso</h3><p id="actionText"></p></div><button onclick="alert('En v7, aquí comenzará COMPRENDE CON PESDAL sobre el área elegida.')">Quiero entender qué está ocurriendo aquí</button><button class="secondary" onclick="go('s7',100)">Responder 4 preguntas de la prueba</button><p class="small">Prototipo de UX y lógica. No es instrumento clínico ni psicométrico validado.</p></section>
+
+<section id="s7" class="screen">
+<h1>Prueba rápida</h1>
+<p>Gracias por ayudarnos a probar esta herramienta. No hay respuestas correctas o incorrectas — queremos evaluar la herramienta, no evaluarte a ti.</p>
+<div class="card"><p><b>1. ¿El Escáner fue fácil de entender?</b></p><div class="grid" id="fq1"></div></div>
+<div class="card"><p><b>2. ¿El resultado te pareció útil?</b></p><div class="grid" id="fq2"></div></div>
+<div class="card"><p><b>3. Después de ver tu resultado, ¿continuarías con "Quiero entender qué está ocurriendo aquí"?</b></p><div class="grid" id="fq3"></div></div>
+<div class="card"><p><b>4. En una frase: ¿qué crees que te mostró el Escáner?</b></p><textarea id="fq4" rows="3" style="width:100%;background:var(--soft);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px;font-family:inherit;color-scheme:dark;-webkit-text-fill-color:var(--text)"></textarea></div>
+<div class="card"><p><b>Tiempo aproximado para completar el Escáner (min):</b></p><input id="fqTime" type="number" min="0" style="width:100%;background:var(--soft);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px;color-scheme:dark;-webkit-text-fill-color:var(--text)"></div>
+<div class="card"><p><b>¿Conocías PESDAL antes de esta prueba?</b></p><div class="grid" id="fq5"></div></div>
+<button id="fqCopy" onclick="copyFeedback()">Copiar mis respuestas</button>
+<p class="small" id="fqStatus"></p>
+<p class="small">Pega el resultado copiado en WhatsApp o email y envíalo. Gracias — nos ayuda a hacerlo más claro, simple y útil.</p>
+</section>
+</main><script>
+const areas=['Quién Soy Hoy','Salud y Energía','Trabajo y Carrera','Dinero y Finanzas','Familia y Relaciones','Propósito y Sentido','Descanso y Disfrute','Legado e Impacto'];
+const areaDesc={
+'Quién Soy Hoy':'Tu relación contigo mismo, tu autoestima y las creencias sobre lo que mereces y puedes lograr.',
+'Salud y Energía':'Tu cuerpo, vitalidad, sueño, alimentación y capacidad de sostener tu ritmo de vida.',
+'Trabajo y Carrera':'Tu ocupación, talento aplicado, satisfacción con lo que haces y dirección de tu carrera.',
+'Dinero y Finanzas':'Lo que ganas, gastas, debes, ahorras y tu relación real con el dinero.',
+'Familia y Relaciones':'Tu pareja, hijos, padres, amigos y la calidad de los vínculos que más importan.',
+'Propósito y Sentido':'El porqué profundo de tu vida y lo que le da sentido más allá de resultados puntuales.',
+'Descanso y Disfrute':'Tu capacidad de parar, disfrutar y recargar sin culpa.',
+'Legado e Impacto':'La huella que dejas en otros y lo que construyes que trasciende tus logros personales.'
+};
+const moments=['Estoy estable y quiero mejorar','Estoy reorganizando varias cosas','Estoy atravesando un cambio importante','Me siento sobrecargado/a','Prefiero no definirlo todavía'];
+let data={moment:null,intuition:null,today:{},refs:{},shortlist:[]},idx=0,ridx=0;
+function go(id,p){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById('prog').style.width=p+'%';scrollTo(0,0)}
+function choices(container,items,key,next){let c=document.getElementById(container);items.forEach(x=>{let b=document.createElement('button');b.className='choice';b.textContent=x;b.onclick=()=>{[...c.children].forEach(z=>z.classList.remove('sel'));b.classList.add('sel');data[key]=x;document.getElementById(next).disabled=false};c.appendChild(b)})}
+choices('momentChoices',moments,'moment','mnext');choices('intuitionChoices',areas,'intuition','inext');
+let selectedToday=null,selectedRef=null,selectedEnergy=null,selectedOpen=null;
+let tieState={mandatory:[],candidates:[],needed:0,selected:[]};
+function renderScale(containerId,selected,onPick){
+  const c=document.getElementById(containerId); c.innerHTML='';
+  for(let n=1;n<=10;n++){
+    const b=document.createElement('button');
+    b.type='button'; b.className='numChoice'+(selected===n?' sel':''); b.textContent=n;
+    b.setAttribute('aria-pressed', selected===n ? 'true':'false');
+    b.onclick=()=>onPick(n);
+    c.appendChild(b);
+  }
+}
+function pickToday(n){selectedToday=n;renderScale('todayScale',n,pickToday);document.getElementById('todayNext').disabled=false}
+function pickRef(n){selectedRef=n;renderScale('refScale',n,pickRef);document.getElementById('refNext').disabled=false}
+function pickEnergy(n){selectedEnergy=n;renderScale('energyScale',n,pickEnergy);updateResultsButton()}
+function pickOpen(n){selectedOpen=n;renderScale('openScale',n,pickOpen);updateResultsButton()}
+function updateResultsButton(){document.getElementById('resultsNext').disabled=!(selectedEnergy&&selectedOpen)}
+function loadActivation(){selectedEnergy=null;selectedOpen=null;renderScale('energyScale',null,pickEnergy);renderScale('openScale',null,pickOpen);updateResultsButton()}
+function startToday(){idx=0;go('s3',30);loadToday()}
+function loadToday(){
+  document.getElementById('areaCount').textContent='Área '+(idx+1)+' de 8';
+  document.getElementById('areaName').textContent=areas[idx];document.getElementById('areaDesc').textContent=areaDesc[areas[idx]];
+  selectedToday = data.today[areas[idx]] || null;
+  renderScale('todayScale',selectedToday,pickToday);
+  document.getElementById('todayNext').disabled = selectedToday===null;
+  document.getElementById('prog').style.width=(30+idx*5)+'%';
+}
+function saveToday(){
+  if(selectedToday===null)return;
+  data.today[areas[idx]]=selectedToday;idx++;
+  if(idx<8)loadToday();else buildShortlist();
+}
+function buildShortlist(){
+  let vals=areas.map(a=>[a,data.today[a]]).sort((a,b)=>a[1]-b[1]);
+  let cutoff=vals[2][1];
+  let strict=vals.filter(x=>x[1]<cutoff).map(x=>x[0]);
+  let tied=vals.filter(x=>x[1]===cutoff).map(x=>x[0]);
+  let mandatory=[...new Set([...strict,data.intuition])];
+  let slots=Math.max(0,4-mandatory.length);
+  let candidates=tied.filter(a=>!mandatory.includes(a));
+  if(candidates.length<=slots){
+    data.shortlist=[...new Set([...mandatory,...candidates])];
+    ridx=0;go('s4',73);loadRef();
+  }else{
+    tieState={mandatory,candidates,needed:slots,selected:[]};
+    renderTie();go('sTie',70);
+  }
+}
+function renderTie(){
+  const c=document.getElementById('tieChoices');c.innerHTML='';
+  document.getElementById('tieInstruction').textContent='Elige '+tieState.needed+' '+(tieState.needed===1?'área':'áreas')+' entre las empatadas para compararlas con tu referencia.';
+  tieState.candidates.forEach(a=>{
+    let b=document.createElement('button');b.type='button';b.className='choice'+(tieState.selected.includes(a)?' sel':'');b.textContent=a;
+    b.onclick=()=>{
+      if(tieState.selected.includes(a)) tieState.selected=tieState.selected.filter(x=>x!==a);
+      else if(tieState.selected.length<tieState.needed) tieState.selected.push(a);
+      renderTie();
+    };c.appendChild(b);
+  });
+  document.getElementById('tieNext').disabled=tieState.selected.length!==tieState.needed;
+}
+function finishTie(){
+  data.shortlist=[...new Set([...tieState.mandatory,...tieState.selected])];
+  ridx=0;go('s4',73);loadRef();
+}
+function loadRef(){
+  let a=data.shortlist[ridx];document.getElementById('refArea').textContent=a;
+  selectedRef = data.refs[a] || null;
+  renderScale('refScale',selectedRef,pickRef);
+  document.getElementById('refNext').disabled = selectedRef===null;
+  document.getElementById('prog').style.width=(73+ridx*3)+'%';
+}
+function saveRef(){
+  if(selectedRef===null)return;
+  let a=data.shortlist[ridx];data.refs[a]=selectedRef;ridx++;
+  if(ridx<data.shortlist.length)loadRef();else{go('s5',88);loadActivation();}
+}
+function results(){
+if(!(selectedEnergy&&selectedOpen))return;
+let e=selectedEnergy,o=selectedOpen;
+let cand=data.shortlist.map(a=>({a,h:data.today[a],r:data.refs[a],d:Math.max(data.refs[a]-data.today[a],0)}));
+let minH=Math.min(...cand.map(x=>x.h)),maxD=Math.max(...cand.map(x=>x.d));
+let strong=maxD>0?cand.filter(x=>x.h===minH&&x.d===maxD):[];
+let low=cand.filter(x=>x.h===minH),far=maxD>0?cand.filter(x=>x.d===maxD):[];
+let allH=Object.values(data.today),text='';
+if(allH.every(v=>v>=8)&&maxD<=1)
+  text='Tu mapa no muestra una distancia dominante. Puedes usar PESDAL para optimizar o elegir conscientemente un área de crecimiento.';
+else if(allH.filter(v=>v<=4).length>=5)
+  text='Varias áreas aparecen bajas en tu evaluación actual. En vez de fabricar una única prioridad, conviene elegir una sola zona para explorar primero.';
+else if(maxD===0&&minH<=4)
+  text='Algunas áreas aparecen bajas en tu evaluación actual, pero en las áreas comparadas no declaraste distancia respecto a lo que hoy consideras suficiente. Vale la pena entender ese contexto antes de decidir qué cambiar.';
+else if(strong.length===1)
+  text=strong[0].a+' reúne las dos señales más claras de este mapa y puede ser un buen lugar para empezar a explorar.';
+else if(low[0]&&far[0]&&low[0].a!==far[0].a)
+  text='Aparecen dos señales distintas: '+low[0].a+' por cómo está hoy y '+far[0].a+' por la distancia respecto a lo que necesitas.';
+else
+  text='No aparece una sola área claramente dominante. Tu mapa muestra varias áreas próximas; puedes elegir conscientemente cuál explorar primero.';
+document.getElementById('headline').textContent=text;
+document.getElementById('map').innerHTML=areas.map(a=>'<div class="maprow"><span>'+a+'</span><span class="bar"><i style="width:'+(data.today[a]*10)+'%"></i></span><b>'+data.today[a]+'</b></div>').join('');
+document.getElementById('refSummary').innerHTML=cand.map(x=>'<p><b>'+x.a+'</b><br><span class="muted">Hoy '+x.h+' · Suficiente por ahora '+x.r+' · Distancia '+x.d+'</span></p>').join('');
+let ic=data.intuition,ci=cand.find(x=>x.a===ic);
+document.getElementById('intuitionText').textContent=(ci&&(ci.h===minH||(maxD>0&&ci.d===maxD)))?'Tu intuición inicial sobre '+ic+' también aparece como una señal relevante en el mapa.':'Llegaste pensando primero en '+ic+'. El mapa aporta otras señales para explorar; una no invalida la otra.';
+document.getElementById('actionText').textContent=e<=4?'Tu energía para actuar es limitada hoy. El siguiente paso debería ser pequeño, concreto y reversible.':o<=4?'Tienes energía para actuar, pero poca apertura a explorar algo inesperado. Conviene empezar por una observación concreta antes de cambiar demasiado.':'Tienes disposición suficiente para pasar a COMPRENDE y explorar un caso concreto con PESDAL.';
+go('s6',100);
+}
+let fb={q1:null,q2:null,q3:null,q5:null};
+function fbChoices(container,items,key){
+  let c=document.getElementById(container);c.innerHTML='';
+  items.forEach(x=>{let b=document.createElement('button');b.type='button';b.className='choice';b.textContent=x;
+    b.onclick=()=>{[...c.children].forEach(z=>z.classList.remove('sel'));b.classList.add('sel');fb[key]=x};
+    c.appendChild(b)});
+}
+fbChoices('fq1',['Muy fácil','Fácil','Regular','Difícil'],'q1');
+fbChoices('fq2',['Mucho','Algo','Poco','Nada'],'q2');
+fbChoices('fq3',['Sí','Tal vez','No'],'q3');
+fbChoices('fq5',['Sí','No'],'q5');
+function copyFeedback(){
+  let txt='PRUEBA ESCÁNER PESDAL\n'
+    +'1. Fácil de entender: '+(fb.q1||'(sin responder)')+'\n'
+    +'2. Utilidad del resultado: '+(fb.q2||'(sin responder)')+'\n'
+    +'3. Continuaría a COMPRENDE: '+(fb.q3||'(sin responder)')+'\n'
+    +'4. Qué le mostró el Escáner: '+(document.getElementById('fq4').value||'(sin responder)')+'\n'
+    +'Tiempo aproximado: '+(document.getElementById('fqTime').value||'(sin dato)')+' min\n'
+    +'Conocía PESDAL antes: '+(fb.q5||'(sin responder)');
+  navigator.clipboard.writeText(txt).then(()=>{
+    document.getElementById('fqStatus').textContent='Copiado ✔ — ahora pégalo en WhatsApp o email.';
+  }).catch(()=>{
+    document.getElementById('fqStatus').textContent='No se pudo copiar automáticamente. Selecciona y copia manualmente:\n\n'+txt;
+  });
+}
+</script></body></html>
